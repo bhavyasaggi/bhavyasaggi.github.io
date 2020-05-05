@@ -1,0 +1,14 @@
+url: "https://bhavyasaggi.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+theme: jekyll-theme-hacker
+
+show_downloads: false
+google_analytics: "xxx"
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/

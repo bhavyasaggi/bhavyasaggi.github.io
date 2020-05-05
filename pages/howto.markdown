@@ -1,0 +1,160 @@
+---
+permalink: /how-to-schema
+---
+<style>
+  *{box-sizing:border-box}
+  button.right{float:right}
+  #HowTo button,#HowToStep button,#Schema button{font-size:x-large;border:0;outline:none;background:none}
+  #HowTo, #HowToStep section{width:49%;margin:10px 0px;padding:10px}
+  #HowTo{background-color:#6666}
+  #Schema{padding:10px;width:49%;height:80%;float:right}
+  #Markup{width:100%;height:100%;display:block;margin:10px 0px;padding:10px;border:1px dotted green;background:#cccc}
+</style>
+<script async src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script>
+      var qaReduce = Array.prototype.reduce;
+      // Helpers ?
+      function inverse(hex) {
+        hex = '0x'+hex;
+        return (~hex & 0xFFFFFF).toString(16);
+      }
+      function escapeHtml(unsafe) {
+          return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+       }
+      function toClip(){
+        markify();
+        const codeArea = document.querySelector('#Markup');
+        const code = document.createRange();
+        window.getSelection().empty();
+        code.setStartBefore(codeArea);
+        code.setEndAfter(codeArea) ;
+        window.getSelection().addRange(code);
+        document.execCommand("copy");
+      }
+      // meh!
+      function addField(sourceId){
+        const inputArea = document.querySelector('#HowToStep');
+        const rando = Math.random().toFixed(2);
+        const inputWrap = Object.assign(
+          document.createElement('section'),
+          {
+            id: '_'+parseInt(100*rando, 10)
+          }
+        );
+        inputWrap.style.backgroundColor = `rgba(128,128,128,${rando})`;
+        inputWrap.appendChild(document.createTextNode('Step:'));
+        inputWrap.appendChild(
+          Object.assign(
+            document.createElement('button'),
+            {
+              innerText: '➕',
+              className: 'right'
+            }
+          )
+        );
+        inputWrap.appendChild(
+          Object.assign(
+            document.createElement('button'),
+            {
+              innerText: '➖',
+              className: 'right'
+            }
+          )
+        );
+        inputWrap.appendChild(document.createElement('hr'));
+        ['text', 'name', 'url', 'image'/*, 'video'*/].forEach(placeholder=>{
+          inputWrap.appendChild(
+            Object.assign(
+              document.createElement('textarea'), 
+              { placeholder }
+            )
+          );
+        });
+        if(! sourceId) {
+          return inputArea.appendChild(inputWrap);
+        } else {
+          inputArea.insertBefore(inputWrap, document.querySelector(`#${sourceId}`).nextSibling);
+        }
+      }
+      function removeField(sourceId){
+        const inputArea = document.querySelector('#HowToStep');
+        const toRemove = sourceId ? document.querySelector(`#HowToStep #${sourceId}`) : inputArea.lastChild;
+        inputArea.removeChild(toRemove);
+      }
+      function linearize(acc, inputElem) {
+        if(!inputElem.value) return acc;
+        return Object.assign(acc, {
+          [inputElem.placeholder]: inputElem.value
+        });
+      }
+      function toAnswer(acc, sectionElem){
+        const inputElems = Array.prototype.slice.call(sectionElem.children, 3);
+        const howToData = qaReduce.call(inputElems, linearize, {});
+        if(!howToData) return acc;
+        return acc.concat(Object.assign({
+          "@type": "HowToStep"
+        }, howToData));
+      }
+      function markify(){
+        const questions = document.querySelectorAll('#HowTo textarea');
+        const answers = document.querySelectorAll('#HowToStep section');
+        const howToData = qaReduce.call(questions, linearize, {});
+        if(!howToData) return;
+        const howToStepData = Array.prototype.reduce.call(answers, toAnswer, []);
+        if(!howToStepData) return;
+        const schema = Object.assign(
+          {
+            "@context": "http://schema.org",
+            "@type": "HowTo"
+          }, 
+          howToData,
+          {
+            "step": howToStepData
+          }
+        );
+        const linearSchema = '<script type="application/ld+json">'+JSON.stringify(schema)+'<\/script>';
+        if (typeof PR === 'undefined') {
+          document.querySelector('#Markup').innerText = linearSchema; 
+        } else {
+          document.querySelector('#Markup').innerHTML = PR.prettyPrintOne(escapeHtml(linearSchema))
+        }
+      }
+      function modSections({target: {tagName = '', className = '', innerText, parentElement}}) {
+        if(tagName !== 'BUTTON' || !parentElement) return;
+        switch(innerText) {
+          case '➕':
+            addField(parentElement.id);
+            break;
+          case '➖':
+            removeField(parentElement.id);
+            break;
+        }
+        return;
+      }
+    </script>
+<h1>How-To Schema Generator</h1>
+<aside id="Schema">
+  <center>
+    <button onclick="markify()" title="Build Schema">🏗️</button>
+    <button onclick="toClip()" title="Copy Schema">📋</button>
+    <a href="https://search.google.com/test/rich-results" target="_blank" style="text-decoration: none;" title="Test Schema">🔗</a>
+  </center>
+  <code id="Markup" class="prettyprint" contenteditable></code>
+</aside>
+<nav id="HowTo">
+  Title
+  <button class="right" onclick="addField()">➕</button>
+  <button class="right" onclick="removeField()">➖</button>
+  <hr/>
+  <textarea placeholder="name"></textarea>
+  <textarea placeholder="totalTime"></textarea>
+  <textarea placeholder="supply"></textarea>
+  <textarea placeholder="tool"></textarea>
+  <textarea placeholder="description"></textarea>
+</nav>
+<main id="HowToStep" onclick="modSections(arguments[0])"></main>

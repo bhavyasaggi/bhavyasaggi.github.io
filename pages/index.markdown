@@ -1,0 +1,7 @@
+---
+permalink: /
+---
+
+<a href="{{ '/how-to-schema' | absolute_url}}" class="btn">How-To Scehma Generator</a>
+<a href="{{ '/faq-schema' | absolute_url}}" class="btn">FAQ Scehma Generator</a>
+<a href="{{ '/jd-number-extractor' | absolute_url}}" class="btn">JD Number Extractor</a>
