@@ -5,6 +5,13 @@ theme: jekyll-theme-hacker
 show_downloads: false
 google_analytics: "xxx"
 
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "default"
+
 exclude:
   - .sass-cache/
   - .jekyll-cache/
