@@ -10,31 +10,19 @@ permalink: /jd-number-extractor
   #Schema{padding:10px;width:49%;height:80%;float:right}
 </style>
 <script>
-  window._KILL_ = false
+  async function fetchData(url, index) {
+    if(window._KILL_) return ''
 
-  function extractPageLinks (data) {
-    if(window._KILL_) {
-      return []
-    }
-    const bank = []
-    ;[].forEach.call(
-      data.querySelectorAll('ul.rsl li.cntanr span.desk-add a'),
-      (dataItem)=>{
-        bank.push(dataItem.href)
-      }
-    )
-    return bank
-  }
+    await new Promise(resolve=>setTimeout(resolve, 2000))
 
-  function extractPageData (data) {
-    if(window._KILL_) {
-      return {}
-    }
+    const pageUrl = url + (index ? `/page-${index}` : '')
+    console.log("\tFetching - ", pageUrl)
+
+    const textHtml = await fetch(pageUrl).then(r=>r.text()).catch(e=>{alert('something went wrong');console.error(e)})
+    const html = new DOMParser().parseFromString(textHtml, 'text/html')
 
     const phoneMap = []
-
-    const {length, [length-1]: styleElem} = data.querySelectorAll('style[type="text/css"]')
-    const stylestring = styleElem.innerHTML.replace(
+    Array.from(html.querySelectorAll('style[type="text/css"]')).pop().innerHTML.replace(
       /\.icon-(.*?):before{content:".*?([\d][\d])"}/gi, 
       (match, key, value)=>{
         phoneMap.push(key)
@@ -42,101 +30,52 @@ permalink: /jd-number-extractor
       }
     )
 
-    const phone = []
-    ;[].forEach.call(
-      data.querySelectorAll('span.telCntct a.tel'),
-      (phoneSpan)=>{
-        ;[].forEach.call(
-          phoneSpan.querySelectorAll('span.mobilesv'),
-          (phoneElem)=>{
-            const {[1]: iconClass} = (phoneElem.className || '').match(/(?:^|[\s+])icon-(.*?)(?:[\s+]|$)/i) || []
-            const phoneRadix = phoneMap.indexOf(iconClass)
-            phone.push(phoneRadix === -1 ? ',' : phoneRadix > 9 ? '+' : phoneRadix)
+    Array.prototype.forEach.call(
+      html.querySelectorAll('li.cntanr'),
+      (data)=>{
+        const phone = []
+        Array.prototype.forEach.call(
+          data.querySelectorAll('p.contact-info a'),
+          (phoneSpan)=>{
+            Array.prototype.forEach.call(
+              phoneSpan.querySelectorAll('span.mobilesv'),
+              (phoneElem)=>{
+                const {[1]: iconClass} = (phoneElem.className || '').match(/(?:^|[\s+])icon-(.*?)(?:[\s+]|$)/i) || []
+                const phoneRadix = phoneMap.indexOf(iconClass)
+                phone.push(phoneRadix === -1 ? ',' : phoneRadix === 10 ? '+' : phoneRadix > 10 ? '' : phoneRadix)
+              }
+            )
+            phone.push(',')
           }
         )
-        phone.push(',')
+
+        const outputRow = document.createElement('tr')
+        const blankRegex = /(?:[\s\n\r][\s\n\r]+)/gi
+        ;[
+          data.querySelector('h2.store-name').innerText.replace(blankRegex, ''),
+          data.querySelector('span.cont_sw_addr').innerText.replace(blankRegex, ''),
+          phone.join('')
+        ].forEach(value=>{
+          const outputColumn = document.createElement('td')
+          outputColumn.innerText = value
+          outputRow.appendChild(outputColumn)
+        })
+        document.getElementById('output').appendChild(outputRow)
+        console.log("\tSaved Successfully.",)
+        return ''
       }
     )
 
-    const context = 'ul#comp-contact.comp-contact'
-    const res = {
-      name: data.querySelector('div.company-details span.fn').innerText,
-      address: data.querySelector('ul#comp-contact.comp-contact span#fulladdress.adrstxtr').innerText.replace(
-        /((?:[\s\n\r][\s\n\r]+)|(?:\(map\)))/gi,
-        ''
-      ),
-      phone: phone.join('')
-    }
-    return res
-  }
-
-  async function fetchData(url) {
-    if(window._KILL_) {
-      return ''
-    }
-    await new Promise(resolve=>setTimeout(resolve, 2000))
-    console.log("\tFetching - ", url)
-    return await fetch(url).then(r=>{
-      console.log("\tStatus - ", r.status)
-      return r.text()
-    }).then(data=>
-      Object.assign(document.createElement('div'),{
-        innerHTML: data
-      })
-    ).catch(e=>{
-      alert(
-`Something went wrong.
-Please make sure CORS is enabled.`
-      )
-      console.error(e)
-    })
-  }
-
-  async function fetchExtractData(url) {
-    if(window._KILL_) {
-      return {}
-    }
-    const foundData = await fetchData(url).then(extractPageData)
-    // WRITE TO FILE
-    const outputRow = document.createElement('tr')
-    Object.keys(foundData).forEach(key=>{
-      const outputColumn = document.createElement('td')
-      outputColumn.innerText = foundData[key]
-      outputRow.appendChild(outputColumn)
-    })
-    document.getElementById('output').appendChild(outputRow)
-    console.log("\tSaved Successfully.",)
-    return foundData
-  }
-
-  async function scrapper(url, index) {
-    if(window._KILL_) {
-      return []
-    }
-    console.log("Scrapping SERP - ", index)
-    const pageLinks = await fetchData(
-      url + (index ? `/page-${index}` : '')
-    ).then(
-      extractPageLinks
-    )
-
-    if(!pageLinks || !pageLinks.length) {
-      return []
-    }
-
-    for(let i=0; i<pageLinks.length; i++) {
-      await fetchExtractData(pageLinks[i])
-    }
-
-    return await scrapper(url, index+1)
+    return await fetchData(url, index+1)
   }
 
   async function scrap_init() {
+    window._KILL_ = false
     const url = document.getElementById('input').value;
     if(!url)
       return
     console.log(">> BEGIN")
-    const scrapResult = await scrapper(url, 0)
+    const scrapResult = await fetchData(url, 0)
     console.log(">> END")
   }
   
