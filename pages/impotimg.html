@@ -1,0 +1,61 @@
+---
+permalink: /convert-compress-photo
+---
+<script>
+  function prettyByte(bytes) {
+      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+      if (!bytes) return 'n/a';
+      var i = ~~(Math.log2(bytes) / 10);
+      return (bytes/(1024 ** i)).toFixed(i ? 2 : 0) + ' ' + sizes[i];
+  }
+  function convertImage(e) {
+    var reader = e.target;
+    var iHeight = document.getElementById('imgHeight').value
+    var iWidth = document.getElementById('imgWidth').value
+    var iQuality = document.getElementById('imgQuality').value / 100
+    var imgCanvas = Object.assign(
+      document.createElement('canvas'),
+      { width: iWidth, height: iHeight }
+    ).getContext('2d');
+    var imgPreview = document.getElementById('imgBase');
+    imgPreview.src = reader.result;
+    var imgPreviewListener = imgPreview.addEventListener('load',function(){
+      imgCanvas.drawImage(imgPreview, 0, 0, iWidth, iHeight);
+      var imgConvertData = imgCanvas.canvas.toDataURL('image/jpeg', iQuality);
+      document.getElementById('imgConvert').src = imgConvertData
+      document.getElementById('imgConvertSize').innerHTML = prettyByte((imgConvertData.length - "data:image/jpeg;base64,".length)*3/4)
+      imgPreview.removeEventListener('load', imgPreviewListener);
+    },false)
+  }
+  function displayFile() {
+    // Init Reader
+    var reader = new FileReader();
+    reader.addEventListener("load", convertImage, false);
+
+    // Preview Initial
+    const imgFile = document.getElementById('imgToFix').files[0];
+    if (!imgFile) {
+      return;
+    }
+    reader.readAsDataURL(imgFile);
+    document.getElementById('imgBaseSize').innerHTML = prettyByte(imgFile.size)
+  }
+</script>
+<h1>Convert & Compress Images</h1>
+<hr/>
+<input type="file" id="imgToFix" accept="image/*" >
+<input type="button" id="imgFix" onclick="javascript:displayFile()" value="Go!">
+<br/>
+<input type="number" id="imgHeight" value="256">
+<input type="number" id="imgWidth" value="256">
+<input type="number" id="imgQuality" value="70">
+<hr/>
+<figure style="display:inline-block">
+    <img id="imgBase" src="" alt="Original Image" height="256" width="256"/>
+    <figcaption>Image Size: <span id="imgBaseSize">NA</span></figcaption>
+</figure>
+<figure style="display:inline-block">
+    <img id="imgConvert" src="" alt="Converted Image" height="256" width="256"/>
+    <figcaption>Image Size: <span id="imgConvertSize">NA</span></figcaption>
+</figure>
+<hr/>
