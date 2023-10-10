@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkalmanac=self.webpackChunkalmanac||[]).push([[5153],{4449:a=>{a.exports=JSON.parse('{"title":"Javascript - Core","slug":"/category/javascript---core","permalink":"/docs/category/javascript---core","navigation":{"previous":{"title":"Intro","permalink":"/docs/intro"},"next":{"title":"Prototyping","permalink":"/docs/javascript/prototyping"}}}')}}]);

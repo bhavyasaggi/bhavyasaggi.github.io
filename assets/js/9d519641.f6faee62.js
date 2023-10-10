@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkalmanac=self.webpackChunkalmanac||[]).push([[2855],{9718:e=>{e.exports=JSON.parse('{"title":"Frontend","slug":"/category/frontend","permalink":"/docs/category/frontend","navigation":{"previous":{"title":"Decorators","permalink":"/docs/javascript/decorators"},"next":{"title":"Manifests","permalink":"/docs/category/manifests"}}}')}}]);

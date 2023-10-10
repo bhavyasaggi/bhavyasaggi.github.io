@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkalmanac=self.webpackChunkalmanac||[]).push([[3530],{3035:a=>{a.exports=JSON.parse('{"title":"Web API","slug":"/category/web-api","permalink":"/docs/category/web-api","navigation":{"previous":{"title":"Web Vitals","permalink":"/docs/frontend/web-vitals"},"next":{"title":"Canvas","permalink":"/docs/frontend/web-api/canvas"}}}')}}]);

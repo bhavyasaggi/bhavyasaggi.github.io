@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkalmanac=self.webpackChunkalmanac||[]).push([[4800],{6171:e=>{e.exports=JSON.parse('{"title":"Index","slug":"/category/index","permalink":"/docs/category/index","navigation":{"previous":{"title":"Accelerated Mobile Pages","permalink":"/docs/frontend/amp"},"next":{"title":"Index","permalink":"/docs/dummy/"}}}')}}]);
