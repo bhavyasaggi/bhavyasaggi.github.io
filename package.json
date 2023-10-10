@@ -1,0 +1,26 @@
+{
+  "name": "bhavyasaggi.github.io",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "almanac"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "almanac": "yarn workspace almanac start",
+    "almanac:build": "yarn workspace almanac build",
+    "almanac:serve": "yarn workspace almanac serve",
+    "almanac:clear": "yarn workspace almanac clear"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhavyasaggi/bhavyasaggi.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "yarn": "^1.22.19"
+  }
+}
