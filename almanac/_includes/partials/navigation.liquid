@@ -1,0 +1,19 @@
+{% if nav_items and nav_items.size > 0 %}
+  <ol>
+    {% for nav_item in nav_items %}
+      <li>
+        {% assign nav_children = nav_item['children'] %}
+        {% if nav_children and nav_children.size > 0 %}
+          <details open>
+            <summary>
+              {% render 'partials/navigation-link.liquid' with nav_item as item %}
+            </summary>
+            {% render 'partials/navigation.liquid' with nav_children as nav_items %}
+          </details>
+        {% else %}
+          {% render 'partials/navigation-link.liquid' with nav_item as item %}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+{% endif %}

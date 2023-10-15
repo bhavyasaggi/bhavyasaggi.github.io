@@ -10,9 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "almanac": "yarn workspace almanac start",
-    "almanac:build": "yarn workspace almanac build",
     "almanac:serve": "yarn workspace almanac serve",
-    "almanac:clear": "yarn workspace almanac clear"
+    "almanac:balance": "yarn workspace almanac balance",
+    "almanac:build": "yarn workspace almanac build"
   },
   "repository": {
     "type": "git",

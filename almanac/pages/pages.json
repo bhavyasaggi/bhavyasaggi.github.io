@@ -1,0 +1,10 @@
+{
+  "title": "LOL",
+  "layout": "base.liquid",
+  "date": "git Last Modified",
+  "dynamicPermalink": false,
+  "eleventyExcludeFromCollections": false,
+  "eleventyNavigation": {
+    "order": 1
+  }
+}

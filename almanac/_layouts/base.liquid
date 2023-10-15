@@ -1,0 +1,37 @@
+---
+title: Welcome
+description: Hello World
+language: en-GB
+---
+<!doctype html>
+<html lang="{{ language }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {{ title }}
+    </title>
+    <meta name="description" content="{{ description }}">
+    <style>
+      {% include "css/index.css" %}
+    </style>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body class="container">
+    <header>
+      <nav></nav>
+    </header>
+    <div class="row">
+      <aside class="col">
+        {% assign nav_items = collections.all | eleventyNavigation %}
+        {% include 'partials/navigation.liquid' with nav_items %}
+      </aside>
+      <main id="skip" class="col">
+        {{ content }}
+        {{ page.date }}
+      </main>
+    </div>
+    <footer></footer>
+  </body>
+</html>
