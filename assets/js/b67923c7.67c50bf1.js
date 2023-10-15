@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkalmanac=self.webpackChunkalmanac||[]).push([[6344],{8091:a=>{a.exports=JSON.parse('{"title":"PHP","slug":"/category/php","permalink":"/docs/category/php","navigation":{"previous":{"title":"Index","permalink":"/docs/dummy/"},"next":{"title":"Laravel","permalink":"/docs/php/laravel"}}}')}}]);
