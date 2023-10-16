@@ -1,37 +1,72 @@
----
-title: Welcome
-description: Hello World
-language: en-GB
----
 <!doctype html>
-<html lang="{{ language }}">
+<html lang="{{- language -}}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-      {{ title }}
+      {{- title -}}
     </title>
-    <meta name="description" content="{{ description }}">
+    <meta name="description" content="{{- description -}}">
+    <link rel="canonical" href="{{- page.url -}}">
+    <link href="/css/bootstrap-reboot.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-utilities.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-grid.min.css" rel="stylesheet">
     <style>
-      {% include "css/index.css" %}
+      {%- include "css/index.css" - %}
     </style>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/js/bootstrap.bundle.min.js"></script>
   </head>
-  <body class="container">
-    <header>
-      <nav></nav>
+  <body class="m-0 b-0 p-0 bg-light">
+    <header class="bg-dark text-light">
+      <div class="container py-2">
+        <ol class="d-flex align-items-center justify-content-start gap-4 list-reset ">
+          <li class="fs-4">
+            <a class="link-light text-decoration-none" href="/">Home</a>
+          </li>
+        </ol>
+      </div>
     </header>
-    <div class="row">
-      <aside class="col">
-        {% assign nav_items = collections.all | eleventyNavigation %}
-        {% include 'partials/navigation.liquid' with nav_items %}
-      </aside>
-      <main id="skip" class="col">
-        {{ content }}
-        {{ page.date }}
-      </main>
+    <div class="container">
+      {%- assign nav_items = collections.all | eleventyNavigation -%}
+      {%- assign toc_items = content | eleventyTOC  -%}
+      <div class="row">
+        <nav class="col-3 py-4">
+          {%- render 'partials/navigation.liquid', nav_items: nav_items, page_url: page.url -%}
+        </nav>
+        <main id="skip" class="col-7 py-2 border-start border-end border-2 bg-white">
+          {%- if title -%}
+            <strong class="d-block fs-2 fw-bold text-dark">
+              {{- title -}}
+            </strong>
+          {%- endif -%}
+          {%- if description -%}
+            <em class="d-block fs-6 fst-italic text-dark-emphasis">
+              {{- description -}}
+            </em>
+          {%- endif -%}
+          {%- if title or description -%}
+            <hr/>
+          {%- endif -%}
+          <div class="m-0 b-0 p-0 min-vh-100">
+            {{- content -}}
+          </div>
+          <hr/>
+          <div class="text-end">
+            <span class="fw-bold">
+              Date:
+            </span>
+            <time>
+              {{- page.date | date: "%Y-%m-%d" -}}
+            </time>
+          </div>
+        </main>
+        <aside class="col-2 py-4 border-start border-end border-2 bg-white">
+          {%- render 'partials/navigation-toc.liquid' with toc_items as nav_items -%}
+        </aside>
+      </div>
     </div>
-    <footer></footer>
+    <footer class="container-fluid py-5 bg-dark text-light text-end">
+      ©
+      {{ "now" | date: '%Y' }}
+    </footer>
   </body>
 </html>

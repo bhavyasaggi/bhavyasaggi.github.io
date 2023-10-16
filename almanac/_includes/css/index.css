@@ -1,0 +1,33 @@
+body { scroll-behavior: smooth; }
+
+ol { counter-reset: list-item; }
+li { display: block; counter-increment: list-item; }
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.list-reset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.header-anchor {
+  font-size: max(0.6em, 16px);
+}
+
+.hover:hover {
+  filter: invert(0.1);
+  cursor: pointer;
+}

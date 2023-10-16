@@ -2,16 +2,6 @@ const pathify = require('../../utils/pathify')
 
 const PLUGIN_TYPE = 'eleventy-navigation'
 
-function defaultParentKey(key) {
-  return (
-    String(key)
-      .split('/')
-      .filter((v) => v)
-      .slice(0, -1)
-      .join('/') + '/'
-  ).replaceAll(/\/+/g, '/')
-}
-
 const defaultInputPath = '/'
 
 function defaultUrlFilter(url) {
@@ -23,24 +13,13 @@ function pathToTitle(path) {
     .split('/')
     .filter((v) => v)
     .pop()
+    .split(/\W+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 }
 
-function fillKeyMap(keyMap, key) {
-  if (!key || key === '/') {
-    return keyMap
-  }
-  const parentKey = pathify(defaultParentKey(key))
-  keyMap[key] = keyMap[key] || {
-    key,
-    parentKey,
-    order: 1,
-    pluginType: PLUGIN_TYPE,
-    title: pathToTitle(key),
-  }
-  return fillKeyMap(parentKey)
-}
-
-function findNavigationEntries(nodes = [], options = {}) {
+function parseNodeNavigation(nodes = [], options = {}) {
+  const rootTitle = (options && options.rootTitle) || 'Navigation'
   const inputPath = (options && options.inputPath) || defaultInputPath
   const urlFilter = (options && options.urlFilter) || defaultUrlFilter
 
@@ -49,11 +28,11 @@ function findNavigationEntries(nodes = [], options = {}) {
       key: '/',
       order: 1,
       pluginType: PLUGIN_TYPE,
-      title: 'Root',
+      title: rootTitle,
     },
   }
 
-  const rootNav = { key: '/', children: [navKeyMap['/']] }
+  const rootNav = navKeyMap['/']
 
   for (let node of nodes) {
     if (
@@ -64,9 +43,7 @@ function findNavigationEntries(nodes = [], options = {}) {
       const currentKey = pathify(node.data.page.inputPath)
       const currentUrl = urlFilter(node.data.page.url)
       const currentDataTitle = node.data.title
-      const currentParent = pathify(
-        node.data.eleventyNavigation.parent || defaultParentKey(currentKey)
-      )
+      const currentParent = pathify(node.data.eleventyNavigation.parent || '')
       const currentOrder = node.data.eleventyNavigation.order
       const currentLink = node.data.eleventyNavigation.link
       const currentTitle = node.data.eleventyNavigation.title
@@ -78,7 +55,6 @@ function findNavigationEntries(nodes = [], options = {}) {
         url: currentLink || currentUrl,
         title: currentTitle || pathToTitle(currentKey) || currentDataTitle,
       }
-      fillKeyMap(navKeyMap, currentParent)
     }
   }
 
@@ -87,12 +63,10 @@ function findNavigationEntries(nodes = [], options = {}) {
     const navItemParentKey = navItem.parentKey
     const navItemParent = navKeyMap[navItemParentKey]
     if (navItemParentKey && navItemParent) {
+      // navKeyMap[navKey].parent = navKeyMap[navItemParentKey]
       navKeyMap[navItemParentKey].children =
         navKeyMap[navItemParentKey].children || []
       navKeyMap[navItemParentKey].children.push(navItem)
-    } else {
-      // TODO: Add missing parent-chain to root
-      // rootNav.children.push(navItem)
     }
   }
 
@@ -109,45 +83,25 @@ function findNavigationEntries(nodes = [], options = {}) {
     }
   }
 
+  const rootPathKey = pathify(inputPath)
+
   const navList =
-    (navKeyMap[inputPath] && navKeyMap[inputPath].children) ||
+    (navKeyMap[rootPathKey] && navKeyMap[rootPathKey].children) ||
     (navKeyMap[defaultInputPath] && navKeyMap[defaultInputPath].children) ||
-    rootNav.children
+    rootNav.children ||
+    []
+
   return navList
-}
-
-function getUrlFilter(eleventyConfig) {
-  // eleventyConfig.pathPrefix was first available in Eleventy 2.0.0-canary.15
-  // And in Eleventy 2.0.0-canary.15 we recommend the a built-in transform for pathPrefix
-  if (eleventyConfig.pathPrefix !== undefined) {
-    return function (url) {
-      return url
-    }
-  }
-
-  if ('getFilter' in eleventyConfig) {
-    // v0.10.0 and above
-    return eleventyConfig.getFilter('url')
-  } else if ('nunjucksFilters' in eleventyConfig) {
-    // backwards compat, hardcoded key
-    return eleventyConfig.nunjucksFilters.url
-  } else {
-    // Theoretically we could just move on here with a `url => url` but then `pathPrefix`
-    // would not work and it wouldn’t be obvious why—so let’s fail loudly to avoid that.
-    throw new Error(
-      'Could not find a `url` filter for the eleventy-navigation plugin in eleventyNavigationToHtml filter.'
-    )
-  }
 }
 
 // export the configuration function for plugin
 module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter('eleventyNavigation', function (nodes) {
-    return findNavigationEntries(nodes, {
+    return parseNodeNavigation(nodes, {
       inputPath:
         (eleventyConfig && eleventyConfig.dir && eleventyConfig.dir.input) ||
         defaultInputPath,
-      urlFilter: getUrlFilter(eleventyConfig),
+      urlFilter: eleventyConfig.getFilter('url'),
     })
   })
 }

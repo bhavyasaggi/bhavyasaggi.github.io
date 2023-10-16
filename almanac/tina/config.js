@@ -33,6 +33,13 @@ export default defineConfig({
             required: true,
           },
           {
+            type: 'boolean',
+            name: 'eleventyExcludeFromCollections',
+            label: 'Draft',
+            parse: (val) => (val ? true : undefined),
+            format: (val) => Boolean(val),
+          },
+          {
             type: 'object',
             name: 'eleventyNavigation',
             label: 'Navigation',
@@ -88,13 +95,6 @@ export default defineConfig({
               timeFormat: false,
             },
             parse: (val) => val || undefined,
-          },
-          {
-            type: 'boolean',
-            name: 'eleventyExcludeFromCollections',
-            label: 'Exclude from Collections',
-            parse: (val) => (val ? true : undefined),
-            format: (val) => Boolean(val),
           },
         ],
         ui: {

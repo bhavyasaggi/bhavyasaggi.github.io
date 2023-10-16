@@ -1,6 +1,10 @@
+const markdownItAnchor = require('markdown-it-anchor')
+const htmlmin = require('html-minifier')
+
 const { EleventyHtmlBasePlugin } = require('@11ty/eleventy')
 
 const eleventyNavigationPlugin = require('./_includes/plugin-navigation')
+const eleventyTOCPlugin = require('./_includes/plugin-toc')
 
 module.exports = function (eleventyConfig) {
   // Copy the contents of the `public` folder to the output folder
@@ -17,21 +21,39 @@ module.exports = function (eleventyConfig) {
 
   // Official plugins
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
+  // Custom plugins
   eleventyConfig.addPlugin(eleventyNavigationPlugin)
+  eleventyConfig.addPlugin(eleventyTOCPlugin)
 
   // Customize Markdown library settings:
-  // eleventyConfig.amendLibrary("md", mdLib => {
-  // 	mdLib.use(markdownItAnchor, {
-  // 		permalink: markdownItAnchor.permalink.ariaHidden({
-  // 			placement: "after",
-  // 			class: "header-anchor",
-  // 			symbol: "#",
-  // 			ariaHidden: false,
-  // 		}),
-  // 		level: [1,2,3,4],
-  // 		slugify: eleventyConfig.getFilter("slugify")
-  // 	});
-  // });
+  eleventyConfig.amendLibrary('md', (mdLib) => {
+    mdLib.use(markdownItAnchor, {
+      permalink: markdownItAnchor.permalink.ariaHidden({
+        placement: 'after',
+        class: 'heading-anchor',
+        symbol: '#',
+      }),
+      level: [1, 2, 3, 4],
+      slugify: eleventyConfig.getFilter('slugify'),
+    })
+  })
+
+  // Minify HTML
+  eleventyConfig.addTransform('htmlmin', function (content) {
+    // Prior to Eleventy 2.0: use this.outputPath instead
+    if (this.page.outputPath && this.page.outputPath.endsWith('.html')) {
+      const minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        minifyCSS: true,
+      })
+      return minified
+    }
+
+    return content
+  })
 
   // Features to make your build faster (when you need them)
 

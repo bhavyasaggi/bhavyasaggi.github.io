@@ -1,6 +1,6 @@
 {
-  "title": "LOL",
   "layout": "base.liquid",
+  "language": "en-GB",
   "date": "git Last Modified",
   "dynamicPermalink": false,
   "eleventyExcludeFromCollections": false,
