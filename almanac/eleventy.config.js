@@ -19,6 +19,12 @@ module.exports = function (eleventyConfig) {
   // Watch content images for the image pipeline.
   eleventyConfig.addWatchTarget('public/**/*.{svg,webp,png,jpeg}')
 
+  // Global Data
+  eleventyConfig.addGlobalData(
+    'eleventyBuildId',
+    Math.random().toString(36).slice(2) + ':' + Date.now().toString(36)
+  )
+
   // Official plugins
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
   // Custom plugins

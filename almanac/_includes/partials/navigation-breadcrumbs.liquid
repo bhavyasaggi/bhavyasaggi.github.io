@@ -1,0 +1,20 @@
+{%- if nav_items and nav_items.size > 0 -%}
+  <ol class="hstack flex-wrap mb-2 border rounded px-2 py-1 list-reset">
+    <li>
+      <a href="/" rel="nofollow" class="d-block link-dark font-monospace" aria-label="Home">⌂</a>
+    </li>
+    {%- for nav_item in nav_items -%}
+      <li class="ms-1 border-start ps-1">
+        {%- if forloop.last -%}
+          <span class="d-block link-dark fst-italic">
+            {{- nav_item.title -}}
+          </span>
+        {%- else -%}
+          <a href="{{- nav_item.url -}}" class="d-block link-dark">
+            {{- nav_item.title -}}
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ol>
+{%- endif -%}

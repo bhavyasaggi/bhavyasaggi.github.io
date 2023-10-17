@@ -1,8 +1,8 @@
 ---
-title: Web Vitals
+title: Manifests
 eleventyNavigation:
   parent: /pages/frontend/
-  order: 6
+  order: 1
 ---
 
-# Web Vitals
+# Manifests

@@ -1,8 +1,8 @@
 {% if nav_items and nav_items.size > 0 %}
   <ol class="list-reset">
     {% for nav_item in nav_items %}
-      <li class="ms-{{ nav_item.level | at_most: 4  }} ellipsis">
-        <a href="#{{ nav_item.id }}" class="text-secondary">
+      <li class="ms-{{ nav_item.level | at_most: 4  }} text-truncate">
+        <a href="#{{ nav_item.id }}" rel="nofollow noindex" class="text-secondary" title="{{ nav_item.text }}">
           {{ nav_item.text }}
         </a>
       </li>

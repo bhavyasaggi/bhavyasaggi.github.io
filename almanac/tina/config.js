@@ -40,6 +40,12 @@ export default defineConfig({
             format: (val) => Boolean(val),
           },
           {
+            type: 'string',
+            name: 'redirect',
+            label: 'Redirection URL',
+            parse: (val) => val || undefined,
+          },
+          {
             type: 'object',
             name: 'eleventyNavigation',
             label: 'Navigation',

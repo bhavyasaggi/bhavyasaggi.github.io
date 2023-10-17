@@ -1,0 +1,11 @@
+{%- if nav_items and nav_items.size > 0 -%}
+  <ol class="row row-cols-auto ">
+    {%- for nav_item in nav_items -%}
+      <li class="col">
+        <a href="{{- nav_item.url -}}" class="d-block link-secondary">
+          {{- nav_item.title -}}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ol>
+{%- endif -%}

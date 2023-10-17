@@ -10,17 +10,35 @@ a:hover {
   text-decoration: underline;
 }
 
+summary {
+  display: block;
+  list-style: none;
+}
+summary:hover::after {
+  text-shadow: 2px 2px black;
+}
+details > summary::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+	height: 0;
+  margin: 0px 2px;
+	border-top: 4px solid transparent;
+	border-left: 8px solid black;
+	border-bottom: 4px solid transparent;
+  vertical-align: middle;
+  transform: rotate(0deg);
+  transition: 0.1s linear;
+}
+details[open] > summary::after {
+  transform: rotate(90deg);
+}
+
 .list-reset {
   margin: 0;
   border: 0;
   padding: 0;
   list-style: none;
-}
-
-.ellipsis {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .header-anchor {

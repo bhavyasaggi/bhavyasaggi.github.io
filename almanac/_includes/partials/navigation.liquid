@@ -9,17 +9,18 @@
       <li>
         {%- assign nav_children = nav_item['children'] -%}
         {%- if nav_children and nav_children.size > 0 -%}
-          <details open class="bg-white border px-4 py-2 rounded">
-            <summary class="px-2 py-1 rounded {{- nav_item_active_bg -}} hover">
-              <a href="{{- nav_item.url -}}" class="link-dark">
+          <!-- class="bg-white border px-4 py-2 rounded" -->
+          <details open>
+            <summary class="d-flex align-items-baseline justify-content-between px-2 py-1 rounded {{ nav_item_active_bg }} hover">
+              <a href="{{- nav_item.url -}}" rel="nofollow" class="d-block link-dark text-truncate" title="{{- nav_item.title -}}">
                 {{- nav_item.title -}}
               </a>
             </summary>
             {%- render 'partials/navigation.liquid', nav_items: nav_children, page_url: page_url -%}
           </details>
         {%- else -%}
-          <div class="px-2 py-1 rounded {{- nav_item_active_bg -}} hover">
-            <a href="{{- nav_item.url -}}" class="d-block link-dark">
+          <div class="px-2 py-1 rounded {{ nav_item_active_bg }} hover">
+            <a href="{{- nav_item.url -}}" rel="nofollow" class="d-block link-dark text-truncate" title="{{- nav_item.title -}}">
               {{- nav_item.title -}}
             </a>
           </div>
