@@ -1,37 +1,97 @@
----
-title: Welcome
-description: Hello World
-language: en-GB
----
 <!doctype html>
-<html lang="{{ language }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-      {{ title }}
-    </title>
-    <meta name="description" content="{{ description }}">
-    <style>
-      {% include "css/index.css" %}
-    </style>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body class="container">
-    <header>
-      <nav></nav>
-    </header>
-    <div class="row">
-      <aside class="col">
-        {% assign nav_items = collections.all | eleventyNavigation %}
-        {% include 'partials/navigation.liquid' with nav_items %}
-      </aside>
-      <main id="skip" class="col">
-        {{ content }}
-        {{ page.date }}
-      </main>
-    </div>
-    <footer></footer>
-  </body>
-</html>
+{% if redirect %}
+  <html lang="{{- language -}}">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>
+        Redirect
+      </title>
+      <meta name="description" content="Redirecting to secondary location">
+      <meta name="robots" content="noindex">
+      <meta http-equiv="refresh" content="0; URL='{{ redirect }}'"/>
+    </head>
+    <body>
+      Redirecting to
+      <a href="{{ redirect }}" rel="nofollow">
+        {{- redirect -}}
+      </a>
+    </body>
+  </html>
+{% else %}
+  <html lang="{{- language -}}">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>
+        {{- title -}}
+      </title>
+      <meta name="description" content="{{- description -}}">
+      <link rel="canonical" href="{{- page.url -}}">
+      <!-- Replace with https://purecss.io/ -->
+      <link href="/css/bootstrap-reboot.min.css" rel="stylesheet">
+      <link href="/css/bootstrap-utilities.min.css" rel="stylesheet">
+      <link href="/css/bootstrap-grid.min.css" rel="stylesheet">
+      <style>
+        {%- include "css/index.css" - %}
+      </style>
+    </head>
+    <body class="m-0 b-0 p-0 bg-light">
+      <header class="position-relative bg-dark text-light shadow">
+        <div class="container py-2">
+          <ol class="hstack gap-4 list-reset">
+            <li class="fs-4">
+              <a class="link-light font-monospace text-decoration-none" href="/">&nlt;&nbsp;bhavyasaggi.github.io</a>
+            </li>
+          </ol>
+        </div>
+      </header>
+      <div class="container">
+        {%- assign nav_items = collections.all | eleventyNavigation: eleventyBuildId -%}
+        {%- assign nav_path = nav_items | eleventyNavigationPath: page.url -%}
+        {%- assign nav_item = nav_path | last -%}
+        {%- assign toc_items = content | eleventyTOC  -%}
+        <div class="row">
+          <nav class="d-none d-md-block col-md-3 py-4 user-select-none">
+            <div class="border rounded pt-2 pe-2 pb-2 bg-white">
+              {%- render 'partials/navigation.liquid', nav_items: nav_items, page_url: page.url -%}
+            </div>
+          </nav>
+          <div class="col col-md-9 col-xl-7 py-2 border-start border-end border-2 bg-white">
+            {%- render 'partials/navigation-breadcrumbs.liquid', nav_items: nav_path -%}
+            <main id="main">
+              <div class="m-0 b-0 p-0 min-vh-100">
+                {{- content -}}
+              </div>
+            </main>
+            <section class="mt-2 border-top pt-2">
+              <header class="my-2 fw-bold fs-5">
+                Keep Reading...
+              </header>
+              {%- render 'partials/navigation-list.liquid', nav_items: nav_item.children -%}
+              {%- render 'partials/navigation-prevnext.liquid', nav_item: nav_item -%}
+              <footer class="text-end">
+                <span class="fw-bold">
+                  Date:
+                </span>
+                <time datetime="{{ page.date }}">
+                  {{- page.date | date: "%Y-%m-%d" -}}
+                </time>
+              </footer>
+            </section>
+          </div>
+          <aside class="d-none d-xl-block col-xl-2 py-4 border-start border-end border-2 bg-white user-select-none">
+            {%- render 'partials/navigation-toc.liquid' with toc_items as nav_items -%}
+          </aside>
+        </div>
+      </div>
+      <footer class="container-fluid py-5 bg-dark text-light text-end">
+        <mark class="font-monospace user-select-none">
+          {{- eleventyBuildId -}}
+          &nbsp;©&nbsp;
+          {{- "now" | date: '%Y' -}}
+        </mark>
+      </footer>
+    </body>
+  </html>
+{%- endif -%}

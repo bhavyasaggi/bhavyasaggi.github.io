@@ -1,16 +1,8 @@
 const pathify = require('../../utils/pathify')
 
-const PLUGIN_TYPE = 'eleventy-navigation'
-
-function defaultParentKey(key) {
-  return (
-    String(key)
-      .split('/')
-      .filter((v) => v)
-      .slice(0, -1)
-      .join('/') + '/'
-  ).replaceAll(/\/+/g, '/')
-}
+// const PLUGIN_TYPE = 'eleventy-navigation'
+const PLUGIN_BUILD_ID = Math.random().toString(36).slice(2)
+const ELEVENTY_BUILD_MODE = process.env.ELEVENTY_RUN_MODE === 'build'
 
 const defaultInputPath = '/'
 
@@ -23,37 +15,30 @@ function pathToTitle(path) {
     .split('/')
     .filter((v) => v)
     .pop()
+    .split(/\W+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 }
 
-function fillKeyMap(keyMap, key) {
-  if (!key || key === '/') {
-    return keyMap
-  }
-  const parentKey = pathify(defaultParentKey(key))
-  keyMap[key] = keyMap[key] || {
-    key,
-    parentKey,
-    order: 1,
-    pluginType: PLUGIN_TYPE,
-    title: pathToTitle(key),
-  }
-  return fillKeyMap(parentKey)
-}
-
-function findNavigationEntries(nodes = [], options = {}) {
+const nodeNavigationCache = {}
+function parseNodeNavigation(nodes = [], options = {}) {
+  const cacheId = (options && options.cacheId) || PLUGIN_BUILD_ID
+  const rootTitle = (options && options.rootTitle) || 'Navigation'
   const inputPath = (options && options.inputPath) || defaultInputPath
   const urlFilter = (options && options.urlFilter) || defaultUrlFilter
+
+  if (ELEVENTY_BUILD_MODE && nodeNavigationCache[cacheId]) {
+    return nodeNavigationCache[cacheId]
+  }
 
   const navKeyMap = {
     '/': {
       key: '/',
       order: 1,
-      pluginType: PLUGIN_TYPE,
-      title: 'Root',
+      // pluginType: PLUGIN_TYPE,
+      title: rootTitle,
     },
   }
-
-  const rootNav = { key: '/', children: [navKeyMap['/']] }
 
   for (let node of nodes) {
     if (
@@ -64,9 +49,7 @@ function findNavigationEntries(nodes = [], options = {}) {
       const currentKey = pathify(node.data.page.inputPath)
       const currentUrl = urlFilter(node.data.page.url)
       const currentDataTitle = node.data.title
-      const currentParent = pathify(
-        node.data.eleventyNavigation.parent || defaultParentKey(currentKey)
-      )
+      const currentParent = pathify(node.data.eleventyNavigation.parent || '')
       const currentOrder = node.data.eleventyNavigation.order
       const currentLink = node.data.eleventyNavigation.link
       const currentTitle = node.data.eleventyNavigation.title
@@ -74,11 +57,13 @@ function findNavigationEntries(nodes = [], options = {}) {
         key: currentKey,
         parentKey: currentParent,
         order: currentOrder,
-        pluginType: PLUGIN_TYPE,
+        // pluginType: PLUGIN_TYPE,
         url: currentLink || currentUrl,
-        title: currentTitle || pathToTitle(currentKey) || currentDataTitle,
+        title: currentTitle || currentDataTitle || pathToTitle(currentKey),
+        parent: null,
+        next: null,
+        prev: null,
       }
-      fillKeyMap(navKeyMap, currentParent)
     }
   }
 
@@ -87,20 +72,23 @@ function findNavigationEntries(nodes = [], options = {}) {
     const navItemParentKey = navItem.parentKey
     const navItemParent = navKeyMap[navItemParentKey]
     if (navItemParentKey && navItemParent) {
+      navKeyMap[navKey].parent = navKeyMap[navItemParentKey]
       navKeyMap[navItemParentKey].children =
         navKeyMap[navItemParentKey].children || []
       navKeyMap[navItemParentKey].children.push(navItem)
-    } else {
-      // TODO: Add missing parent-chain to root
-      // rootNav.children.push(navItem)
     }
   }
 
+  // Sort all children
   for (let navFullKey in navKeyMap) {
     const navChildren = navKeyMap[navFullKey].children
     if (navChildren && navChildren.length > 0) {
       navKeyMap[navFullKey].children = navChildren.sort((a, b) => {
-        if (Number.isFinite(a.order) && Number.isFinite(b.order)) {
+        if (
+          Number.isFinite(a.order) &&
+          Number.isFinite(b.order) &&
+          a.order !== b.order
+        ) {
           return a.order - b.order
         } else {
           return String(a).charCodeAt() - String(b).charCodeAt()
@@ -109,45 +97,93 @@ function findNavigationEntries(nodes = [], options = {}) {
     }
   }
 
+  // Link siblings
+  for (let navFullKey in navKeyMap) {
+    const navChildren = navKeyMap[navFullKey].children
+    if (navChildren && navChildren.length) {
+      for (
+        let navChildIndex = 0;
+        navChildIndex < navChildren.length;
+        navChildIndex += 1
+      ) {
+        const navChild = navChildren[navChildIndex]
+        if (navChildIndex > 0) {
+          navChild.prev = navChildren[navChildIndex - 1]
+        }
+        if (navChildIndex + 1 < navChildren.length) {
+          navChild.next = navChildren[navChildIndex + 1]
+        }
+      }
+    }
+    // TODO: Remove Children
+  }
+
   const navList =
     (navKeyMap[inputPath] && navKeyMap[inputPath].children) ||
     (navKeyMap[defaultInputPath] && navKeyMap[defaultInputPath].children) ||
-    rootNav.children
+    []
+
+  if (ELEVENTY_BUILD_MODE) {
+    nodeNavigationCache[cacheId] = navList
+  }
+
   return navList
 }
 
-function getUrlFilter(eleventyConfig) {
-  // eleventyConfig.pathPrefix was first available in Eleventy 2.0.0-canary.15
-  // And in Eleventy 2.0.0-canary.15 we recommend the a built-in transform for pathPrefix
-  if (eleventyConfig.pathPrefix !== undefined) {
-    return function (url) {
-      return url
+function getNodeCurrent(parsedNodes = [], pageUrl = '') {
+  if (!pageUrl) {
+    return null
+  }
+  for (let node of parsedNodes) {
+    if (node.url === pageUrl) {
+      return node
+    } else if (node.children) {
+      const childCurrent = getNodeCurrent(node.children, pageUrl)
+      if (childCurrent) {
+        return childCurrent
+      }
     }
   }
+  return null
+}
 
-  if ('getFilter' in eleventyConfig) {
-    // v0.10.0 and above
-    return eleventyConfig.getFilter('url')
-  } else if ('nunjucksFilters' in eleventyConfig) {
-    // backwards compat, hardcoded key
-    return eleventyConfig.nunjucksFilters.url
-  } else {
-    // Theoretically we could just move on here with a `url => url` but then `pathPrefix`
-    // would not work and it wouldn’t be obvious why—so let’s fail loudly to avoid that.
-    throw new Error(
-      'Could not find a `url` filter for the eleventy-navigation plugin in eleventyNavigationToHtml filter.'
-    )
+function getNodePath(parsedNodes = [], options = {}) {
+  const inputPath = (options && options.inputPath) || defaultInputPath
+  const pageUrl = (options && options.pageUrl) || defaultInputPath
+
+  const nodePath = []
+  let nodeCurrent = getNodeCurrent(parsedNodes, pageUrl)
+
+  while (nodeCurrent && ![null, '', inputPath].includes(nodeCurrent.key)) {
+    nodePath.unshift(nodeCurrent)
+    nodeCurrent = nodeCurrent.parent
   }
+
+  return nodePath
 }
 
 // export the configuration function for plugin
 module.exports = function (eleventyConfig) {
-  eleventyConfig.addFilter('eleventyNavigation', function (nodes) {
-    return findNavigationEntries(nodes, {
-      inputPath:
-        (eleventyConfig && eleventyConfig.dir && eleventyConfig.dir.input) ||
-        defaultInputPath,
-      urlFilter: getUrlFilter(eleventyConfig),
+  const inputPath = pathify(
+    (eleventyConfig && eleventyConfig.dir && eleventyConfig.dir.input) ||
+      defaultInputPath
+  )
+  const urlFilter = eleventyConfig.getFilter('url')
+  eleventyConfig.addFilter('eleventyNavigation', function (nodes, cacheId) {
+    return parseNodeNavigation(nodes, {
+      cacheId,
+      inputPath,
+      urlFilter,
     })
   })
+  eleventyConfig.addFilter('eleventyNavigationCurrent', getNodeCurrent)
+  eleventyConfig.addFilter(
+    'eleventyNavigationPath',
+    function (parsedNodes, pageUrl) {
+      return getNodePath(parsedNodes, {
+        pageUrl,
+        inputPath,
+      })
+    }
+  )
 }
