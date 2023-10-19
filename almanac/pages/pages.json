@@ -3,8 +3,5 @@
   "language": "en-GB",
   "date": "git Last Modified",
   "dynamicPermalink": false,
-  "eleventyExcludeFromCollections": false,
-  "eleventyNavigation": {
-    "order": 1
-  }
+  "eleventyExcludeFromCollections": false
 }

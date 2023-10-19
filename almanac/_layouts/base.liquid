@@ -27,6 +27,9 @@
         {{- title -}}
       </title>
       <meta name="description" content="{{- description -}}">
+      {%- if eleventyNoIndex -%}
+        <meta name="robots" content="noindex">
+      {%- endif -%}
       <link rel="canonical" href="{{- page.url -}}">
       <!-- Replace with https://purecss.io/ -->
       <link href="/css/bootstrap-reboot.min.css" rel="stylesheet">
@@ -35,6 +38,11 @@
       <style>
         {%- include "css/index.css" - %}
       </style>
+      <script>
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+      </script>
     </head>
     <body class="m-0 b-0 p-0 bg-light">
       <header class="position-relative bg-dark text-light shadow">
@@ -54,7 +62,7 @@
         <div class="row">
           <nav class="d-none d-md-block col-md-3 py-4 user-select-none">
             <div class="border rounded pt-2 pe-2 pb-2 bg-white">
-              {%- render 'partials/navigation.liquid', nav_items: nav_items, page_url: page.url -%}
+              {%- render 'partials/navigation.liquid', nav_items: nav_items, nav_root: true, page_url: page.url -%}
             </div>
           </nav>
           <div class="col col-md-9 col-xl-7 py-2 border-start border-end border-2 bg-white">

@@ -1,0 +1,5 @@
+{
+  "layout": "sandpack",
+  "sandpackTemplate": "react",
+  "eleventyExcludeFromCollections": true
+}

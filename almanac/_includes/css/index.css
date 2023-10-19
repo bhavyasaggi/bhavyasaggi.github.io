@@ -1,8 +1,5 @@
 body { scroll-behavior: smooth; }
 
-ol { counter-reset: list-item; }
-li { display: block; counter-increment: list-item; }
-
 a {
   text-decoration: none;
 }

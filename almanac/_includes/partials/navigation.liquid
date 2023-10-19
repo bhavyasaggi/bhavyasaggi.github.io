@@ -13,7 +13,13 @@
           <details open>
             <summary class="d-flex align-items-baseline justify-content-between px-2 py-1 rounded {{ nav_item_active_bg }} hover">
               <a href="{{- nav_item.url -}}" rel="nofollow" class="d-block link-dark text-truncate" title="{{- nav_item.title -}}">
-                {{- nav_item.title -}}
+                {%- if nav_root -%}
+                  <strong>
+                  {%- endif -%}
+                  {{- nav_item.title -}}
+                  {%- if nav_root -%}
+                  </strong>
+                {%- endif -%}
               </a>
             </summary>
             {%- render 'partials/navigation.liquid', nav_items: nav_children, page_url: page_url -%}
@@ -21,7 +27,13 @@
         {%- else -%}
           <div class="px-2 py-1 rounded {{ nav_item_active_bg }} hover">
             <a href="{{- nav_item.url -}}" rel="nofollow" class="d-block link-dark text-truncate" title="{{- nav_item.title -}}">
-              {{- nav_item.title -}}
+              {%- if nav_root -%}
+                <strong>
+                {%- endif -%}
+                {{- nav_item.title -}}
+                {%- if nav_root -%}
+                </strong>
+              {%- endif -%}
             </a>
           </div>
         {%- endif -%}
