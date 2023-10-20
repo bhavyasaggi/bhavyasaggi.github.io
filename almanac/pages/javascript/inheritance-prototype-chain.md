@@ -7,6 +7,6 @@ eleventyNavigation:
 
 # Prototype Chain
 
-<iframe height="420" width="100%" src="/examples-js/currying/"></iframe>
+<iframe height="320" width="100%" src="/examples-js/currying/" class="box-reset"></iframe>
 
 # Inheritance

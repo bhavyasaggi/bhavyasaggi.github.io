@@ -31,10 +31,9 @@
         <meta name="robots" content="noindex">
       {%- endif -%}
       <link rel="canonical" href="{{- page.url -}}">
-      <!-- Replace with https://purecss.io/ -->
-      <link href="/css/bootstrap-reboot.min.css" rel="stylesheet">
-      <link href="/css/bootstrap-utilities.min.css" rel="stylesheet">
-      <link href="/css/bootstrap-grid.min.css" rel="stylesheet">
+      <link href="/css/purecss-base.min.css" rel="stylesheet">
+      <link href="/css/purecss-grids.min.css" rel="stylesheet">
+      <link href="/css/purecss-grids-responsive.min.css" rel="stylesheet">
       <style>
         {%- include "css/index.css" - %}
       </style>
@@ -42,59 +41,63 @@
         if ('scrollRestoration' in history) {
           history.scrollRestoration = 'manual';
         }
+        function toggleTheme() {
+          const isDark = document.getElementById('switch-theme').checked
+            ? 1
+            : 0;
+          document.body.dataset.themeDark = isDark;
+        }
       </script>
     </head>
-    <body class="m-0 b-0 p-0 bg-light">
-      <header class="position-relative bg-dark text-light shadow">
-        <div class="container py-2">
-          <ol class="hstack gap-4 list-reset">
-            <li class="fs-4">
-              <a class="link-light font-monospace text-decoration-none" href="/">&nlt;&nbsp;bhavyasaggi.github.io</a>
-            </li>
-          </ol>
-        </div>
+    <body data-theme-dark="0" class="box-reset shade">
+      <header class="stack p-2 shade-dark">
+        <a class="shade-dark" href="/">&nlt;&nbsp;bhavyasaggi.github.io</a>
+        <label class="box-reset d-sm-none ms-auto shade-dark cursor-pointer">
+          <input id="switch-theme" onclick="toggleTheme()" type="checkbox" hidden class="box-reset shade-dark"/>
+          <span class="shade" aria-label="Toggle Theme"></span>
+        </label>
       </header>
-      <div class="container">
-        {%- assign nav_items = collections.all | eleventyNavigation: eleventyBuildId -%}
-        {%- assign nav_path = nav_items | eleventyNavigationPath: page.url -%}
-        {%- assign nav_item = nav_path | last -%}
-        {%- assign toc_items = content | eleventyTOC  -%}
-        <div class="row">
-          <nav class="d-none d-md-block col-md-3 py-4 user-select-none">
-            <div class="border rounded pt-2 pe-2 pb-2 bg-white">
-              {%- render 'partials/navigation.liquid', nav_items: nav_items, nav_root: true, page_url: page.url -%}
+
+      {%- assign nav_items = collections.all | eleventyNavigation: eleventyBuildId -%}
+      {%- assign nav_path = nav_items | eleventyNavigationPath: page.url -%}
+      {%- assign nav_item = nav_path | last -%}
+      {%- assign toc_items = content | eleventyTOC  -%}
+      <div class="pure-g">
+        <nav class="be-1 p-1 d-md-none pure-u-1 pure-u-md-1-3 pure-u-xl-6-24 shade-light">
+          {%- render 'partials/navigation.liquid', nav_items: nav_items, nav_root: true, page_url: page.url -%}
+        </nav>
+        <div class="p-1 pure-u-1 pure-u-md-2-3 pure-u-xl-14-24">
+          {%- render 'partials/navigation-breadcrumbs.liquid', nav_items: nav_path -%}
+          <main id="main">
+            <div class="m-0 b-0 p-0 min-vh-100">
+              {{- content -}}
             </div>
-          </nav>
-          <div class="col col-md-9 col-xl-7 py-2 border-start border-end border-2 bg-white">
-            {%- render 'partials/navigation-breadcrumbs.liquid', nav_items: nav_path -%}
-            <main id="main">
-              <div class="m-0 b-0 p-0 min-vh-100">
-                {{- content -}}
-              </div>
-            </main>
-            <section class="mt-2 border-top pt-2">
-              <header class="my-2 fw-bold fs-5">
-                Keep Reading...
-              </header>
-              {%- render 'partials/navigation-list.liquid', nav_items: nav_item.children -%}
-              {%- render 'partials/navigation-prevnext.liquid', nav_item: nav_item -%}
-              <footer class="text-end">
-                <span class="fw-bold">
-                  Date:
-                </span>
-                <time datetime="{{ page.date }}">
-                  {{- page.date | date: "%Y-%m-%d" -}}
-                </time>
-              </footer>
-            </section>
-          </div>
-          <aside class="d-none d-xl-block col-xl-2 py-4 border-start border-end border-2 bg-white user-select-none">
-            {%- render 'partials/navigation-toc.liquid' with toc_items as nav_items -%}
-          </aside>
+          </main>
+          <hr/>
+          <section>
+            <header>
+              Keep Reading...
+            </header>
+            <br/>
+            {%- render 'partials/navigation-list.liquid', nav_items: nav_item.children -%}
+            {%- render 'partials/navigation-prevnext.liquid', nav_item: nav_item -%}
+            <footer class="stack">
+              <strong class="ms-auto">
+                Date:&nbsp;
+              </strong>
+              <time datetime="{{ page.date }}">
+                {{- page.date | date: "%Y-%m-%d" -}}
+              </time>
+            </footer>
+          </section>
         </div>
+        <aside class="bs-1 p-1 d-xl-none pure-u-1 pure-u-xl-4-24">
+          {%- render 'partials/navigation-toc.liquid' with toc_items as nav_items -%}
+        </aside>
       </div>
-      <footer class="container-fluid py-5 bg-dark text-light text-end">
-        <mark class="font-monospace user-select-none">
+
+      <footer class="p-2 text-center shade-dark">
+        <mark class="text-monospace">
           {{- eleventyBuildId -}}
           &nbsp;©&nbsp;
           {{- "now" | date: '%Y' -}}

@@ -9,10 +9,9 @@ eleventyNavigation:
 
 ## Styling Libraries
 
-### Preprocessors (Less / Sass / Scss)
-
 ### Stylesheet Generators
 
+- Less / Sass / Scss
 - bootstrap
 - tailwind
 - vanilla-extract
