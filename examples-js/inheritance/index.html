@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Live Code</title><meta name="description" content="Live Code"><meta name="robots" content="noindex"><script type="importmap">{
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom": "https://esm.sh/react-dom@18.2.0",
+          "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+          "@codesandbox/sandpack-react": "https://esm.sh/@codesandbox/sandpack-react@2.8.0"
+        }
+      }</script><script defer type="module">import React from "react";
+      import {createRoot} from "react-dom/client";
+      import {Sandpack} from "@codesandbox/sandpack-react";
+
+      const root = createRoot(document.getElementById("root"));
+      const inputData = document.getElementById("default-input");
+      const template = `vanilla` || "vanilla";
+      const [filename, layout] = {
+        'react': [
+          '/App.js', 'preview'
+        ],
+        'vanilla': ['/index.js', 'console']
+      }[template];
+      console.log(">", {filename, layout})
+      const sandpackComponent = React.createElement(Sandpack, {
+        template,
+        theme: "dark",
+        files: {
+          [filename]: inputData.value
+        },
+        options: {
+          layout,
+          showRefreshButton: true,
+          showInlineErrors: true,
+          showLineNumbers: true,
+          editorWidthPercentage: 50
+        }
+      }, null);
+      inputData.value = '';
+      root.render(sandpackComponent);</script></head><body style="margin:0;border:0;padding:0;outline:0"><textarea id="default-input" hidden style="display:none;height:0;width:0">
+  console.log("Inheritance By Prototyping");
+</textarea><div id="root"></div></body></html>
