@@ -1,8 +1,8 @@
 {%- assign nav_exists = nav_item.prev or nav_item.next -%}
 {%- if nav_exists -%}
-  <ol class="box-reset list-reset stack">
+  <ol class="reset-box reset-list stack gap-1">
     {%- if nav_item.prev -%}
-      <li class="me-auto border rounded p-1 shade-light hover">
+      <li class="me-auto border rounded p-1 shade-primary hover">
         <em>Previous</em>
         <div class="stack">
           <span class="link text-monospace">&nbsp;&laquo;&nbsp;</span>
@@ -13,7 +13,7 @@
       </li>
     {%- endif -%}
     {%- if nav_item.next -%}
-      <li class="ms-auto border rounded p-1 shade-light hover">
+      <li class="ms-auto border rounded p-1 shade-primary hover">
         <em>Next</em>
         <div class="stack">
           <a href="{{ nav_item.next.url }}">

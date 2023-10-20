@@ -1,0 +1,96 @@
+:root {
+  --pc-black: #000000;
+  --pc-color: #212529;
+  --pc-secondary: #343a40;
+  --pc-primary: #e9ecef;
+  --pc-bg: #f8f9fa;
+  --pc-white: #ffffff;
+  --pc-border: #6C757D;
+  --pc-link: #198019;
+  --pc-pre: #dd74dd;
+}
+
+.shade-secondary {
+  background-color: var(--pc-secondary);
+  color: var(--pc-primary);
+}
+.shade-primary {
+  background-color: var(--pc-primary);
+  color: var(--pc-color);
+}
+.shade {
+  background-color: var(--pc-bg);
+  color: var(--pc-color);
+}
+
+[data-theme='secondary'].shade-secondary,
+[data-theme='secondary'] .shade-secondary {
+  background-color: var(--pc-black);
+  color: var(--pc-primary);
+}
+[data-theme='secondary'].shade-primary,
+[data-theme='secondary'] .shade-primary,
+[data-theme='secondary'].shade,
+[data-theme='secondary'] .shade {
+  background-color: var(--pc-secondary);
+  color: var(--pc-primary);
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+  .shade-secondary {
+    background-color: var(--pc-black);
+    color: var(--pc-primary);
+  }
+  .shade-primary,
+  .shade {
+    background-color: var(--pc-secondary);
+    color: var(--pc-primary);
+  }
+
+  [data-theme='secondary'].shade-secondary,
+  [data-theme='secondary'] .shade-secondary {
+    background-color: var(--pc-secondary);
+    color: var(--pc-primary);
+  }
+  [data-theme='secondary'].shade-primary,
+  [data-theme='secondary'] .shade-primary {
+    background-color: var(--pc-primary);
+    color: var(--pc-color);
+  }
+  [data-theme='secondary'].shade,
+  [data-theme='secondary'] .shade {
+    background-color: var(--pc-bg);
+    color: var(--pc-color);
+  }
+}
+*/
+
+/* Theme Switcher */
+#switch-theme + span {
+  display: block;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  overflow: hidden;
+}
+#switch-theme + span:after {
+  content: '🌙';
+  filter: sepia(1);
+}
+[data-theme="secondary"] #switch-theme + span:after {
+  content: '☀️'
+}
+/*
+@media (prefers-color-scheme: dark) {
+  #switch-theme + span:after {
+    content: '☀️';
+  }
+  [data-theme="secondary"] #switch-theme + span:after {
+    content: '🌙'
+  }
+}
+*/
