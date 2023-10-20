@@ -1,28 +1,28 @@
 {%- assign nav_exists = nav_item.prev or nav_item.next -%}
 {%- if nav_exists -%}
-  <ol class="hstack flex-wrap list-reset">
+  <ol class="box-reset list-reset stack">
     {%- if nav_item.prev -%}
-      <li class="d-inline-block my-1 me-auto border rounded px-4 py-1 text-start hover">
-        <div class="text-secondary fst-italic">Previous</div>
-        <div class="hstack fs-5">
-          <span class="text-monospace text-dark">&nbsp;&laquo;&nbsp;</span>
-          <a href="{{ nav_item.prev.url }}" class="link-dark">
+      <li class="me-auto border rounded p-1 shade-light hover">
+        <em>Previous</em>
+        <div class="stack">
+          <span class="link text-monospace">&nbsp;&laquo;&nbsp;</span>
+          <a href="{{ nav_item.prev.url }}">
             {{ nav_item.prev.title }}
           </a>
         </div>
-
       </li>
     {%- endif -%}
     {%- if nav_item.next -%}
-      <li class="d-inline-block my-1 ms-auto border rounded px-4 py-1 text-end hover">
-        <div class="text-secondary fst-italic">Next</div>
-        <div class="hstack fs-5">
-          <a href="{{ nav_item.next.url }}" class="link-dark">
+      <li class="ms-auto border rounded p-1 shade-light hover">
+        <em>Next</em>
+        <div class="stack">
+          <a href="{{ nav_item.next.url }}">
             {{ nav_item.next.title }}
           </a>
-          <div class="text-monospace text-dark">&nbsp;&raquo;&nbsp;</div>
+          <span class="link text-monospace">&nbsp;&raquo;&nbsp;</span>
         </div>
       </li>
     {%- endif -%}
   </ol>
+  <br/>
 {%- endif -%}

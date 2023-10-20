@@ -48,6 +48,7 @@ function parseNodeNavigation(nodes = [], options = {}) {
     ) {
       const currentKey = pathify(node.data.page.inputPath)
       const currentUrl = urlFilter(node.data.page.url)
+      const currentRedirect = node.data.redirect
       const currentDataTitle = node.data.title
       const currentParent = pathify(node.data.eleventyNavigation.parent || '')
       const currentOrder = node.data.eleventyNavigation.order
@@ -58,7 +59,7 @@ function parseNodeNavigation(nodes = [], options = {}) {
         parentKey: currentParent,
         order: currentOrder,
         // pluginType: PLUGIN_TYPE,
-        url: currentLink || currentUrl,
+        url: currentLink || currentRedirect || currentUrl,
         title: currentTitle || currentDataTitle || pathToTitle(currentKey),
         parent: null,
         next: null,
