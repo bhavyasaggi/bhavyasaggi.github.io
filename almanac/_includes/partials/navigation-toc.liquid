@@ -1,7 +1,7 @@
 {% if nav_items and nav_items.size > 0 %}
-  <ol class="box-reset list-reset">
+  <ol class="reset-box reset-list">
     {% for nav_item in nav_items %}
-      <li class="ps-{{ nav_item.level | at_most: 3  }} text-truncate">
+      <li class="p-1 ps-{{ nav_item.level | at_most: 3  }} text-truncate">
         <a href="#{{ nav_item.id }}" rel="nofollow noindex" title="{{ nav_item.text }}">
           {{ nav_item.text }}
         </a>

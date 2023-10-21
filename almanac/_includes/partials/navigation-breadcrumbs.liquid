@@ -1,16 +1,16 @@
 {%- if nav_items and nav_items.size > 0 -%}
-  <ol class="box-reset stack border rounded shade-light list-reset">
+  <ol class="reset-box reset-list border rounded p-1 stack gap-1 shade-primary">
     <li class="p-1">
-      <a href="/" rel="nofollow" class="shade-light font-monospace" aria-label="Home">⌂</a>
+      <a href="/" rel="nofollow" class="shade-primary font-monospace" aria-label="Home">⌂</a>
     </li>
     {%- for nav_item in nav_items -%}
       <li class="bs-1 p-1">
         {%- if forloop.last -%}
-          <span class="shade-light">
+          <span class="shade-primary">
             {{- nav_item.title -}}
           </span>
         {%- else -%}
-          <a href="{{- nav_item.url -}}" class="shade-light">
+          <a href="{{- nav_item.url -}}" class="shade-primary">
             {{- nav_item.title -}}
           </a>
         {%- endif -%}
