@@ -3,7 +3,7 @@ title: Frameworks
 redirect: /
 eleventyNavigation:
   parent: /pages/
-  order: 7
+  order: 6
   link: '#'
 ---
 

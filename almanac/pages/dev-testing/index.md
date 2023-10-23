@@ -1,5 +1,5 @@
 ---
-title: Dev Automated Test Suites
+title: Dev Test Suites
 redirect: /
 eleventyNavigation:
   parent: /pages/
@@ -7,4 +7,4 @@ eleventyNavigation:
   link: '#'
 ---
 
-# Dev Automated Test Suites
+# Dev Test Suites

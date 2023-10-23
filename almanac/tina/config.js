@@ -40,6 +40,13 @@ export default defineConfig({
             format: (val) => Boolean(val),
           },
           {
+            type: 'boolean',
+            name: 'eleventyNoIndex',
+            label: 'No-Index',
+            parse: (val) => (val ? true : undefined),
+            format: (val) => Boolean(val),
+          },
+          {
             type: 'string',
             name: 'redirect',
             label: 'Redirection URL',
@@ -77,6 +84,12 @@ export default defineConfig({
                   }
                   return num
                 },
+              },
+              {
+                label: 'Link',
+                name: 'link',
+                type: 'string',
+                parse: (val) => val || undefined,
               },
             ],
           },
