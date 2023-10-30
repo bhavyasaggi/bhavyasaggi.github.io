@@ -20,12 +20,38 @@ a:hover,
   text-decoration: underline;
 }
 
-mark {
-  background-color: var(--pc-link);
-  color: var(--pc-black);
+pre,
+code,
+kbd,
+samp,
+.text-monospace {
+  font-family: 'Courier New', Courier, Consolas, 'Lucida Console', 'Noto Mono',
+    monospace;
 }
 pre {
-  color: var(--pc-pre);
+  border: 1px solid var(--pc-border);
+  padding: 8px 16px;
+  color: var(--pc-link);
+  background-color: var(--pc-secondary);
+}
+
+mark,
+.text-cursive {
+  font-family: 'Brush Script MT', 'Comic Sans MS', 'Comic Sans', cursive;
+}
+mark {
+  color: inherit;
+  background-color: inherit;
+}
+
+blockquote,
+.text-fantasy {
+  font-family: 'Impact', 'Blippo', 'Luminari', 'Trattatello', 'Stencil Std',
+    'Marker Felt', fantasy;
+}
+blockquote {
+  border-left: 4px solid var(--pc-border);
+  padding-left: 2px;
 }
 
 summary {
