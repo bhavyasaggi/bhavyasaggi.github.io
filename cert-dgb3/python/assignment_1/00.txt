@@ -1,0 +1,292 @@
+# 1. Write a Python program to print the following string in a specific format (see
+# the output).
+# Sample String : "Twinkle, twinkle, little star, How I wonder what you are! Up
+# above the world so high, Like a diamond in the sky. Twinkle, twinkle, little star,
+# How I wonder what you are"
+# Output :
+# Twinkle, twinkle, little star,
+#   How I wonder what you are!
+#     Up above the world so high,
+#     Like a diamond in the sky.
+# Twinkle, twinkle, little star,
+#   How I wonder what you are
+print(
+    "Twinkle, twinkle, little star,\n\tHow I wonder hat you are!\n\t\tUp above the world so high\n\t\tLike a diamond in the sky.\nTwinkle, twinkle, little star,\n\tHow I wonder what you are"
+)
+
+# 2. Write a Python program which accepts the radius of a circle from the user and
+# compute the area.
+# Sample Output :
+# r = 1.1
+# Area = 3.8013271108436504
+print("Area = ", 3.14 * int(input("Input radius: ")))
+
+# 3. Write a Python program which accepts a sequence of comma-separated
+# numbers from the user and generates a list and a tuple with those numbers.
+# Sample data : 3, 5, 7, 23
+# Output :
+# List : ['3', ' 5', ' 7', ' 23']
+# Tuple : ('3', ' 5', ' 7', ' 23')
+int_list = list(map(int, input("Enter comma-separated list of numbers: ").split(",")))
+int_tuple = tuple(int_list)
+print("List : ", int_list)
+print("Tuple : ", int_tuple)
+
+# 4. Write a Python program to accept a filename from the user and print the
+# extension of that.
+# Sample filename : abc.java
+# Output : java
+print(input("Enter Filename: ").split(".")[-1])
+
+# 5. Write a Python program to sum of two given integers. However, if the sum is
+# between 15 to 20 it will return 20.
+a = int(input("Enter first number: "))
+b = int(input("Enter second number: "))
+c = a + b
+if c >= 15 and c < 20:
+    c = 20
+print(c)
+
+# 6. Write a Python function to find the maximum and minimum numbers from a
+# sequence of numbers.
+# Note: Do not use built-in functions.
+mm_list = list(map(int, input("Enter comma-separated list of numbers: ").split(",")))
+min_list = None
+max_list = None
+for item_list in mm_list:
+    if min_list == None or min_list > item_list:
+        min_list = item_list
+    if max_list == None or max_list < item_list:
+        max_list = item_list
+print("Minimum Number in list: ", min_list)
+print("Maximum Number in list: ", max_list)
+
+# 7. Write a Python program to create all possible strings by using 'a', 'e', 'i', 'o', 'u'.
+# Use the characters exactly once.
+def permute_string(p_string, start=0):
+    end = len(p_string)
+    if start == end:
+        print(p_string)
+    else:
+        for idx in range(start, end):
+            p_string_copy = [c_string for c_string in p_string]
+            p_string_copy[start], p_string_copy[idx] = (
+                p_string_copy[idx],
+                p_string_copy[start],
+            )
+            p_string_copy = "".join(p_string_copy)
+            permute_string(p_string_copy, start + 1)
+
+
+permute_string("aeiou")
+
+# 8. Write a Python program to get all possible two digit letter combinations from a
+# digit (1 to 9) string.
+string_maps = {
+    "1": "abc",
+    "2": "def",
+    "3": "ghi",
+    "4": "jkl",
+    "5": "mno",
+    "6": "pqrs",
+    "7": "tuv",
+    "8": "wxy",
+    "9": "z",
+}
+num_first, num_second = [
+    string_maps[i] for i in input("enter 2 digit number combination of 1-9: ")
+]
+for i_first in num_first:
+    for i_second in num_second:
+        print(i_first + i_second)
+
+# 9. Write a Python program to find the number of notes (Sample of notes: 10, 20,
+# 50, 100, 200 and 500 ) against a given amount.
+# Range - Number of notes(n) : n (1 <= n <= 1000000).
+notes = [500, 200, 100, 50, 20, 10]
+amount = int(input("Enter amount to breakdown: "))
+count = 0
+for note in notes:
+    note_amount = amount // note
+    amount -= note * note_amount
+    count += note_amount
+print("Number of notes: ", count)
+
+# 10. Write a Python program to count the number of characters (character
+# frequency) in a string.
+# Sample String : google.com'
+# Expected Result : {'g': 2, 'o': 3, 'l': 1, 'e': 1, '.': 1, 'c': 1, 'm': 1}
+inp_str = input("Enter a string: ")
+inp_dict = dict()
+for inp_char in inp_str:
+    inp_dict[inp_char] = inp_dict.get(inp_char, 0) + 1
+print("Character frequencies: ", inp_dict)
+
+# 11. Write a Python program to add 'ing' at the end of a given string (length should
+# be at least 3). If the given string already ends with 'ing' then add 'ly' instead. If the
+# string length of the given string is less than 3, leave it unchanged.
+# Sample String : 'abc'
+# Expected Result : 'abcing'
+# Sample String : 'string'
+# Expected Result : 'stringly'
+inp_str = input("Enter a string: ")
+chk_str = inp_str[-3:]
+if len(chk_str) < 3:
+    print(inp_str)
+elif chk_str == "ing":
+    print(inp_str + "ly")
+else:
+    print(inp_str + "ing")
+
+# 12. Write a Python program to create a list by concatenating a given list which
+# range goes from 1 to n.
+# Sample list : ['p', 'q']
+# n =5
+# Sample Output : ['p1', 'q1', 'p2', 'q2', 'p3', 'q3', 'p4', 'q4', 'p5', 'q5']
+inp_range = int(input("Enter range: "))
+inp_sample = ["p", "q"]
+out_list = list()
+for i_sample in inp_sample:
+    for i_range in range(1, inp_range + 1):
+        out_list.append(i_sample + str(i_range))
+print(out_list)
+
+# 13. Write a Python program to compute the difference between two lists.
+# Sample data: ["red", "orange", "green", "blue", "white"], ["black", "yellow", "green",
+# "blue"]
+# Expected Output:
+# Color1-Color2: ['white', 'orange', 'red']
+# Color2-Color1: ['black', 'yellow']
+list_1 = ["red", "orange", "green", "blue", "white"]
+list_2 = ["black", "yellow", "green", "blue"]
+set_1 = set(list_1)
+set_2 = set(list_2)
+print("Color1-Color2: ", list(set_1.difference(set_2)))
+print("Color2-Color1: ", list(set_2.difference(set_1)))
+
+# 14. Write a Python program to create and display all combinations of letters,
+# selecting each letter from a different key in a dictionary.
+# Sample data : {'1':['a','b'], '2':['c','d']}
+# Expected Output:
+# ac
+# ad
+# bc
+# Bd
+def precomb(pre_str, post_list):
+    if len(post_list) == 0:
+        print(pre_str)
+    else:
+        it_list = post_list[0]
+        nx_list = post_list[1:]
+        for post_char in it_list:
+            precomb(pre_str + post_char, nx_list)
+
+
+sample_dict = {"1": ["a", "b"], "2": ["c", "d"], "3": ["e", "f"]}
+precomb("", list(sample_dict.values()))
+
+# 15. Write a Python program to replace the last value of tuples in a list.
+# Sample list: [(10, 20, 40), (40, 50, 60), (70, 80, 90)]
+# Expected Output: [(10, 20, 100), (40, 50, 100), (70, 80, 100)]
+repl_val = int(input("Enter Replaced Value: "))
+
+
+def repl_last(repl_set):
+    if len(repl_set) == 0:
+        return repl_set
+    else:
+        repl_list = list(repl_set)
+        repl_list[-1] = repl_val
+        return tuple(repl_list)
+
+
+list_sample = [(10, 20, 40), (40, 50, 60), (70, 80, 90)]
+list_update = list(map(repl_last, list_sample))
+print(list_update)
+
+# 16. Write a Python program to construct the following pattern, using a nested for
+# loop.
+# For n = 9
+# *
+# * *
+# * * *
+# * * * *
+# * * * * *
+# * * * *
+# * * *
+# * *
+# *
+int_lines = int(input("Enter size: "))
+for ix in range(1, 2 * int_lines):
+    print("*" * (ix if ix <= int_lines else 2 * int_lines - ix))
+
+# 17. Write a Python program to construct the following pattern, using a nested for
+# loop.
+# For n = 5
+# * * * *
+# * *
+# * * * * *
+# * *
+# * * * *
+s_size = int(input("Enter size: "))
+s_mid = s_size // 2
+for row in range(0, s_size):
+    col_str = ""
+    for col in range(0, s_size):
+        if (
+            (col == 0 and row < s_mid)
+            or (col == s_size - 1 and row > s_mid)
+            or (row == s_mid)
+            or (col == s_mid)
+            or (row == 0 and col > s_mid)
+            or (row == s_size - 1 and col < s_mid)
+        ):
+            col_str += "*"
+        else:
+            col_str += " "
+    print(col_str)
+
+# 18. Write a Python program to construct the following pattern, using a nested for
+# loop.
+# For n = 3
+# 1 1
+# 1 2 2 1
+# 1 2 3 2 1
+# For n = 5
+# 1 1
+# 1 2 2 1
+# 1 2 3 3 2 1
+# 1 2 3 4 4 3 2 1
+# 1 2 3 4 5 4 3 2 1
+inp_count = int(input("Enter size: "))
+for row in range(1, inp_count + 1):
+    col_str = ""
+    for col in range(1, 2 * inp_count):
+        if col <= row:
+            col_str += str(col)
+        elif col >= 2 * inp_count - row:
+            col_str += str(2 * inp_count - col)
+        else:
+            col_str += " "
+    print(col_str)
+
+# 19. Write a Python program to construct the following pattern using any loop.
+# For n = 5
+# *
+# * *
+# * * *
+# * * * *
+# * * * * *
+inp_rows = int(input("Enter size: ")) + 1
+for row in range(1, inp_rows):
+    print(" " * (inp_rows - row) + "*" * row)
+
+# 20. Write a Python program to print Pascal’s Triangle.
+inp_rows = int(input("Enter Pascal Number: ")) + 1
+for row in range(1, inp_rows):
+    row_str = " " * (inp_rows - row)
+    col_int = 1
+    for col in range(1, row + 1):
+        row_str += " " + str(col_int)
+        col_int = col_int * (row - col) // col
+    print(row_str)

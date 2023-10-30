@@ -1,7 +1,7 @@
 ---
 title: Loading Patterns
 eleventyNavigation:
-  parent: /pages/system-desings/
+  parent: /pages/system-design/
   order: 2
 ---
 

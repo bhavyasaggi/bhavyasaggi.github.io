@@ -15,9 +15,13 @@ eleventyNavigation:
 - New Relic
 - Sentry
 
-# Orchestration
+# Virutalization & Containerization
 
-- Docker
+- Virutalization (VMware)
+- Containerization (Docker)
+
+# Orchestration & C𝐡𝐨𝐫𝐞𝐨𝐠𝐫𝐚𝐩𝐡𝐲
+
 - Kubernetes
 - CI/CD
   - TDD (Test Driven Development)

@@ -1,0 +1,72 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+#app-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: #e76f51;
+}
+
+#quote-box {
+  margin: 32px 16px;
+  padding: 16px 32px;
+  max-width: max(320px, 66vw);
+  background: #e9c46a;
+  box-shadow: 4px 4px 0px 0px #f4a261;
+}
+
+#text {
+  padding: 8px 4px;
+  color: #264653;
+  font-weight: 700;
+  font-size: 1.8em;
+  font-family: sans-serif;
+}
+
+#author {
+  padding: 4px 2px;
+  text-align: right;
+  color: #2a9d8f;
+  font-size: 1.2em;
+  font-family: monospace;
+  font-style: italic;
+}
+#author:before {
+  content: '- ';
+}
+
+#tweet-quote {
+  float: left;
+}
+
+#new-quote {
+  float:right;
+}
+
+.btn{
+  margin: 8px 0px;
+  border: 0px;
+  border-radius: 0px;
+  padding: 8px 16px;
+  outline: 0px;
+  float: right;
+  font-size: 1.3em;
+  font-weight: 300;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+  color: #f4a261;
+  background: #264653;
+  box-shadow: 2px 2px 2px 0px #f4a261;
+  cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease-in-out	;
+}
+.btn:hover {
+  box-shadow: 2px 2px 4px 2px #f4a261;
+}

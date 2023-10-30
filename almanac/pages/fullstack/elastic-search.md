@@ -2,7 +2,7 @@
 title: Elastic Search
 eleventyNavigation:
   parent: /pages/fullstack/
-  order: 2
+  order: 3
 ---
 
 # Elastic Search

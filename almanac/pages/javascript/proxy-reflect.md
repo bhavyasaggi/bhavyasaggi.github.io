@@ -5,6 +5,8 @@ eleventyNavigation:
   order: 2
 ---
 
-# Proxy
+# Intercept and Redefine operations for a object
 
-# Reflect
+## Proxy
+
+## Reflect

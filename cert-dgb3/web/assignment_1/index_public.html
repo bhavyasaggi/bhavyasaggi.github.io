@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Assignment 1</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 30px;
+      background: linear-gradient(90deg, white, gray);
+    }
+    h1 {
+      color: green;
+      text-align: center;
+    }
+    img {
+      display: block;
+      height: 300px;
+      width: 300px;
+      margin: auto;
+    }
+    .block {
+      width: 600px;
+      margin: auto;
+      border: 16px solid white;
+      box-shadow: 2px 2px 2px 2px grey;
+    }
+    @media(max-width:1024px) {
+      img {
+        height: 200px;
+        width: 200px;
+      }
+      .block {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Dinosaurs Are Crazy Creatures</h1>
+  <div class="block">
+    <img src="https://images.newscientist.com/wp-content/uploads/2020/08/19131539/gpnatp_web.jpg" />
+  </div>
+  <script>
+    setInterval(function(){
+      if (document.querySelector('h1').style.color === 'red') {
+        document.querySelector('h1').style.color = 'green';
+        document.querySelector('img').src = 'https://images.newscientist.com/wp-content/uploads/2020/08/19131539/gpnatp_web.jpg';
+      } else {
+        document.querySelector('h1').style.color = 'red';
+        document.querySelector('img').src = 'https://cdn.britannica.com/83/211283-131-3DB62136/Tyrannosaurus-Rex-Struthiomimus-dinosaurs.jpg';
+      }
+    }, 2000);
+  </script>
+</body>
+</html>

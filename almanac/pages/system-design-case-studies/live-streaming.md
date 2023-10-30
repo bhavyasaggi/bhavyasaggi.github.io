@@ -1,7 +1,7 @@
 ---
 title: Live Streaming - Case Study
 eleventyNavigation:
-  parent: /pages/system-design/
+  parent: /pages/system-design-case-studies/
   order: 3
 ---
 

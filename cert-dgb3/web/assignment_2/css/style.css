@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+#header {
+  color: white;
+  text-align: center;
+}
+#info {
+  font-size: 2rem;
+}
+#nav {
+  margin: 4px 0px;
+  text-align: center;
+}
+#nav button {
+  margin: 0px 4px;
+  border: 0px;
+  padding: 0px;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}
+#main {
+  background-color: black;
+  min-height: 100vh;
+  text-align: center;
+}
+.game-button {
+  display: inline-block;
+  min-height: 200px;
+  min-width: 200px;
+  margin: 4px;
+  border-radius: 50%;
+  transition: min-height 0.2s linear, min-width 0.2s linear, margin 0.2s linear,
+    background-color 0.2s linear;
+  cursor: pointer;
+}
+.game-button.disable {
+  min-height: 0px;
+  min-width: 0px;
+  margin: 104px 104px;
+}

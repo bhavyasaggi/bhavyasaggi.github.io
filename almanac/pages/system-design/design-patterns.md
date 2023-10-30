@@ -1,7 +1,7 @@
 ---
 title: Design Patterns
 eleventyNavigation:
-  parent: /pages/system-designs/
+  parent: /pages/system-design/
   order: 1
 ---
 
