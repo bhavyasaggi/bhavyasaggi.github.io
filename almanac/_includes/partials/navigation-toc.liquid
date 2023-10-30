@@ -2,7 +2,7 @@
   <ol class="reset-box reset-list">
     {% for nav_item in nav_items %}
       <li class="p-1 ps-{{ nav_item.level | at_most: 3  }} text-truncate">
-        <a href="#{{ nav_item.id }}" rel="nofollow noindex" title="{{ nav_item.text }}">
+        <a href="#{{ nav_item.id }}" rel="nofollow noindex" title="{{ nav_item.text }}" class="text-truncate">
           {{ nav_item.text }}
         </a>
       </li>

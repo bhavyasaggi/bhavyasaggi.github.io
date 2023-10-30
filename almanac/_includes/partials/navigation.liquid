@@ -12,7 +12,7 @@
           <details open>
             <summary class="p-1 {{ nav_item_shade }} text-truncate hover cursor-pointer">
               {%- if nav_item.url and nav_item.url != '#' -%}
-                <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }}" title="{{- nav_item.title -}}">
+                <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }} text-truncate" title="{{- nav_item.title -}}">
                   {%- if nav_root -%}
                     <strong>
                     {%- endif -%}
@@ -22,7 +22,7 @@
                   {%- endif -%}
                 </a>
               {%- else -%}
-                <span class="{{ nav_item_shade }}" title="{{- nav_item.title -}}">
+                <span class="{{ nav_item_shade }} text-truncate" title="{{- nav_item.title -}}">
                   {%- if nav_root -%}
                     <strong>
                     {%- endif -%}
@@ -37,7 +37,7 @@
           </details>
         {%- else -%}
           <div class="p-1 {{ nav_item_shade }} text-truncate hover cursor-pointer">
-            <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }}" title="{{- nav_item.title -}}">
+            <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }} text-truncate" title="{{- nav_item.title -}}">
               {%- if nav_root -%}
                 <strong>
                 {%- endif -%}
