@@ -6,6 +6,8 @@ const { EleventyHtmlBasePlugin } = require('@11ty/eleventy')
 const eleventyNavigationPlugin = require('./_includes/plugin-navigation')
 const eleventyTOCPlugin = require('./_includes/plugin-toc')
 
+const ELEVENTY_BUILD_MODE = process.env.ELEVENTY_RUN_MODE === 'build'
+
 module.exports = function (eleventyConfig) {
   // Copy the contents of the `public` folder to the output folder
   // For example, `./public/css/` ends up in `_site/css/`
@@ -47,7 +49,11 @@ module.exports = function (eleventyConfig) {
   // Minify HTML
   eleventyConfig.addTransform('htmlmin', function (content) {
     // Prior to Eleventy 2.0: use this.outputPath instead
-    if (this.page.outputPath && this.page.outputPath.endsWith('.html')) {
+    if (
+      ELEVENTY_BUILD_MODE &&
+      this.page.outputPath &&
+      this.page.outputPath.endsWith('.html')
+    ) {
       const minified = htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,

@@ -1,7 +1,7 @@
 .stack {
   display: flex;
   flex-flow: row wrap;
-  align-content: flex-start;
+  justify-content: flex-start;
 }
 .brick {
   display: inline-block;
@@ -9,6 +9,10 @@
   word-spacing: normal;
   vertical-align: top;
   text-rendering: auto;
+}
+.brick-center {
+  align-self: center;
+  vertical-align: center;
 }
 .gap-1 {
   gap: 0.5rem;
@@ -82,13 +86,22 @@
 .d-none {
   display: none;
 }
+.d-block {
+  display: block;
+}
 @media screen and (max-width: 768px) {
   .d-md-none {
     display: none;
+  }
+  .d-md-block {
+    display: block;
   }
 }
 @media screen and (max-width: 1024px) {
   .d-xl-none {
     display: none;
+  }
+  .d-xl-block {
+    display: block;
   }
 }

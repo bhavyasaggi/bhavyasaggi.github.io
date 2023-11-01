@@ -6,8 +6,7 @@
   --pc-bg: #f8f9fa;
   --pc-white: #ffffff;
   --pc-border: #6C757D;
-  --pc-link: #198019;
-  --pc-pre: #dd74dd;
+  --pc-link: #13b766;
 }
 
 .shade-secondary {
@@ -36,36 +35,6 @@
   color: var(--pc-primary);
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-  .shade-secondary {
-    background-color: var(--pc-black);
-    color: var(--pc-primary);
-  }
-  .shade-primary,
-  .shade {
-    background-color: var(--pc-secondary);
-    color: var(--pc-primary);
-  }
-
-  [data-theme='secondary'].shade-secondary,
-  [data-theme='secondary'] .shade-secondary {
-    background-color: var(--pc-secondary);
-    color: var(--pc-primary);
-  }
-  [data-theme='secondary'].shade-primary,
-  [data-theme='secondary'] .shade-primary {
-    background-color: var(--pc-primary);
-    color: var(--pc-color);
-  }
-  [data-theme='secondary'].shade,
-  [data-theme='secondary'] .shade {
-    background-color: var(--pc-bg);
-    color: var(--pc-color);
-  }
-}
-*/
-
 /* Theme Switcher */
 #switch-theme + span {
   display: block;
@@ -84,13 +53,3 @@
 [data-theme="secondary"] #switch-theme + span:after {
   content: '☀️'
 }
-/*
-@media (prefers-color-scheme: dark) {
-  #switch-theme + span:after {
-    content: '☀️';
-  }
-  [data-theme="secondary"] #switch-theme + span:after {
-    content: '🌙'
-  }
-}
-*/

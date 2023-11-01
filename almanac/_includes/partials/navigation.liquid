@@ -11,21 +11,33 @@
         {%- if nav_children and nav_children.size > 0 -%}
           <details open>
             <summary class="p-1 {{ nav_item_shade }} text-truncate hover cursor-pointer">
-              <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }}" title="{{- nav_item.title -}}">
-                {%- if nav_root -%}
-                  <strong>
-                  {%- endif -%}
-                  {{- nav_item.title -}}
+              {%- if nav_item.url and nav_item.url != '#' -%}
+                <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }} text-truncate" title="{{- nav_item.title -}}">
                   {%- if nav_root -%}
-                  </strong>
-                {%- endif -%}
-              </a>
+                    <strong>
+                    {%- endif -%}
+                    {{- nav_item.title-}}
+                    {%- if nav_root -%}
+                    </strong>
+                  {%- endif -%}
+                </a>
+              {%- else -%}
+                <span class="{{ nav_item_shade }} text-truncate" title="{{- nav_item.title -}}">
+                  {%- if nav_root -%}
+                    <strong>
+                    {%- endif -%}
+                    {{- nav_item.title-}}
+                    {%- if nav_root -%}
+                    </strong>
+                  {%- endif -%}
+                </span>
+              {%- endif-%}
             </summary>
             {%- render 'partials/navigation.liquid', nav_items: nav_children, page_url: page_url -%}
           </details>
         {%- else -%}
           <div class="p-1 {{ nav_item_shade }} text-truncate hover cursor-pointer">
-            <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }}" title="{{- nav_item.title -}}">
+            <a href="{{- nav_item.url -}}" rel="nofollow" class="{{ nav_item_shade }} text-truncate" title="{{- nav_item.title -}}">
               {%- if nav_root -%}
                 <strong>
                 {%- endif -%}

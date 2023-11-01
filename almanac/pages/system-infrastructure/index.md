@@ -1,10 +1,8 @@
 ---
 title: System Infrastructure
-redirect: /
 eleventyNavigation:
   parent: /pages/
-  order: 98
-  link: '#'
+  order: 7
 ---
 
 # System Infrastructure
@@ -12,3 +10,19 @@ eleventyNavigation:
 ## Deployment
 
 ## Monitoring
+
+- Datadog
+- New Relic
+- Sentry
+
+# Virutalization & Containerization
+
+- Virutalization (VMware)
+- Containerization (Docker)
+
+# Orchestration & C𝐡𝐨𝐫𝐞𝐨𝐠𝐫𝐚𝐩𝐡𝐲
+
+- Kubernetes
+- CI/CD
+  - TDD (Test Driven Development)
+  - BFF (Backend For Frontend)

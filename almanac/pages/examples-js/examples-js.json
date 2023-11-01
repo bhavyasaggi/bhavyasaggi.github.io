@@ -1,7 +1,7 @@
 {
   "layout": "sandpack",
   "sandpackTemplate": "vanilla",
-  "eleventyExcludeFromCollections": false,
+  "eleventyExcludeFromCollections": true,
   "eleventyNavigation": {
     "order": 0
   }

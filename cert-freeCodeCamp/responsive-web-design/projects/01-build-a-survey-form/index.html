@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Survey Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1 id="title">Survey Form</h1>
+    <p id="description">Thank you for taking the time to help us</p>
+    <form id="survey-form">
+      <label id="name-label"> Name </label>
+      <input id="name" type="text" required placeholder="Your Name" />
+      <label id="email-label"> Email </label>
+      <input id="email" type="email" required placeholder="Your Email" />
+      <label id="number-label"> Age </label>
+      <input
+        id="number"
+        type="number"
+        min="1"
+        max="200"
+        placeholder="Your Age"
+      />
+      <label> Role </label>
+      <select id="dropdown">
+        <option>Student</option>
+        <option>Professional</option>
+      </select>
+      <div>Source</div>
+      <div>
+        <label>
+          <input name="source" type="radio" value="Friend" />
+          Friend
+        </label>
+        <label>
+          <input name="source" type="radio" value="Other" />
+          Other
+        </label>
+      </div>
+      <div>Interest</div>
+      <div>
+        <label>
+          <input name="source" type="checkbox" value="Front-End" />
+          Front-End
+        </label>
+        <label>
+          <input name="source" type="checkbox" value="Back-End" />
+          Back-End
+        </label>
+      </div>
+      <label>Comments</label>
+      <textarea></textarea>
+      <button id="submit" type="submit">Submit</button>
+    </form>
+  </body>
+</html>

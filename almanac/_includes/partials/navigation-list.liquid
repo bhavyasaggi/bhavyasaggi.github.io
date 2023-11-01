@@ -1,8 +1,8 @@
 {%- if nav_items and nav_items.size > 0 -%}
-  <ol class="reset-box reset-list stack p-1">
+  <ol class="reset-box reset-list stack gap-1 p-1">
     {%- for nav_item in nav_items -%}
-      <li class="p-1">
-        <a href="{{- nav_item.url -}}">
+      <li>
+        <a href="{{- nav_item.url -}}" class="d-block border p-1">
           {{- nav_item.title -}}
         </a>
       </li>

@@ -1,0 +1,24 @@
+body {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  display: grid;
+  grid-template: auto / 1fr 2fr;
+  font-size: 24px;
+}
+
+.main-section {
+  margin: 4px;
+  border: 1px solid black;
+  padding: 4px;
+}
+
+#navbar a{
+  display: block;
+}
+
+@media  (max-width: 815px) {
+  body {
+    font-size: 16px;
+  }
+}
