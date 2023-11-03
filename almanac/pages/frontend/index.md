@@ -8,3 +8,5 @@ eleventyNavigation:
 ---
 
 # Frontend
+
+https://cheatsheetseries.owasp.org/

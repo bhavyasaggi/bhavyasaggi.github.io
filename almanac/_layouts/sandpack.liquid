@@ -27,14 +27,16 @@
 
       const root = createRoot(document.getElementById("root"));
       const inputData = document.getElementById("default-input");
-      const template = `{{ sandpackTemplate }}` || "vanilla";
-      const [filename, layout] = {
-        'react': [
-          '/App.js', 'preview'
-        ],
-        'vanilla': ['/index.js', 'console']
+      const [
+        template = "vanilla",
+        layout = "preview"
+      ] = (`{{ sandpackTemplate }}` || "vanilla").split('-');
+      const filename = {
+        'react': '/App.js',
+        'static': '/index.html',
+        'vanilla': '/index.js'
       }[template];
-      console.log(">", {filename, layout})
+      const autoAction = template !== "react"
       const sandpackComponent = React.createElement(Sandpack, {
         template,
         theme: "dark",
@@ -43,10 +45,17 @@
         },
         options: {
           layout,
+          autoRun: autoAction,
+          autoReload: autoAction,
+          skipEval: false,
+          initMode: "user-visible",
+          recompileMode: "delayed",
+          recompileDelay: 300,
           showRefreshButton: true,
           showInlineErrors: true,
           showLineNumbers: true,
-          editorWidthPercentage: 50
+          editorWidthPercentage: 50,
+          resizablePanels: false
         }
       }, null);
       inputData.value = '';
