@@ -47,6 +47,8 @@
         {%- include "css/utils.css" - %}
       </style>
       <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+      <link rel="preload" href="https://esm.sh/prismjs@1.29.0/themes/prism-okaidia.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+      <noscript><link rel="stylesheet" href="https://esm.sh/prismjs@1.29.0/themes/prism-okaidia.min.css"></noscript>
       <script>
         if ('scrollRestoration' in history) {
           history.scrollRestoration = 'manual';
@@ -68,13 +70,13 @@
     </head>
     <body data-theme="primary" class="reset-box shade">
       <script>
-        (function() {
-          const prefersTheme = localStorage.getItem("prefersTheme")
+        (function(window, document) {
+          const prefersTheme = window.localStorage.getItem("prefersTheme")
           const defaultTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "secondary"
             : "primary"
           document.body.dataset.theme = prefersTheme || defaultTheme;
-        })();
+        })(window, document);
       </script>
       <header id="root-header" class="stack gap-1 p-2 shade-secondary">
         <a href="/sitemap" rel="nofollow noindex" class="brick brick-center d-none d-md-block border p-1 shade-secondary text-monospace hover">
@@ -132,6 +134,10 @@
           {{- "now" | date: '%Y' -}}
         </mark>
       </footer>
+      <script type="module" defer>
+        import mermaid from 'https://esm.sh/mermaid@10.6.1/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({startOnLoad: true, theme: 'neutral'});
+      </script>
     </body>
   </html>
 {%- endif -%}
