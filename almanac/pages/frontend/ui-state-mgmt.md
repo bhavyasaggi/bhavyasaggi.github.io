@@ -1,11 +1,11 @@
 ---
-title: State Management
+title: UI State Management
 eleventyNavigation:
-  parent: /pages/frontend/react/
-  order: 1
+  parent: /pages/frontend/
+  order: 32
 ---
 
-# State Management
+# UI State Management
 
 ## Global Store
 

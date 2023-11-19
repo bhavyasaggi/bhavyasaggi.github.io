@@ -1,8 +1,8 @@
 ---
-title: PWA
+title: UI Routing
 eleventyNavigation:
   parent: /pages/frontend/
-  order: 2
+  order: 31
 ---
 
-# Progressive Web Apps
+# UI Routing

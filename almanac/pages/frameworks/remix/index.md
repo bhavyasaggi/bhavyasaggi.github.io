@@ -2,7 +2,7 @@
 title: Remix
 redirect: /
 eleventyNavigation:
-  parent: /pages/frameworks/
+  parent: /pages/frameworks
   order: 5
   link: '#'
 ---

@@ -7,49 +7,49 @@ eleventyNavigation:
 
 # System Design
 
+https://blog.cleancoder.com/uncle-bob/2011/01/17/software-craftsmanship-is-about.html
+
 ## Principles
 
-- DRY
-- KISs
-- MVP (Minimum Viable Product)
+### DRY
 
-## Factors
+### KISS
 
-- Latency
-- Consistency
-- Throughput
-- Availability
+### MVP
 
-## Paradigms
+Minimum Viable Product
 
-- Scaling
-  - Horizontal Scaling
-  - Vertical Scaling
-- Paritioning
-  - Horizontal Partitioning
-  - Vertical Partitioning
-- Sharding
-- Concurrency
-  - Serially
-  - Serially Batch
-  - Pessimistic Locking
-  - Optimistic Locking
-- Resource Locking
+### SOLID
 
-## Upgradation
+https://speakerdeck.com/tastapod/why-every-element-of-solid-is-wrong?slide=2
 
-- Load Balancer
-- Split Services to Clusters
-- Split DB by Service
-- Optimize DB Operation
-  - DB Cache
-  - DB Replication (Master-Slave) for Operations (Read-Write)
-- Split & Parition DB
+#### SRP (Single Responsibility Principle)
 
-Leads to
+The single responsibility principle states that a class, module, or function should have only one reason to change, meaning it should do one thing.
 
-- Load Balancer
-- Application Cluster
-- Services
-- Cache
-- Master-Slave DB
+#### OCP (Open-Closed Principle)
+
+The open-closed principle states that classes, modules, and functions should be open for extension but closed for modification.
+
+#### LSP (Liskov Substitution Principle)
+
+The principle states that child classes or subclasses must be substitutable for their parent classes or super classes.
+
+#### ISP (Interface Segregation Principle)
+
+The interface segregation principle states that clients should not be forced to implement interfaces or methods they do not use.
+
+#### DIP (Dependency Inversion Principle)
+
+The principle states that high-level modules should not depend on low-level modules.
+
+## Software Patterns
+
+Commonly used Software Patterns that should be known, are as follows:
+
+- MVC (Model, View, Controller)
+- MVP (Model, View, Presenter)
+- MVI (Model, View, Intent)
+- MVVM (Model, View, ViewModel)
+- VIPER (View, Interactor, Presenter, Entity and Router)
+  https://medium.com/@pinarkocak/understanding-viper-pattern-619fa9a0b1f1

@@ -8,3 +8,7 @@ eleventyNavigation:
 # Highly Available Media - Case Study
 
 Example: Facebook Media / Instagram / Youtube
+
+## Live Streaming
+
+Examples: Youtube / Disney+Hotstar

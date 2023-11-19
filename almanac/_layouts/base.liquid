@@ -94,10 +94,10 @@
       {%- assign nav_item = nav_path | last -%}
       {%- assign toc_items = content | eleventyTOC  -%}
       <div class="stack">
-        <nav id="root-nav" class="be-1 p-1 d-md-none brick brick-md-2 brick-xl-1 shade-primary user-select-none">
+        <nav id="root-nav" class="be-1 p-1 d-md-none brick brick-md-2 brick-xl-1 shade-primary fs-14 user-select-none">
           {%- render 'partials/navigation.liquid', nav_items: nav_items, nav_root: true, page_url: page.url -%}
         </nav>
-        <div id="root-content" class="p-1 brick brick-6 brick-md-4">
+        <div id="root-content" class="p-1 brick brick-6 brick-md-4 fs-16">
           {%- render 'partials/navigation-breadcrumbs.liquid', nav_items: nav_path -%}
           <main id="main">
             <div class="m-0 b-0 p-0 min-vh-100">
@@ -122,7 +122,8 @@
             </footer>
           </section>
         </div>
-        <aside id="root-aside" class="bs-1 p-1 d-xl-none brick brick-0 brick-xl-1 user-select-none">
+        <aside id="root-aside" class="p-1 d-xl-none brick brick-0 brick-xl-1 fs-14 user-select-none">
+          <strong class="p-1">In this Page</strong>
           {%- render 'partials/navigation-toc.liquid' with toc_items as nav_items -%}
         </aside>
       </div>
