@@ -1,24 +1,42 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Live Code</title><meta name="description" content="Live Code"><meta name="robots" content="noindex"><script type="importmap">{
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      Live Code
+    </title>
+    <meta name="description" content="Live Code">
+    <meta name="robots" content="noindex">
+
+    <script type="importmap">
+      {
         "imports": {
           "react": "https://esm.sh/react@18.2.0",
           "react-dom": "https://esm.sh/react-dom@18.2.0",
           "react-dom/": "https://esm.sh/react-dom@18.2.0/",
           "@codesandbox/sandpack-react": "https://esm.sh/@codesandbox/sandpack-react@2.8.0"
         }
-      }</script><script defer type="module">import React from "react";
+      }
+    </script>
+
+    <script defer type="module">
+      import React from "react";
       import {createRoot} from "react-dom/client";
       import {Sandpack} from "@codesandbox/sandpack-react";
 
       const root = createRoot(document.getElementById("root"));
       const inputData = document.getElementById("default-input");
-      const template = `vanilla` || "vanilla";
-      const [filename, layout] = {
-        'react': [
-          '/App.js', 'preview'
-        ],
-        'vanilla': ['/index.js', 'console']
+      const [
+        template = "vanilla",
+        layout = "preview"
+      ] = (`vanilla-console` || "vanilla").split('-');
+      const filename = {
+        'react': '/App.js',
+        'static': '/index.html',
+        'vanilla': '/index.js'
       }[template];
-      console.log(">", {filename, layout})
+      const autoAction = template !== "react"
       const sandpackComponent = React.createElement(Sandpack, {
         template,
         theme: "dark",
@@ -27,13 +45,60 @@
         },
         options: {
           layout,
+          autoRun: autoAction,
+          autoReload: autoAction,
+          skipEval: false,
+          initMode: "user-visible",
+          recompileMode: "delayed",
+          recompileDelay: 300,
           showRefreshButton: true,
           showInlineErrors: true,
           showLineNumbers: true,
-          editorWidthPercentage: 50
+          editorWidthPercentage: 50,
+          resizablePanels: false
         }
       }, null);
       inputData.value = '';
-      root.render(sandpackComponent);</script></head><body style="margin:0;border:0;padding:0;outline:0"><textarea id="default-input" hidden style="display:none;height:0;width:0">
-  console.log("Hello World");
-</textarea><div id="root"></div></body></html>
+      root.render(sandpackComponent);
+    </script>
+  </head>
+
+  <body style="margin:0;border:0;padding:0;outline:0;">
+    <textarea id="default-input" hidden style="display:none;height:0;width:0;">
+// This method performs the following steps when called:
+// https://tc39.es/ecma262/#sec-function.prototype.bind
+//
+// 1. Let Target be the this value.
+// 2. If IsCallable(Target) is false, throw a TypeError exception.
+// 3. Let F be ? BoundFunctionCreate(Target, thisArg, args).
+// 4. Let L be 0.
+// 5. Let targetHasLength be ? HasOwnProperty(Target, "length").
+// 6. If targetHasLength is true, then
+//   a. Let targetLen be ? Get(Target, "length").
+//   b. If targetLen is a Number, then
+//     i. If targetLen is +∞𝔽, then
+//       1. Set L to +∞.
+//     ii. Else if targetLen is -∞𝔽, then
+//       1. Set L to 0.
+//     iii. Else,
+//       1. Let targetLenAsInt be ! ToIntegerOrInfinity(targetLen).
+//       2. Assert: targetLenAsInt is finite.
+//       3. Let argCount be the number of elements in args.
+//       4. Set L to max(targetLenAsInt - argCount, 0).
+// 7. Perform SetFunctionLength(F, L).
+// 8. Let targetName be ? Get(Target, "name").
+// 9. If targetName is not a String, set targetName to the empty String.
+// 10. Perform SetFunctionName(F, targetName, "bound").
+// 11. Return F.
+
+Function.prototype.bind2 = function (obj, ...args) {
+  let func = this;
+  // Accepting arguments passed to newFunc
+  return function (...newArgs) {
+    func.apply(obj, [...args, ...newArgs]);
+  };
+};
+</textarea>
+    <div id="root"></div>
+  </body>
+</html>

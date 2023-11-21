@@ -30,7 +30,7 @@
       const [
         template = "vanilla",
         layout = "preview"
-      ] = (`react-preview` || "vanilla").split('-');
+      ] = (`vanilla-preview` || "vanilla").split('-');
       const filename = {
         'react': '/App.js',
         'static': '/index.html',
@@ -65,9 +65,9 @@
 
   <body style="margin:0;border:0;padding:0;outline:0;">
     <textarea id="default-input" hidden style="display:none;height:0;width:0;">
-  export default () => {
-    return <div>Hello World</div>
-  };
+import "./styles.css";
+
+document.getElementById("app").innerHTML = `<h1>Hello world</h1>`;
 </textarea>
     <div id="root"></div>
   </body>

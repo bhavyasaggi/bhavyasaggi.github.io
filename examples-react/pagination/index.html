@@ -1,24 +1,42 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Live Code</title><meta name="description" content="Live Code"><meta name="robots" content="noindex"><script type="importmap">{
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      Live Code
+    </title>
+    <meta name="description" content="Live Code">
+    <meta name="robots" content="noindex">
+
+    <script type="importmap">
+      {
         "imports": {
           "react": "https://esm.sh/react@18.2.0",
           "react-dom": "https://esm.sh/react-dom@18.2.0",
           "react-dom/": "https://esm.sh/react-dom@18.2.0/",
           "@codesandbox/sandpack-react": "https://esm.sh/@codesandbox/sandpack-react@2.8.0"
         }
-      }</script><script defer type="module">import React from "react";
+      }
+    </script>
+
+    <script defer type="module">
+      import React from "react";
       import {createRoot} from "react-dom/client";
       import {Sandpack} from "@codesandbox/sandpack-react";
 
       const root = createRoot(document.getElementById("root"));
       const inputData = document.getElementById("default-input");
-      const template = `react` || "vanilla";
-      const [filename, layout] = {
-        'react': [
-          '/App.js', 'preview'
-        ],
-        'vanilla': ['/index.js', 'console']
+      const [
+        template = "vanilla",
+        layout = "preview"
+      ] = (`react-preview` || "vanilla").split('-');
+      const filename = {
+        'react': '/App.js',
+        'static': '/index.html',
+        'vanilla': '/index.js'
       }[template];
-      console.log(">", {filename, layout})
+      const autoAction = template !== "react"
       const sandpackComponent = React.createElement(Sandpack, {
         template,
         theme: "dark",
@@ -27,15 +45,30 @@
         },
         options: {
           layout,
+          autoRun: autoAction,
+          autoReload: autoAction,
+          skipEval: false,
+          initMode: "user-visible",
+          recompileMode: "delayed",
+          recompileDelay: 300,
           showRefreshButton: true,
           showInlineErrors: true,
           showLineNumbers: true,
-          editorWidthPercentage: 50
+          editorWidthPercentage: 50,
+          resizablePanels: false
         }
       }, null);
       inputData.value = '';
-      root.render(sandpackComponent);</script></head><body style="margin:0;border:0;padding:0;outline:0"><textarea id="default-input" hidden style="display:none;height:0;width:0">
+      root.render(sandpackComponent);
+    </script>
+  </head>
+
+  <body style="margin:0;border:0;padding:0;outline:0;">
+    <textarea id="default-input" hidden style="display:none;height:0;width:0;">
   export default () => {
     return <div>Hello World</div>
   };
-</textarea><div id="root"></div></body></html>
+</textarea>
+    <div id="root"></div>
+  </body>
+</html>
