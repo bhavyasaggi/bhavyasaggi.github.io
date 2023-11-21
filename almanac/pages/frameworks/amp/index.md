@@ -2,7 +2,7 @@
 title: Accelerated Mobile Pages
 redirect: https://amp.dev/documentation/
 eleventyNavigation:
-  parent: /pages/frameworks
+  parent: /pages/frameworks/
   order: 1
   link: '#'
 ---

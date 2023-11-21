@@ -1,6 +1,6 @@
 {
   "layout": "sandpack",
-  "sandpackTemplate": "vanilla-console",
+  "sandpackTemplate": "vanilla-preview",
   "eleventyExcludeFromCollections": true,
   "eleventyNavigation": {
     "order": 0

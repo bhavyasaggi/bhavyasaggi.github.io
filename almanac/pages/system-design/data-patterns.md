@@ -7,6 +7,8 @@ eleventyNavigation:
 
 # Data Patterns for Distributed Systems
 
+https://blog.bytebytego.com/p/understanding-database-types
+
 - concurrency
 - database isolation
   - Read Uncommitted
@@ -28,10 +30,11 @@ eleventyNavigation:
 
 - OLTP
   - Relational
-  - ACID Properties
+  - ACID (Atomicity, Consistency, Isolation, Durability)
 - OLAP
   - Columnar
   - Analytical
+  - BASE (Basically-Available, Soft-State, Eventual-Consistency)
 
 ## Semi-Structured Data Modelling
 

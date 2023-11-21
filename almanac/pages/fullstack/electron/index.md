@@ -2,7 +2,7 @@
 title: Electron
 eleventyNavigation:
   parent: /pages/fullstack/
-  order: 90
+  order: 80
 ---
 
 # Electron

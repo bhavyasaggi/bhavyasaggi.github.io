@@ -2,7 +2,7 @@
 title: System Infrastructure
 eleventyNavigation:
   parent: /pages/
-  order: 7
+  order: 53
 ---
 
 # System Infrastructure
@@ -15,14 +15,39 @@ eleventyNavigation:
 - New Relic
 - Sentry
 
-# Virutalization & Containerization
+## Alerting
 
-- Virutalization (VMware)
-- Containerization (Docker)
+## Upgradation
 
-# Orchestration & C𝐡𝐨𝐫𝐞𝐨𝐠𝐫𝐚𝐩𝐡𝐲
+To improve QPS or CPU usage to handle incremental load, systems evolve to become more complex.
+Generic steps that are undertaken to improve infrastructure performance are:
 
-- Kubernetes
-- CI/CD
-  - TDD (Test Driven Development)
-  - BFF (Backend For Frontend)
+- Load Balancer
+- Split Services to Clusters
+- Split DB by Service
+- Optimize DB Operation
+  - DB Cache
+  - DB Replication (Master-Slave) for Operations (Read-Write)
+
+### DB Upgradation
+
+To further improve DB perfomance, a distributed approach could be utilized.
+But following items must be considered:
+
+- Sharding
+- Paritioning
+  - Horizontal Partitioning
+  - Vertical Partitioning
+- Concurrency
+  - Serially
+  - Serially Batch
+  - Pessimistic Locking
+  - Optimistic Locking
+- Resource Locking
+
+### Service Upgradation
+
+Some services require more attention than others to manage QPS/CPU usage, leading to 'Scaling':
+
+- Horizontal Scaling
+- Vertical Scaling

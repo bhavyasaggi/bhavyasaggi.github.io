@@ -14,6 +14,8 @@ SAML vs SSO
 - Token based authentication
 - HMAC (Hash-based Message Authentication Code) authentication
 
+### Session Management
+
 ## Authorization
 
 ### OAuth2.0

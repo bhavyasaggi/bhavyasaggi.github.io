@@ -9,6 +9,7 @@ eleventyNavigation:
 
 ## Prototype Chain
 
-<iframe height="320" width="100%" src="/examples-js/currying/" class="reset-box"></iframe>
+- `Object.create`
+- `setPrototypeOf`
 
 ## Inheritance

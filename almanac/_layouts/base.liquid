@@ -47,6 +47,8 @@
         {%- include "css/utils.css" - %}
       </style>
       <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+      <link rel="preload" href="https://esm.sh/prismjs@1.29.0/themes/prism-okaidia.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+      <noscript><link rel="stylesheet" href="https://esm.sh/prismjs@1.29.0/themes/prism-okaidia.min.css"></noscript>
       <script>
         if ('scrollRestoration' in history) {
           history.scrollRestoration = 'manual';
@@ -68,13 +70,13 @@
     </head>
     <body data-theme="primary" class="reset-box shade">
       <script>
-        (function() {
-          const prefersTheme = localStorage.getItem("prefersTheme")
+        (function(window, document) {
+          const prefersTheme = window.localStorage.getItem("prefersTheme")
           const defaultTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "secondary"
             : "primary"
           document.body.dataset.theme = prefersTheme || defaultTheme;
-        })();
+        })(window, document);
       </script>
       <header id="root-header" class="stack gap-1 p-2 shade-secondary">
         <a href="/sitemap" rel="nofollow noindex" class="brick brick-center d-none d-md-block border p-1 shade-secondary text-monospace hover">
@@ -92,10 +94,10 @@
       {%- assign nav_item = nav_path | last -%}
       {%- assign toc_items = content | eleventyTOC  -%}
       <div class="stack">
-        <nav id="root-nav" class="be-1 p-1 d-md-none brick brick-md-2 brick-xl-1 shade-primary user-select-none">
+        <nav id="root-nav" class="be-1 p-1 d-md-none brick brick-md-2 brick-xl-1 shade-primary fs-14 user-select-none">
           {%- render 'partials/navigation.liquid', nav_items: nav_items, nav_root: true, page_url: page.url -%}
         </nav>
-        <div id="root-content" class="p-1 brick brick-6 brick-md-4">
+        <div id="root-content" class="p-1 brick brick-6 brick-md-4 fs-16">
           {%- render 'partials/navigation-breadcrumbs.liquid', nav_items: nav_path -%}
           <main id="main">
             <div class="m-0 b-0 p-0 min-vh-100">
@@ -120,7 +122,8 @@
             </footer>
           </section>
         </div>
-        <aside id="root-aside" class="bs-1 p-1 d-xl-none brick brick-0 brick-xl-1 user-select-none">
+        <aside id="root-aside" class="p-1 d-xl-none brick brick-0 brick-xl-1 fs-14 user-select-none">
+          <strong class="p-1">In this Page</strong>
           {%- render 'partials/navigation-toc.liquid' with toc_items as nav_items -%}
         </aside>
       </div>
@@ -132,6 +135,11 @@
           {{- "now" | date: '%Y' -}}
         </mark>
       </footer>
+      <!-- TODO: Push to SSG -->
+      <script type="module" defer>
+        import mermaid from 'https://esm.sh/mermaid@10.6.1/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({startOnLoad: true, theme: 'neutral'});
+      </script>
     </body>
   </html>
 {%- endif -%}

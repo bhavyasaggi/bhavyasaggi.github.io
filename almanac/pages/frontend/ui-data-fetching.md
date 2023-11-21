@@ -1,8 +1,8 @@
 ---
-title: PWA
+title: UI Data Fetching
 eleventyNavigation:
   parent: /pages/frontend/
-  order: 2
+  order: 32
 ---
 
-# Progressive Web Apps
+# UI Data Fetching

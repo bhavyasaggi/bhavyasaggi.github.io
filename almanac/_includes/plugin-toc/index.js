@@ -22,9 +22,9 @@ function getHeadingsFromHtml(content) {
         const lastHeading = headings[Math.max(headings.length - 1, 0)]
         if (
           lastHeading &&
-          (!lastHeading.text || lastHeading.text.length < 26)
+          (!lastHeading.text || lastHeading.text.length < 60)
         ) {
-          lastHeading.text = (lastHeading.text + data).slice(0, 26)
+          lastHeading.text = (lastHeading.text + data).slice(0, 60)
         }
       }
     },

@@ -2,7 +2,7 @@
 title: System Design Case Studies
 eleventyNavigation:
   parent: /pages/
-  order: 53
+  order: 54
 ---
 
 # System Design Case Studies
@@ -25,7 +25,12 @@ Focus on Consistency and Availability.
 - Timeline System
 - Chat System
 - Collaboration System
-- Media Storage System
+- Media System
+  - On-Demand Large Media Service
+  - Live-Streaming Media Service
+- Financial System
+  - Payment System
+  - Stock-Exchange System
 
 ## Low Level System Design
 

@@ -1,5 +1,6 @@
 const markdownItAnchor = require('markdown-it-anchor')
 const htmlmin = require('html-minifier')
+const Prism = require('prismjs')
 
 const { EleventyHtmlBasePlugin } = require('@11ty/eleventy')
 
@@ -7,6 +8,21 @@ const eleventyNavigationPlugin = require('./_includes/plugin-navigation')
 const eleventyTOCPlugin = require('./_includes/plugin-toc')
 
 const ELEVENTY_BUILD_MODE = process.env.ELEVENTY_RUN_MODE === 'build'
+
+const PRISM_DEFAULT_GRAMMER = [
+  'markup',
+  'html',
+  'xml',
+  'svg',
+  'mathml',
+  'ssml',
+  'atom',
+  'rss',
+  'css',
+  'clike',
+  'javascript',
+  'js',
+]
 
 module.exports = function (eleventyConfig) {
   // Copy the contents of the `public` folder to the output folder
@@ -35,6 +51,19 @@ module.exports = function (eleventyConfig) {
 
   // Customize Markdown library settings:
   eleventyConfig.amendLibrary('md', (mdLib) => {
+    mdLib.enable(['typographer'], true)
+    mdLib.disable(['linkify'], true)
+    mdLib.set({
+      highlight: function (str, lang) {
+        if (lang === 'mermaid') {
+          return `<pre class="${lang}">${str}</pre>`
+        }
+        if (PRISM_DEFAULT_GRAMMER.includes(lang)) {
+          const strHighlight = Prism.highlight(str, Prism.languages[lang], lang)
+          return `<pre class="prism"><code class="language-${lang}">${strHighlight}</code></pre>`
+        }
+      },
+    })
     mdLib.use(markdownItAnchor, {
       permalink: markdownItAnchor.permalink.ariaHidden({
         placement: 'after',
