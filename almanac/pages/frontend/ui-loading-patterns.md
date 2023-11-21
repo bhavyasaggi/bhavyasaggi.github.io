@@ -2,7 +2,7 @@
 title: UI Loading Patterns
 eleventyNavigation:
   parent: /pages/frontend/
-  order: 32
+  order: 31
 ---
 
 # UI Loading Patterns

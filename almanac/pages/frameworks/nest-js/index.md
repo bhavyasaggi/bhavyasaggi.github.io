@@ -2,7 +2,7 @@
 title: Nest.js
 redirect: /
 eleventyNavigation:
-  parent: /pages/frameworks
+  parent: /pages/frameworks/
   order: 3
   link: '#'
 ---

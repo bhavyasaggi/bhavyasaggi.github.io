@@ -2,7 +2,7 @@
 title: UI Data Fetching
 eleventyNavigation:
   parent: /pages/frontend/
-  order: 33
+  order: 32
 ---
 
 # UI Data Fetching

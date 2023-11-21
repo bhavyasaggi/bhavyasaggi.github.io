@@ -6,12 +6,10 @@
   --pc-bg: #f8f9fa;
   --pc-white: #ffffff;
   --pc-border: #6C757D;
-  --pc-link: #0069C2;
   --pc-link: #7151a9;
 }
 
 [data-theme='secondary'] {
-  --pc-link: #8cb4ff;
   --pc-link: #ac8bee;
 }
 

@@ -48,7 +48,8 @@ Special props: ref, key, children
   - SVG
 - State Management Libraries
   - Redux
-  - Recoil
+  - Recoil / Zustand
+  - RTK / Apollo
 - Routing Libraries
   - React-Router
 - Component Libraries
