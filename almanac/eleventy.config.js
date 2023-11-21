@@ -80,6 +80,7 @@ module.exports = function (eleventyConfig) {
     // Prior to Eleventy 2.0: use this.outputPath instead
     if (
       ELEVENTY_BUILD_MODE &&
+      !String(this.page.inputPath).endsWith('.11ty.js') &&
       this.page.outputPath &&
       this.page.outputPath.endsWith('.html')
     ) {
