@@ -1,0 +1,591 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardCount Dummy Data 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Dummy Render
+    </div>
+    <div
+      class="card-body"
+    >
+      3
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardCount Empty Data 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Empty Render
+    </div>
+    <div
+      class="card-body"
+    >
+      0
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardCount Error State 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Error Render
+    </div>
+    <div
+      class="card-body"
+    >
+      TRE
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardCount Loading State 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Loading Render
+    </div>
+    <div
+      class="card-body"
+    >
+      TRL
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardCount Malformed Data 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Malformed Render
+    </div>
+    <div
+      class="card-body"
+    >
+      0
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimeseries Dummy Data 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Dummy Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="height: 300px;"
+    >
+      <canvas
+        height="0"
+        role="img"
+        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+        width="0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimeseries Empty Data 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Empty Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="height: 300px;"
+    >
+      <canvas
+        height="0"
+        role="img"
+        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+        width="0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimeseries Error State 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Loading Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="height: 300px;"
+    >
+      TRE
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimeseries Loading State 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Loading Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="height: 300px;"
+    >
+      TRL
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimeseries Malformed Data 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Malformed Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="height: 300px;"
+    >
+      <canvas
+        height="0"
+        role="img"
+        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+        width="0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimetable Dummy Data 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Dummy Render
+    </div>
+    <div
+      class="table-responsive"
+    >
+      <table
+        class="table table-sm table-striped table-bordered table-hover"
+      >
+        <thead>
+          <tr>
+            <td>
+              #
+            </td>
+            <td>
+              UserId
+            </td>
+            <td>
+              timestamp
+            </td>
+            <td>
+              Status
+            </td>
+            <td>
+              Error Message
+            </td>
+            <td>
+              Request
+            </td>
+            <td>
+              Response
+            </td>
+          </tr>
+        </thead>
+        <tbody
+          class="small"
+        >
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              1
+            </td>
+            <td>
+              <time
+                datetime="2023-11-24T16:52:23.168Z"
+              >
+                Nov 24, 2023, 10:22:23.168 p.m.
+              </time>
+            </td>
+            <td>
+              Success
+            </td>
+            <td />
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"1"},"body":{}}
+            </td>
+            <td>
+              {"userId":"1","timestamp":"2023-11-24T16:52:23.168Z","status":0}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2
+            </td>
+            <td>
+              1
+            </td>
+            <td>
+              <time
+                datetime="2023-11-24T16:52:23.168Z"
+              >
+                Nov 24, 2023, 10:22:23.168 p.m.
+              </time>
+            </td>
+            <td>
+              Failure
+            </td>
+            <td />
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"1"},"body":{}}
+            </td>
+            <td>
+              {"userId":"1","timestamp":"2023-11-24T16:52:23.168Z","status":0}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              3
+            </td>
+            <td>
+              2
+            </td>
+            <td>
+              <time
+                datetime="2023-11-24T16:52:25.388Z"
+              >
+                Nov 24, 2023, 10:22:25.388 p.m.
+              </time>
+            </td>
+            <td>
+              Failure
+            </td>
+            <td>
+              Random Failure
+            </td>
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"2"},"body":{}}
+            </td>
+            <td>
+              {"userId":"2","timestamp":"2023-11-24T16:52:25.388Z","status":1,"errorMsg":"Random Failure"}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              4
+            </td>
+            <td>
+              3
+            </td>
+            <td>
+              <time
+                datetime="2023-11-24T16:52:27.781Z"
+              >
+                Nov 24, 2023, 10:22:27.781 p.m.
+              </time>
+            </td>
+            <td>
+              Success
+            </td>
+            <td />
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"3"},"body":{}}
+            </td>
+            <td>
+              {"userId":"3","timestamp":"2023-11-24T16:52:27.781Z","status":0}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimetable Empty Data 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Empty Render
+    </div>
+    <div
+      class="table-responsive"
+    >
+      <table
+        class="table table-sm table-striped table-bordered table-hover"
+      >
+        <thead>
+          <tr>
+            <td>
+              #
+            </td>
+            <td>
+              UserId
+            </td>
+            <td>
+              timestamp
+            </td>
+            <td>
+              Status
+            </td>
+            <td>
+              Error Message
+            </td>
+            <td>
+              Request
+            </td>
+            <td>
+              Response
+            </td>
+          </tr>
+        </thead>
+        <tbody
+          class="small"
+        />
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimetable Error State 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Loading Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="min-height: 300px;"
+    >
+      TRE
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimetable Loading State 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Loading Render
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center card-body"
+      style="min-height: 300px;"
+    >
+      TRL
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CardTimetable Malformed Data 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <div
+      class="card-header"
+    >
+      Test Malformed Render
+    </div>
+    <div
+      class="table-responsive"
+    >
+      <table
+        class="table table-sm table-striped table-bordered table-hover"
+      >
+        <thead>
+          <tr>
+            <td>
+              #
+            </td>
+            <td>
+              UserId
+            </td>
+            <td>
+              timestamp
+            </td>
+            <td>
+              Status
+            </td>
+            <td>
+              Error Message
+            </td>
+            <td>
+              Request
+            </td>
+            <td>
+              Response
+            </td>
+          </tr>
+        </thead>
+        <tbody
+          class="small"
+        >
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              1
+            </td>
+            <td>
+              -
+            </td>
+            <td>
+              Success
+            </td>
+            <td />
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"1"},"body":{}}
+            </td>
+            <td>
+              {"userId":"1","timestamp":"2023-11-24T16:52:23.168Z","status":0}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2
+            </td>
+            <td>
+              1
+            </td>
+            <td>
+              -
+            </td>
+            <td>
+              Failure
+            </td>
+            <td />
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"1"},"body":{}}
+            </td>
+            <td>
+              {"userId":"1","timestamp":"2023-11-24T16:52:23.168Z","status":0}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              3
+            </td>
+            <td>
+              2
+            </td>
+            <td>
+              -
+            </td>
+            <td>
+              Failure
+            </td>
+            <td>
+              Random Failure
+            </td>
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"2"},"body":{}}
+            </td>
+            <td>
+              {"userId":"2","timestamp":"2023-11-24T16:52:25.388Z","status":1,"errorMsg":"Random Failure"}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              4
+            </td>
+            <td>
+              3
+            </td>
+            <td>
+              -
+            </td>
+            <td>
+              Success
+            </td>
+            <td />
+            <td>
+              {"hostname":"localhost","ip":"::1","path":"/api/hello-world","xhr":false,"query":{"userId":"3"},"body":{}}
+            </td>
+            <td>
+              {"userId":"3","timestamp":"2023-11-24T16:52:27.781Z","status":0}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;
