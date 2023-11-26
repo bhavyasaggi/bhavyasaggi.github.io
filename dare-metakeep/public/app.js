@@ -26,17 +26,28 @@ import {
 import {
   Chart as ChartJS,
   BarElement,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend,
   LinearScale,
   TimeScale,
 } from 'chart.js'
-import { Bar } from 'react-chartjs-2'
+import { Bar, Line } from 'react-chartjs-2'
 import { isValid, format, subDays } from 'date-fns'
 import 'chartjs-adapter-date-fns'
 
-ChartJS.register(BarElement, Title, Tooltip, Legend, LinearScale, TimeScale)
+ChartJS.register(
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  LinearScale,
+  TimeScale
+)
 
 export const QUERY_DATETIME = {
   LAST_24_HOURS: 'Last 24 Hours',
@@ -58,27 +69,23 @@ export function CardCount({ title, value, StatusComponent }) {
 }
 
 export function CardTimeseries({ title, value, StatusComponent }) {
-  const dataSuccess = []
-  const dataFailure = []
-  ;(value || []).forEach(({ timestamp, status }) => {
-    if (!isValidDate(timestamp)) {
-      return
+  const dataCount = []
+  const dataUsers = []
+  const dataFailures = []
+  ;(value || []).forEach(
+    ({ timestamp, countTotal, countUsers, countFailures }) => {
+      if (!isValidDate(timestamp)) {
+        return
+      }
+      const datetimestamp = new Date(timestamp)
+      dataCount.push({ x: datetimestamp, y: countTotal })
+      dataUsers.push({ x: datetimestamp, y: countUsers })
+      dataFailures.push({ x: datetimestamp, y: countFailures })
     }
-    const datum = {
-      x: new Date(timestamp),
-      y: 1,
-    }
-    if (status) {
-      // Failure
-      dataFailure.push(datum)
-    } else {
-      // Sucess
-      dataSuccess.push(datum)
-    }
-  })
+  )
 
   return (
-    <Card>
+    <Card className='text-center'>
       <Card.Header>{title}</Card.Header>
       <Card.Body
         className='d-flex align-items-center justify-content-center'
@@ -89,29 +96,47 @@ export function CardTimeseries({ title, value, StatusComponent }) {
         {StatusComponent ? (
           <StatusComponent />
         ) : (
-          <Bar
+          <Line
             data={{
               datasets: [
                 {
-                  label: 'Success',
-                  data: dataSuccess,
-                  backgroundColor: 'green',
+                  label: 'Total Log Count',
+                  data: dataCount,
+                  backgroundColor: 'blue',
+                  borderColor: 'blue',
+                  tension: 0.1,
                 },
                 {
-                  label: 'Failure',
-                  data: dataFailure,
+                  label: 'Distinct User Count',
+                  data: dataUsers,
+                  backgroundColor: 'green',
+                  borderColor: 'green',
+                  tension: 0.1,
+                },
+                {
+                  label: 'Failure Log Count',
+                  data: dataFailures,
                   backgroundColor: 'red',
+                  borderColor: 'red',
+                  tension: 0.1,
                 },
               ],
             }}
             options={{
+              responsive: true,
+              maintainAspectRatio: false,
               scales: {
                 x: {
                   type: 'time',
-                  stacked: true,
+                  time: {
+                    minUnit: 'minute',
+                  },
                 },
-                y: {
-                  stacked: true,
+                y: {},
+              },
+              plugins: {
+                legend: {
+                  display: false,
                 },
               },
             }}
@@ -234,7 +259,7 @@ export function FilterDateTime({
                   value={
                     format(queryDateTimeFrom, 'yyyy-MM-dd') +
                     'T' +
-                    format(queryDateTimeFrom, 'hh:mm')
+                    format(queryDateTimeFrom, 'HH:mm')
                   }
                   disabled={isDisabledDateTime}
                   data-testid='dType-datetime-start'
@@ -250,7 +275,7 @@ export function FilterDateTime({
                   value={
                     format(queryDateTimeTo, 'yyyy-MM-dd') +
                     'T' +
-                    format(queryDateTimeTo, 'hh:mm')
+                    format(queryDateTimeTo, 'HH:mm')
                   }
                   disabled={isDisabledDateTime}
                   data-testid='dType-datetime-end'
@@ -313,7 +338,8 @@ export const DEFAULT_DATA_REDUCER = (prevMeta, deltaMeta) => {
     }
   }
   if (nextMeta.queryDateTimeFrom > nextMeta.queryDateTimeTo) {
-    throw new Error('Improper DateRange')
+    window.alert('Mismatched TimeRange')
+    return prevMeta
   }
   // TODO: deep compare
   return nextMeta
@@ -423,8 +449,8 @@ export default function App() {
         <Row className='mb-3'>
           <Col>
             <CardTimeseries
-              title='Logs'
-              value={dataset.data}
+              title='Total Log Count'
+              value={dataset?.dataSummary}
               StatusComponent={StatusComponent}
             />
           </Col>

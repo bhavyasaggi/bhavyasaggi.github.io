@@ -98,7 +98,7 @@ exports[`CardCount Malformed Data 1`] = `
 exports[`CardTimeseries Dummy Data 1`] = `
 <DocumentFragment>
   <div
-    class="card"
+    class="text-center card"
   >
     <div
       class="card-header"
@@ -123,7 +123,7 @@ exports[`CardTimeseries Dummy Data 1`] = `
 exports[`CardTimeseries Empty Data 1`] = `
 <DocumentFragment>
   <div
-    class="card"
+    class="text-center card"
   >
     <div
       class="card-header"
@@ -148,7 +148,7 @@ exports[`CardTimeseries Empty Data 1`] = `
 exports[`CardTimeseries Error State 1`] = `
 <DocumentFragment>
   <div
-    class="card"
+    class="text-center card"
   >
     <div
       class="card-header"
@@ -168,7 +168,7 @@ exports[`CardTimeseries Error State 1`] = `
 exports[`CardTimeseries Loading State 1`] = `
 <DocumentFragment>
   <div
-    class="card"
+    class="text-center card"
   >
     <div
       class="card-header"
@@ -188,7 +188,7 @@ exports[`CardTimeseries Loading State 1`] = `
 exports[`CardTimeseries Malformed Data 1`] = `
 <DocumentFragment>
   <div
-    class="card"
+    class="text-center card"
   >
     <div
       class="card-header"
