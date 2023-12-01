@@ -59,105 +59,114 @@ Manager which will be used by the SaaS company’s Engineering team.
 
 - Single Tenant, Single User in a view.
 - Keeping endpoints un-Authenticated for simplicity's sake
-- Show subset of everything, but unselected.
+- Levels of selection
+  - Unselected: White
+  - Hightlight (current-options): Silver
+  - Select (user-click): Gold
+    - last column selection opens up editor modal
 - Make progression click-aware:
-
-  | Left Chain | Right Chain | Populate Direction | Description                      |
-  | ---------- | ----------- | ------------------ | -------------------------------- |
-  | Absent     | Absent      | N/A                | No click allowed on preselection |
-  | Absent     | Present     | X                  | XXX                              |
-  | Present    | Absent      | X                  | XXX                              |
-  | Present    | Present     | X                  | XXX                              |
+  - One hard-select per view, saved in query-filter
+  - Multiple highlight per column,
+- Initial: (no query)
+  - Current: Grab All column entries
+  - Extension: Grab top 10 for each column. And progressively fetch-render, while keeping backup in indexDB.
+- Apply filter
+  - On column with selection: Remove Selection
+  - On column without selecton: Omit all edges that includes the filtered item
+- Reorder Columns:
+  - Selected Items
+  - Highlighted Items
+  - Filtered Items
+- Error
+  - Error data is kept in 'key'-node, as Variable(key-value) is shared across all edges
+  - Keep 'Error-Codes'. But for this exercise we'll consider only "Failure".
 
 ## Decisions
 
 - Edges (Relations) are more important than visual nodes.\
   (because of many-to-many relationships with same node sharing)
-- Inital items, Selected Items, & Filtered Items would be the shown in each column in-order.
+- Inital items, Highlighted Items, & Selected Items would be the shown in each column in-order.
 - Save 3 Datasets
   - Available Items (Environments, Features , Sub-Features, Category, Configuration)\
     & their meta (like id, and name).
   - Edge Values (Edge Value Id => config key-values)
   - Edge Meta (Button-Top Mapping from Items hierarchy) => Edge Value Id
 
+TODO
+
+- Progressive Filters, do not require API call.
+- Can cache Filter Journey for quick undo.
+
 ## Back-of-the-Envelope Calculation
 
 Max Data Support assumption:
 
-- 1K tenants
-- 100 environments
-- 1M workflows
-- 1K Features
-- 1M Categories
-- 1K Configurations
-- 1K Variables
+- 1 / 1K tenants
+- 10 / 100 environments
+- 100 / 1M workflows
+- 100 / 1K Features
+- 100 / 1M Categories
+- 100 / 1K Configurations
+- 100 /1K Variables
 
 If everyone uses everything, we can reach a limit of `1K * 100 * 1M * 1K * 1M * 1K * 1K`, ie. `10^26` edges.\
 We can uniquely identify each edge with a keysize of `log(10^26)`, ie. `26 bits` or `4 bytes`.
 
-### DB_Items
+### Items
 
-Total Entries would be `1K + 100 + 1M + 1K + 1M + 1K + 1K` or `2004100`, which would require `log(2004100)` or `7 bits` or `1 byte` keys. And each field would have max-size of `4 Kb`.
+Each item would be detailed description of each entity in system.
 
-Therefore, max size should be under `2 Gb`
+| uniqKey | type | name | metaValue |
+| ------- | ---- | ---- | --------- |
+| xx      | xx   | xx   | xx        |
 
-### DB_Edge_Value
+Total Entries would be `1K + 100 + 1M + 1K + 1M + 1K + 1K` or `2004100`, which can be represented by concatenated string of `3+2+6+3+6+3+3` or `26 bits` or `4 bytes`.\
+Therefore, after including the `2 Kb` value, the each tuple value should be `4Kb`, and max size should be under `8 Gb`.
 
-Translates to acutal configuration key-value pair.
-
-Each variable would have id & name key of max-size of 1Kb, rounding up to 2Kb for each variable-entry. Since each configuration has 1K variable-entries, therefore max-size of each config => `1K*2Kb` => `2Mb`.
-
-- `10^17 *  2Kb`
-- `2 * 10^8 Gb`
-
-This is problematic, and would require sharding! Luckily we can simply do it by distributing on edgeID. And to uniquely identify in alphanumeric incrementing id (base 36), we'd need `log(2*10^8)/log(36)` => `6` length key => `6 bytes`
-
-### DB_Edge_Meta
-
-Each field would have id & name key of max-size of 1Kb, rounding up to 2Kb for each item-entry.
-
-- (1K + 100 + 1M + 10K + 1M + 1K) \* 2Kb
-- 2004204000 bytes
-- 16 Gb
-
-- 1 reference => 1K Char Key => 1Kb (rounded up to 2Kb)
-- 1 Variable => 1K Char Key, 2K Char Value => 3Kb (rounded up to 4Kb)
-- Sharding dataset by
-  - Tenants
-  -
-- Worst Case: All edges are consumed by everyone:
-  - `1K * 100 * 1M * 10K * 1M * 1K * 4Kb`
-  - `4*10^17 bytes` => `4*10^8 Gb`
-
-## Object Entity Blueprint
+Blueprint:
 
 ```json
 [
   {
-    "id": "env-dev",
-    "workflows": [
-      {
-        "id": "env-dev_wf-signup",
-        "features": [
-          {
-            "id": "env-dev_wf-signup_feature-auth",
-            "categories": [
-              {
-                "id": "env-dev_wf-signup_feature-auth_category-login",
-                "keys": [
-                  {
-                    "id": "env-dev_wf-signup_feature-auth_category-login_key-username",
-                    "type": "string",
-                    "name": "",
-                    "value": "---"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    "id": "",
+    "type": "tenant|environment|workflow|feature|category|config|variable|",
+    "name": "",
+    "value": "{}"
+  }
+]
+```
+
+### Edges
+
+Each Edge translates to acutal configuration key-value pair from tenant.
+
+| uniqKey | tenantKey | envKey | workflowKey | featureKey | categoryKey | configKey | varKey |
+| ------- | --------- | ------ | ----------- | ---------- | ----------- | --------- | ------ |
+| xx      | xxx       | xxx    | xxx         | xxx        | xxx         | xxx       | xxx    |
+
+Each variable would have id of size: `4 bytes`.\
+Therefore, each tuple with 7 fields of similar size: `7*4 bytes` or `28 bytes`
+
+DB size would be around `10^26 * 28 bytes` or `3 * 10^18 Gb`. This is problematic, and would require sharding!\
+Luckily we can simply do it by distributing on edgeID.
+
+Notes: Keeping the data non-normalized and replicated, we incur higher storage but lower lookups.\
+But, what if we normalize the data halfway? That would not work since each node-path resolve to unique varKeyValue :(
+
+Blueprint:
+
+```json
+[
+  {
+    "id": "",
+    "tenant": "tenant-self",
+    "environment": "env-dev",
+    "workflow": "wf-signup",
+    "feature": "feature-auth",
+    "category": "category-login",
+    "config": "config-legacy",
+    "variable": "key-username",
+    "value": "------"
   }
 ]
 ```
