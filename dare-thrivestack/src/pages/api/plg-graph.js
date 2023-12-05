@@ -1,5 +1,5 @@
-import dataPlgNodes from '#/data/plg-nodes.json'
-import dataPlgEdges from '#/data/plg-edges.json'
+import dataPlgNodes from '../../../data/plg-nodes.json'
+import dataPlgEdges from '../../../data/plg-edges.json'
 
 const MIN_COL_NODE_COUNT = 10
 

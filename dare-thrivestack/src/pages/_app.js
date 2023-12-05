@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import '@/styles/globals.css'
+import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Head from 'next/head'
 
 import { Provider } from 'react-redux'
 
-import { store } from '@/store'
+import { store } from '../store'
 
 export default function App({ Component, pageProps }) {
   return (

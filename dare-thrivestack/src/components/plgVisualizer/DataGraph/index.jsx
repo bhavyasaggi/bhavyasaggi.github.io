@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import useFetch from '@/hooks/useFetch'
+import useFetch from '../../../hooks/useFetch'
 
 import {
   actionStatus,
