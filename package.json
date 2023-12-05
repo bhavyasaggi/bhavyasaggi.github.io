@@ -5,14 +5,18 @@
   "main": "index.js",
   "private": true,
   "workspaces": [
-    "almanac"
+    "almanac",
+    "dare-metakeep",
+    "dare-thrivestack"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "almanac": "yarn workspace almanac start",
     "almanac:serve": "yarn workspace almanac serve",
     "almanac:balance": "yarn workspace almanac balance",
-    "almanac:build": "yarn workspace almanac build"
+    "almanac:build": "yarn workspace almanac build",
+    "dare:metakeep": "yarn workspace dare-metakeep start",
+    "dare:thrivestack": "yarn workspace dare-thrivestack dev"
   },
   "repository": {
     "type": "git",

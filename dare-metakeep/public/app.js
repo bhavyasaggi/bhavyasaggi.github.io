@@ -134,11 +134,6 @@ export function CardTimeseries({ title, value, StatusComponent }) {
                 },
                 y: {},
               },
-              plugins: {
-                legend: {
-                  display: false,
-                },
-              },
             }}
           />
         )}
@@ -449,7 +444,7 @@ export default function App() {
         <Row className='mb-3'>
           <Col>
             <CardTimeseries
-              title='Total Log Count'
+              title='Log Summary'
               value={dataset?.dataSummary}
               StatusComponent={StatusComponent}
             />
