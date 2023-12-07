@@ -3,6 +3,8 @@ import isEmpty from 'lodash/isEmpty'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import Iconize from '../../Iconize'
+
 import useFetch from '../../../hooks/useFetch'
 
 import {
@@ -15,8 +17,10 @@ import {
 
 function PlgVisualizerDataGraphWrapper({ children }) {
   return (
-    <div className='position-absolute top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center bg-dark bg-opacity-75 z-3'>
-      {children}
+    <div className='fade show placeholder-glow position-absolute top-0 bottom-0 start-0 end-0 bg-white opacity-75 z-3'>
+      <div className='w-100 h-100 d-flex align-items-center justify-content-center placeholder placeholder-lg bg-dark z-3'>
+        <Iconize className='display-1'>{children}</Iconize>
+      </div>
     </div>
   )
 }

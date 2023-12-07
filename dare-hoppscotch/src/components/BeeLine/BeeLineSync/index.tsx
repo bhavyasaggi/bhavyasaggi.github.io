@@ -1,46 +1,53 @@
 import * as Comlink from 'comlink'
 
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState, useTransition, useCallback } from 'react'
 
-import { BeeLineWorker } from '@/workers/beeline.worker'
+import { useBeeLineWorkerLoaded, useBeeLineWorkerRef } from '../provider'
 
 export default function BeeLineSync() {
-  const workerRef = useRef<Worker>()
-  const beeLineWorkerRef = useRef<Comlink.Remote<BeeLineWorker>>()
+  const [isPending, startTransition] = useTransition()
 
   const [progress, setProgress] = useState(0)
-  const [workerLoaded, setWorkerLoaded] = useState(false)
 
-  useEffect(() => {
-    setWorkerLoaded(false)
-    workerRef.current = new Worker('@/workers/beeline.worker', {
-      type: 'module',
+  const workerRef = useBeeLineWorkerRef()
+  const workerLoaded = useBeeLineWorkerLoaded()
+
+  const fetchTickets = useCallback(async () => {
+    const workerObj = workerRef.current
+    const uriList = [...Array(10)].map(
+      (_i, i) => `https://sfe-interview.hoppscotch.com/issues-${i + 1}.json`
+    )
+    console.log('>>', workerObj)
+    await new Promise((resolve) => {
+      workerObj?.fetchTicketsAbort(Comlink.proxy(resolve))
     })
-    beeLineWorkerRef.current = Comlink.wrap<BeeLineWorker>(workerRef.current)
-    setWorkerLoaded(true)
-
-    return () => {
-      workerRef.current?.terminate()
-      // @ts-ignore
-      beeLineWorkerRef.current?.terminate()
-      setWorkerLoaded(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (workerLoaded) {
-      const beeLineWorkerObj = beeLineWorkerRef.current
-      const uriList = [...Array(10)].map(
-        (_i, i) => `https://sfe-interview.hoppscotch.com/issues-${i + 1}.json`
-      )
-      beeLineWorkerObj?.syncIssues(
-        uriList,
-        Comlink.proxy((p: number) => {
-          setProgress(p)
+    workerObj?.fetchTickets(
+      uriList,
+      Comlink.proxy((p: number) => {
+        startTransition(() => {
+          setProgress(Number(p.toFixed(4)))
         })
-      )
-    }
-  }, [workerLoaded])
+      })
+    )
+  }, [workerRef])
 
-  return <div>Sync: {progress}%</div>
+  return (
+    <>
+      <button
+        type='button'
+        onClick={() => {
+          return workerLoaded
+            ? fetchTickets()
+            : window.alert('Worked not loaded.')
+        }}
+      >
+        <span>Re-Sync </span>
+        <span>{isPending ? '?' : ''}</span>
+        <span>{progress}%</span>
+      </button>
+      <button type='button' onClick={() => {}}>
+        Clear
+      </button>
+    </>
+  )
 }

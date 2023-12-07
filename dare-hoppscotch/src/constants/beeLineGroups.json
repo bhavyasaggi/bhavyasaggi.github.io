@@ -1,0 +1,114 @@
+[
+  {
+    "id": "status",
+    "name": "Status",
+    "values": [
+      {
+        "id": "status-triage",
+        "name": "Triage"
+      },
+      {
+        "id": "status-backlog",
+        "name": "Backlog"
+      },
+      {
+        "id": "status-todo",
+        "name": "Todo"
+      },
+      {
+        "id": "status-inprogress",
+        "name": "In Progress"
+      },
+      {
+        "id": "status-inreview",
+        "name": "In Review"
+      },
+      {
+        "id": "status-done",
+        "name": "Done"
+      }
+    ]
+  },
+  {
+    "id": "labels",
+    "name": "Labels",
+    "values": [
+      {
+        "id": "labels-bug",
+        "name": "Bug"
+      },
+      {
+        "id": "labels-feature",
+        "name": "Feature"
+      },
+      {
+        "id": "labels-performance",
+        "name": "Performance"
+      },
+      {
+        "id": "labels-security",
+        "name": "Security"
+      },
+      {
+        "id": "labels-documentation",
+        "name": "Documentation"
+      },
+      {
+        "id": "labels-userrequest",
+        "name": "User Request"
+      },
+      {
+        "id": "labels-immediate",
+        "name": "Immediate"
+      },
+      {
+        "id": "labels-nextrelease",
+        "name": "Next Release"
+      },
+      {
+        "id": "labels-majorrelease",
+        "name": "Major Release"
+      }
+    ]
+  },
+  {
+    "id": "assignee",
+    "name": "Assignee",
+    "values": [
+      {
+        "id": "assignee-1",
+        "name": 1
+      },
+      {
+        "id": "assignee-0",
+        "name": 0
+      }
+    ]
+  },
+  {
+    "id": "priority",
+    "name": "Priority",
+    "values": [
+      {
+        "id": "priority-none",
+        "name": "none"
+      },
+      {
+        "id": "priority-low",
+        "name": "low"
+      },
+      {
+        "id": "priority-medium",
+        "name": "medium"
+      },
+      {
+        "id": "priority-high",
+        "name": "high"
+      },
+      {
+        "id": "priority-critical",
+        "name": "critical"
+      }
+    ]
+  }
+]

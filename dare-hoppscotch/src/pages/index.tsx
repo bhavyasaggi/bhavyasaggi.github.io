@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 
+import BeeLine from '@/components/BeeLine'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -9,7 +11,9 @@ export default function Home() {
       <Head>
         <title>Home</title>
       </Head>
-      <main className={`${inter.className}`}>Hellow</main>
+      <main className={`${inter.className}`}>
+        <BeeLine />
+      </main>
     </>
   )
 }

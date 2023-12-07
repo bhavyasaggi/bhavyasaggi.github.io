@@ -1,13 +1,23 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
 
+import Iconize from '../../Iconize'
+
 import { actionSelect } from '../store'
 
-export default function PlgVisualizerCardNode({ hidden, type, node }) {
+function PlgVisualizerCardNodeRaw({
+  hidden,
+  type,
+  name,
+  value,
+  error,
+  active,
+  uuid,
+}) {
   const select = useSelector((state) => state.plgVisualizer.select)
 
   const dispatch = useDispatch()
@@ -24,52 +34,69 @@ export default function PlgVisualizerCardNode({ hidden, type, node }) {
     if (type === 'key') {
       // eslint-disable-next-line no-alert
       const newNodeValue = window.prompt(
-        `Current value for ${node.name} is ${node.value}. Change Value?`,
-        node.value
+        `Current value for ${name} is ${value}. Change Value?`,
+        value
       )
-      if (newNodeValue !== node.value) {
+      if (newNodeValue !== value) {
         // TODO: Update
       }
     }
-  }, [node.name, node.value, type])
+  }, [name, value, type])
 
-  if (hidden || !type || !node) {
+  if (hidden || !type || !uuid) {
     return null
   }
 
-  let variant = 'outline-info'
-  if (select.value === node.uuid) {
-    if (node.error) {
+  let variant = 'light'
+  let variantClassName = ''
+  if (select.value === uuid) {
+    if (error) {
       variant = 'danger'
+      variantClassName = 'bg-danger text-light'
     } else {
-      variant = 'info'
+      variant = 'warning'
+      variantClassName = ' bg-warning-subtle text-dark'
     }
-  } else if (node.active) {
-    if (node.error) {
+  } else if (active) {
+    if (error) {
       variant = 'outline-danger'
+      variantClassName = ' bg-danger-subtle text-dark'
     } else {
       variant = 'outline-warning'
+      variantClassName = 'bg-warning-subtle text-dark'
     }
   }
 
   return (
-    <ButtonGroup size='sm'>
+    <ButtonGroup size='sm' className={`rounded-0 ${variantClassName}`}>
       <Button
         variant={variant}
         data-card='plg'
         data-type={type}
-        data-uuid={node.uuid}
-        className='text-truncate'
-        title={node.name}
+        data-uuid={uuid}
+        className={`rounded-0 text-truncate ${
+          variant === 'light' ? 'border' : ''
+        }`}
+        title={name}
         onClick={onClickCb}
       >
-        {node.name}
+        {name}
       </Button>
       {type === 'key' ? (
-        <Button variant='info' onClick={onEditCb}>
-          ✏️
+        <Button
+          variant={variant}
+          className={`rounded-0 flex-grow-0 flex-shrink-0 ${
+            variant === 'light' ? 'border' : ''
+          }`}
+          onClick={onEditCb}
+        >
+          <Iconize>✏️</Iconize>
         </Button>
       ) : null}
     </ButtonGroup>
   )
 }
+
+const PlgVisualizerCardNode = React.memo(PlgVisualizerCardNodeRaw)
+
+export default PlgVisualizerCardNode

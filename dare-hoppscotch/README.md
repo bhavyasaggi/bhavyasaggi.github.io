@@ -30,7 +30,7 @@ Implement an Issues list, similar to [Linear](https://linear.app/)'s.
           "title": "xxxxxx",
           "parentID": "{id}",
           "status": "Triage|Backlog|Todo|In Progress|In Review|Done",
-          "lables": "Bug|Feature|Performance|Security|Documentation|User Request|Immediate|Next Release|Major Release",
+          "labels": "Bug|Feature|Performance|Security|Documentation|User Request|Immediate|Next Release|Major Release",
           "priority": "none|low|medium|high|critical",
           "assignee": "xxxxxx|null"
         }

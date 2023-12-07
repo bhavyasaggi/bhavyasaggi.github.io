@@ -181,7 +181,7 @@ export default async function handler(req, res) {
   localEdgeCount = dataPlgEdges.length
 
   await new Promise((resolve) => {
-    setTimeout(resolve, 1000 * (1 + Math.random()))
+    setTimeout(resolve, 100 * (1 + Math.random()))
   })
 
   res.status(200).json({

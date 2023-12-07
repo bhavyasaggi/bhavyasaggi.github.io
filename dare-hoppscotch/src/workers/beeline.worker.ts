@@ -4,113 +4,131 @@
 
 import * as Comlink from 'comlink'
 
-const idbEventTarget = new EventTarget()
-const idbEventReady = new Event('ready')
-
-let db: IDBDatabase | null = null
-let objStore: IDBObjectStore | null = null
-const idb = indexedDB.open('beeline', 1)
-idb.addEventListener('upgradeneeded', (e: any) => {
-  db = e.target.result as IDBDatabase
-  if (!db.objectStoreNames.contains('tickets')) {
-    const objStoreLocal = idb.result.createObjectStore('tickets', {
-      keyPath: 'id',
-      autoIncrement: false,
-    })
-    objStoreLocal.createIndex('id', 'id', { unique: true })
-  }
-})
-idb.addEventListener('success', (e: any) => {
-  db = e.target.result as IDBDatabase
-  objStore = db.transaction('tickets', 'readwrite').objectStore('tickets')
-  idbEventTarget.dispatchEvent(idbEventReady)
-})
-
-function waitForReady(cb: Function) {
-  return (...args: any) => {
-    if (db && objStore) {
-      cb(...args)
-    } else {
-      const lazyCb = () => {
-        cb(...args)
-        idbEventTarget.removeEventListener('ready', lazyCb)
-      }
-      idbEventTarget.addEventListener('ready', lazyCb, {
-        once: true,
-        passive: true,
-      })
-    }
-  }
+//
+const dataSinkTickets = new Map()
+let dataListTickets: any = []
+let dataGroupTickets: any = {}
+const pushDataGroupTickets = ({ id, type, value }: any) => {
+  const group = `${type}-${value}`.replace(/\s/, '').toLowerCase()
+  dataGroupTickets[group] = dataGroupTickets[group] || []
+  dataGroupTickets[group].push(id)
+}
+const addDataGroupTickets = (ticket: any) => {
+  const { id, status, labels, priority, assignee } = ticket
+  pushDataGroupTickets({ id, type: 'status', value: status })
+  pushDataGroupTickets({ id, type: 'priority', value: priority })
+  pushDataGroupTickets({ id, type: 'assignee', value: assignee ? 1 : 0 })
+  ;(Array.isArray(labels) ? labels : [labels]).forEach((lbl) => {
+    pushDataGroupTickets({ id, type: 'labels', value: lbl })
+  })
 }
 
-let isSyncIssuesRunning = false
-// TODO: Make Singleton, use abortcontroller
-async function syncIssues(
-  uriList: string[] = [],
+//
+let fetchTicketsAbortController: AbortController | null = null
+async function fetchTickets(
+  uriList: any[] = [],
   // eslint-disable-next-line no-unused-vars
-  cb: (progress: number) => void = () => {}
+  cb: (progress: number) => any = () => {}
 ) {
-  if (!isSyncIssuesRunning) {
-    isSyncIssuesRunning = true
-    let progress = 0
-    const progressUnit = Number((100 / (uriList.length || 1)).toFixed(2))
+  // Short Circuit
+  if (
+    fetchTicketsAbortController &&
+    !fetchTicketsAbortController.signal.aborted
+  ) {
+    return
+  }
+
+  fetchTicketsAbortController = new AbortController()
+
+  dataSinkTickets.clear()
+  dataListTickets = []
+  dataGroupTickets = {}
+
+  let progress = 0
+  const progressUnit = Number(100 / (uriList.length || 1))
+
+  try {
+    if (fetchTicketsAbortController.signal.aborted) {
+      throw new Error('Aborted')
+    }
     for (const uri of uriList) {
-      const res = await fetch(uri)
-      const { tickets = [] } = await res.json()
-      const progressUnitLocal = Number(
-        (progressUnit / (tickets.length || 1)).toFixed(2)
-      )
-      tickets.forEach((ticket: any) => {
-        const objStoreRequest = objStore?.add(ticket)
-        objStoreRequest?.addEventListener('success', () => {
-          progress += progressUnitLocal
-        })
+      fetchTicketsAbortController = new AbortController()
+      const res = await fetch(uri, {
+        signal: fetchTicketsAbortController.signal,
       })
-      // progress += progressUnit
-      cb(progress)
+      const { tickets = [] } = await res.json()
+      for (const ticket of tickets) {
+        setTimeout(() => {
+          dataSinkTickets.set(ticket.id, ticket)
+          dataListTickets.push(ticket.id)
+          addDataGroupTickets(ticket)
+          // Schedule a debounced indexedDB Commit
+        }, 0)
+      }
+      progress += progressUnit
+      // Schedule a debounced indexedDB Commit
+      await cb(progress)
     }
-    cb(progress)
-    isSyncIssuesRunning = false
+  } catch (err: any) {
+    if (fetchTicketsAbortController?.signal.aborted) {
+      // Manual Abortion
+      progress *= -1
+    } else if (err.message !== 'Aborted') {
+      console.error(err)
+    }
   }
+  // Schedule a debounced indexedDB Commit
+  await cb(progress)
+  fetchTicketsAbortController = null
 }
 
-async function getTickets(
+function fetchTicketsAbort(cb: Function) {
+  if (fetchTicketsAbortController) {
+    fetchTicketsAbortController.abort()
+  }
+  cb()
+}
+
+//
+function getTickets(
   {
-    // eslint-disable-next-line no-unused-vars
-    groupBy,
-    // eslint-disable-next-line no-unused-vars
-    from,
-    // eslint-disable-next-line no-unused-vars
-    limit,
-  }: {
-    groupBy: string
-    from: string
-    limit: number
-  },
-  // eslint-disable-next-line no-unused-vars
-  cb: (list: any[]) => void = () => {}
+    group,
+    page = 1,
+    limit = 10,
+  }: { group?: string; page?: number; limit?: number },
+  cb: Function
 ) {
-  // TODO: Apply filter, GRAB DATA
-  const objStoreCursor = objStore?.openCursor('tickets')
-  const resultList: any[] = []
-  objStoreCursor?.addEventListener('success', (event: any) => {
-    const cursor: IDBCursorWithValue | null = event.target.result
-    if (!cursor) {
-      cb(resultList)
-      return
-    }
-    resultList.push(cursor.value)
+  const sourceArray = (group ? dataGroupTickets[group] : dataListTickets) || []
+  const pages = Math.ceil(sourceArray.length / limit)
+  const from = (page - 1) * limit
+  const to = from + limit
+  const returnArray = sourceArray
+    .slice(from, to)
+    .map((id: any) => dataSinkTickets.get(id))
+  console.log({
+    pages,
+    page,
+    limit,
+    data: returnArray,
+  })
+  cb({
+    pages,
+    page,
+    limit,
+    data: returnArray,
   })
 }
 
 const beeline = {
-  syncIssues: waitForReady(syncIssues),
-  getTickets: waitForReady(getTickets),
+  fetchTickets,
+  getTickets,
+  fetchTicketsAbort,
 }
 
 export interface BeeLineWorker {
-  syncIssues: typeof syncIssues
+  fetchTickets: typeof fetchTickets
   getTickets: typeof getTickets
+  fetchTicketsAbort: typeof fetchTicketsAbort
 }
 
 Comlink.expose(beeline)
