@@ -7,6 +7,7 @@ import React, {
   useContext,
   createContext,
   MutableRefObject,
+  useCallback,
 } from 'react'
 
 import { BeeLineWorker } from '@/workers/beeline.worker'
@@ -51,6 +52,17 @@ export default function BeeLineProvider({ children }: { children: any }) {
 export function useBeeLineWorkerRef() {
   const workerRef = useContext(ContextBeeLineWorkerRef)
   return workerRef
+}
+
+export function useBeeLineWorkerCb() {
+  const proxyCb = useCallback(
+    // eslint-disable-next-line no-unused-vars
+    <T extends {}>(cb: T): T => {
+      return Comlink.proxy(cb)
+    },
+    []
+  )
+  return proxyCb
 }
 
 export function useBeeLineWorkerLoaded() {

@@ -106,6 +106,7 @@ function getTickets(
     .slice(from, to)
     .map((id: any) => dataSinkTickets.get(id))
   console.log({
+    hasMore: Boolean(fetchTicketsAbortController),
     pages,
     page,
     limit,

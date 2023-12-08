@@ -19,7 +19,8 @@
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18",
     "react-redux": "^9.0.2",
-    "react-window": "^1.8.10"
+    "react-window": "^1.8.10",
+    "react-window-infinite-loader": "^1.0.9"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -1,113 +1,139 @@
 [
   {
     "id": "status",
-    "name": "Status",
+    "name": "🧾",
+    "displayName": "Status",
     "values": [
       {
         "id": "status-triage",
-        "name": "Triage"
+        "name": "🩺",
+        "displayName": "Triage"
       },
       {
         "id": "status-backlog",
-        "name": "Backlog"
+        "name": "🗃️",
+        "displayName": "Backlog"
       },
       {
         "id": "status-todo",
-        "name": "Todo"
+        "name": "📝",
+        "displayName": "Todo"
       },
       {
         "id": "status-inprogress",
-        "name": "In Progress"
+        "name": "🚀",
+        "displayName": "In Progress"
       },
       {
         "id": "status-inreview",
-        "name": "In Review"
+        "name": "🔎",
+        "displayName": "In Review"
       },
       {
         "id": "status-done",
-        "name": "Done"
+        "name": "📌",
+        "displayName": "Done"
       }
     ]
   },
   {
     "id": "labels",
-    "name": "Labels",
+    "name": "🏷️",
+    "displayName": "Labels",
     "values": [
       {
         "id": "labels-bug",
-        "name": "Bug"
+        "name": "",
+        "displayName": "Bug"
       },
       {
         "id": "labels-feature",
-        "name": "Feature"
+        "name": "",
+        "displayName": "Feature"
       },
       {
         "id": "labels-performance",
-        "name": "Performance"
+        "name": "",
+        "displayName": "Performance"
       },
       {
         "id": "labels-security",
-        "name": "Security"
+        "name": "",
+        "displayName": "Security"
       },
       {
         "id": "labels-documentation",
-        "name": "Documentation"
+        "name": "",
+        "displayName": "Documentation"
       },
       {
         "id": "labels-userrequest",
-        "name": "User Request"
+        "name": "",
+        "displayName": "User Request"
       },
       {
         "id": "labels-immediate",
-        "name": "Immediate"
+        "name": "",
+        "displayName": "Immediate"
       },
       {
         "id": "labels-nextrelease",
-        "name": "Next Release"
+        "name": "",
+        "displayName": "Next Release"
       },
       {
         "id": "labels-majorrelease",
-        "name": "Major Release"
+        "name": "",
+        "displayName": "Major Release"
       }
     ]
   },
   {
     "id": "assignee",
-    "name": "Assignee",
+    "name": "✍",
+    "displayName": "Assignee",
     "values": [
       {
         "id": "assignee-1",
-        "name": 1
+        "name": "✔️",
+        "displayName": "Assigned"
       },
       {
         "id": "assignee-0",
-        "name": 0
+        "name": "❌",
+        "displayName": "Unassigned"
       }
     ]
   },
   {
     "id": "priority",
-    "name": "Priority",
+    "name": "👋",
+    "displayName": "Priority",
     "values": [
       {
         "id": "priority-none",
-        "name": "none"
+        "name": "☝️",
+        "displayName": "none"
       },
       {
         "id": "priority-low",
-        "name": "low"
+        "name": "✌️",
+        "displayName": "low"
       },
       {
         "id": "priority-medium",
-        "name": "medium"
+        "name": "👌",
+        "displayName": "medium"
       },
       {
         "id": "priority-high",
-        "name": "high"
+        "name": "🖖",
+        "displayName": "high"
       },
       {
         "id": "priority-critical",
-        "name": "critical"
+        "name": "✋",
+        "displayName": "critical"
       }
     ]
   }

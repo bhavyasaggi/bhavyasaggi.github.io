@@ -1,53 +1,85 @@
-import * as Comlink from 'comlink'
-
 import React, { useState, useTransition, useCallback } from 'react'
 
-import { useBeeLineWorkerLoaded, useBeeLineWorkerRef } from '../provider'
+import Stack from 'react-bootstrap/Stack'
+import ProgressBar from 'react-bootstrap/ProgressBar'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from 'react-bootstrap/Button'
 
-export default function BeeLineSync() {
+import Iconize from '@/components/Iconize'
+
+import {
+  useBeeLineWorkerLoaded,
+  useBeeLineWorkerRef,
+  useBeeLineWorkerCb,
+} from '../provider'
+
+function BeeLineSyncRaw({ title = '' }: { title?: string }) {
   const [isPending, startTransition] = useTransition()
 
   const [progress, setProgress] = useState(0)
 
   const workerRef = useBeeLineWorkerRef()
   const workerLoaded = useBeeLineWorkerLoaded()
+  const workerCb = useBeeLineWorkerCb()
 
   const fetchTickets = useCallback(async () => {
     const workerObj = workerRef.current
     const uriList = [...Array(10)].map(
       (_i, i) => `https://sfe-interview.hoppscotch.com/issues-${i + 1}.json`
     )
-    console.log('>>', workerObj)
     await new Promise((resolve) => {
-      workerObj?.fetchTicketsAbort(Comlink.proxy(resolve))
+      workerObj?.fetchTicketsAbort(workerCb(resolve))
     })
     workerObj?.fetchTickets(
       uriList,
-      Comlink.proxy((p: number) => {
+      workerCb((p: number) => {
         startTransition(() => {
           setProgress(Number(p.toFixed(4)))
         })
       })
     )
-  }, [workerRef])
+  }, [workerRef, workerCb])
+
+  const abortTickets = useCallback(async () => {
+    const workerObj = workerRef.current
+    await new Promise((resolve) => {
+      workerObj?.fetchTicketsAbort(workerCb(resolve))
+    })
+  }, [workerRef, workerCb])
 
   return (
-    <>
-      <button
-        type='button'
-        onClick={() => {
-          return workerLoaded
-            ? fetchTickets()
-            : window.alert('Worked not loaded.')
-        }}
-      >
-        <span>Re-Sync </span>
-        <span>{isPending ? '?' : ''}</span>
-        <span>{progress}%</span>
-      </button>
-      <button type='button' onClick={() => {}}>
-        Clear
-      </button>
-    </>
+    <Stack direction='horizontal' className='border-bottom p-3 text-end'>
+      <div className='d-inline-block ms-0 me-auto lead'>{title}</div>
+      <ButtonGroup size='sm' className='opacity-75'>
+        <Button
+          variant='secondary'
+          onClick={() => {
+            return workerLoaded
+              ? fetchTickets()
+              : window.alert('Worked not loaded.')
+          }}
+          style={{ width: '300px' }}
+        >
+          <span>{isPending ? '↻' : ''}</span>
+          <span>{workerLoaded ? 'P' : 'A'}</span>
+
+          <ProgressBar
+            variant={progress < 0 ? 'danger' : 'dark'}
+            min={0}
+            max={100}
+            now={Math.abs(progress)}
+            label={`${Math.abs(progress)}%`}
+            striped
+          />
+        </Button>
+        <Button variant='dark' onClick={abortTickets}>
+          <Iconize>🛑</Iconize>
+        </Button>
+      </ButtonGroup>
+    </Stack>
   )
 }
+
+const BeeLineSync = React.memo(BeeLineSyncRaw)
+
+export default BeeLineSync

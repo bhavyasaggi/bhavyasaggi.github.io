@@ -41,6 +41,7 @@
     "jsx-a11y/no-onchange": "off",
     "react/no-array-index-key": "off",
     "react/prop-types": "off",
+    "react/require-default-props": "off",
     // NextJs specific fix: suppress errors for missing 'import React' in files for nextjs
     "react/react-in-jsx-scope": "off",
     // NextJs specific fix: allow jsx syntax in js files

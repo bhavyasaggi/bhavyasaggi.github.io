@@ -1,14 +1,30 @@
 import React from 'react'
 
-import BeeLineProvider from './provider'
 import BeeLineSync from './BeeLineSync'
 import BeeLineIssues from './BeeLineIssues'
 
-export default function BeeLine() {
+import BeeLineProvider from './provider'
+
+export default function BeeLine({
+  title = '',
+  sections = [],
+}: {
+  title?: string
+  sections?: any
+}) {
   return (
     <BeeLineProvider>
-      <BeeLineSync />
-      <BeeLineIssues />
+      <BeeLineSync title={title} />
+
+      {sections && sections.length ? (
+        sections.map(({ id: sectionId, displayName: sectionName }: any) => (
+          <React.Fragment key={sectionId}>
+            <BeeLineIssues title={sectionName} section={sectionId} />
+          </React.Fragment>
+        ))
+      ) : (
+        <BeeLineIssues title='Issues' section='' />
+      )}
     </BeeLineProvider>
   )
 }
