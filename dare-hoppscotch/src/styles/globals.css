@@ -1,0 +1,15 @@
+details > summary {
+  list-style-type: '';
+}
+details > summary::after {
+  content: '➕';
+  display: inline-block;
+  margin-left: auto;
+  font-size: 8px;
+  line-height: 1;
+  color: transparent;
+  text-shadow: 0 0 var(--bs-dark);
+}
+details[open] > summary::after {
+  content: '➖';
+}

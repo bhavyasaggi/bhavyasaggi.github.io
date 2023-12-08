@@ -7,7 +7,8 @@
   "workspaces": [
     "almanac",
     "dare-metakeep",
-    "dare-thrivestack"
+    "dare-thrivestack",
+    "dare-hoppscotch"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,7 +17,8 @@
     "almanac:balance": "yarn workspace almanac balance",
     "almanac:build": "yarn workspace almanac build",
     "dare:metakeep": "yarn workspace dare-metakeep start",
-    "dare:thrivestack": "yarn workspace dare-thrivestack dev"
+    "dare:thrivestack": "yarn workspace dare-thrivestack dev",
+    "dare:hoppscotch": "yarn workspace dare-hoppscotch dev"
   },
   "repository": {
     "type": "git",

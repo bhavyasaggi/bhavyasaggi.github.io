@@ -56,7 +56,9 @@ export default function PlgVisualizerCardEdges() {
         <Xarrow
           key={idx}
           start={start}
+          startAnchor='right'
           end={end}
+          endAnchor='left'
           color={color}
           strokeWidth={2}
           headSize={3}

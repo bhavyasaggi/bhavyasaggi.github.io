@@ -40,11 +40,11 @@ export default function PlgVisualizerFilter({ filterKey, title }) {
   }, [dispatch, filterKey])
 
   return (
-    <InputGroup>
-      <Form.Select size='sm' onChange={onSelectCb}>
+    <InputGroup className='px-3 rounded-0'>
+      <Form.Select size='sm' className='rounded-0' onChange={onSelectCb}>
         <option value='' hidden>
+          {filters.length ? `(${filters.length}) ` : ''}
           {title}
-          {filters.length ? `(${filters.length})` : ''}
         </option>
         {nodes.map((node) => (
           <option
@@ -60,6 +60,7 @@ export default function PlgVisualizerFilter({ filterKey, title }) {
         size='sm'
         variant={filters && filters.length ? 'danger' : 'secondary'}
         disabled={!filters || !filters.length}
+        className='rounded-0'
         onClick={onClearCb}
       >
         x

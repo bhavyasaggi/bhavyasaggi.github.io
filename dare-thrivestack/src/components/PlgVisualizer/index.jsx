@@ -14,9 +14,9 @@ import { colOrder, colTitle } from './utils'
 
 export default function PlgVisualizer() {
   return (
-    <div className='position-relative min-vh-100'>
+    <div className='position-relative pt-1 pb-5'>
       <PlgVisualizerDataGraph />
-      <Container>
+      <Container fluid className='pt-1 pb-5'>
         <PlgVisualizerRollupList />
       </Container>
       <Container>
@@ -32,7 +32,7 @@ export default function PlgVisualizer() {
         </Row>
         <Row className='py-1'>
           {colOrder.map((colKey) => (
-            <Col key={colKey} sm={{ span: 1, offset: 1 }}>
+            <Col key={colKey} sm={{ span: 2, offset: 0 }}>
               <PlgVisualizerCardNodeList nodeKey={colKey} />
             </Col>
           ))}

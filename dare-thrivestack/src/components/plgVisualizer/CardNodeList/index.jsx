@@ -19,9 +19,17 @@ export default function PlgVisualizerCardNodeList({ nodeKey }) {
   )
 
   return (
-    <Stack gap={1}>
+    <Stack gap={1} className='mx-3'>
       {filteredNodes.map((node) => (
-        <PlgVisualizerCardNode key={node.uuid} type={nodeKey} node={node} />
+        <PlgVisualizerCardNode
+          key={node.uuid}
+          type={nodeKey}
+          name={node.name}
+          value={node.value}
+          uuid={node.uuid}
+          error={node.error}
+          active={Boolean(node.active)}
+        />
       ))}
       {moreCount ? (
         <Badge bg='secondary' pill className='opacity-25'>

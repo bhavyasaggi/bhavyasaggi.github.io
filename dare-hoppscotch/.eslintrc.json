@@ -1,0 +1,56 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "ignorePatterns": ["node_modules/*", ".next/*", "out/*"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:json/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "next",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 80,
+        "tabWidth": 2,
+        "semi": false,
+        "singleQuote": true,
+        "jsxSingleQuote": true,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "endOfLine": "auto"
+      }
+    ],
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "jsx-a11y/no-onchange": "off",
+    "react/no-array-index-key": "off",
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
+    // NextJs specific fix: suppress errors for missing 'import React' in files for nextjs
+    "react/react-in-jsx-scope": "off",
+    // NextJs specific fix: allow jsx syntax in js files
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ], //should add ".ts" if typescript project
+    "@next/next/no-document-import-in-page": "off" // temporary fix
+  }
+}

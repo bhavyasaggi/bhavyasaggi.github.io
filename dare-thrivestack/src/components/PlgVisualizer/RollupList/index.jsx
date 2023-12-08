@@ -21,51 +21,56 @@ export default function PlgVisualizerRollupList() {
   )
 
   return (
-    <Stack direction='horizontal' gap='3' className='my-3'>
-      <PlgVisualizerRollupCard
-        title='Edge Failures'
-        value={affectedEdges.length}
-      >
-        <Table size='sm'>
-          <thead>
-            <tr>
-              {colOrder.map((colKey) => (
-                <th key={colKey}>{colTitle[colKey]}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {affectedEdges.map((aEdge, aIdx) => (
-              <tr key={aEdge.uuid || aIdx}>
-                {colOrder.map((colKey, colIdx) => (
-                  <td key={colIdx}>{aEdge[colKey]}</td>
+    <>
+      <div className='text-dark-emphasis small fw-bold my-1'>
+        Showing rollup status
+      </div>
+      <Stack direction='horizontal' gap='3'>
+        <PlgVisualizerRollupCard
+          title='Edge Failures'
+          value={affectedEdges.length}
+        >
+          <Table size='sm'>
+            <thead>
+              <tr>
+                {colOrder.map((colKey) => (
+                  <th key={colKey}>{colTitle[colKey]}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </PlgVisualizerRollupCard>
-      <PlgVisualizerRollupCard
-        title='Variable Failures'
-        value={affectedKeyNodes.length}
-      >
-        <Table size='sm'>
-          <thead>
-            <tr>
-              <td>Variable</td>
-              <td>Value</td>
-            </tr>
-          </thead>
-          <tbody>
-            {affectedKeyNodes.map(({ uuid, name, value }) => (
-              <tr key={uuid}>
-                <td>{name}</td>
-                <td>{value}</td>
+            </thead>
+            <tbody>
+              {affectedEdges.map((aEdge, aIdx) => (
+                <tr key={aEdge.uuid || aIdx}>
+                  {colOrder.map((colKey, colIdx) => (
+                    <td key={colIdx}>{aEdge[colKey]}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </PlgVisualizerRollupCard>
+        <PlgVisualizerRollupCard
+          title='Variable Failures'
+          value={affectedKeyNodes.length}
+        >
+          <Table size='sm'>
+            <thead>
+              <tr>
+                <td>Variable</td>
+                <td>Value</td>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </PlgVisualizerRollupCard>
-    </Stack>
+            </thead>
+            <tbody>
+              {affectedKeyNodes.map(({ uuid, name, value }) => (
+                <tr key={uuid}>
+                  <td>{name}</td>
+                  <td>{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </PlgVisualizerRollupCard>
+      </Stack>
+    </>
   )
 }

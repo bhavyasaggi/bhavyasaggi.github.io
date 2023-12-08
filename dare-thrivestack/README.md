@@ -1,4 +1,4 @@
-## Context to the problem:
+# Dare-Thrivestack
 
 Thrive Stack is a SaaS platform that acts as a functional backbone enabling any B2B SaaS product
 organization to become PLG (Product Led Growth) enabled.
@@ -25,7 +25,7 @@ Each Node has configurations. These configurations can be dependent on other con
 Once the workflows are configured and saved, they can be promoted to different environments
 defined by the Customer’s Dev Team
 
-# Terminologies
+## Terminologies
 
 1. **Environments**: Environment can be Dev, QA, UAT, and PROD of our customers
 2. **Workflows**: Workflows are a set of steps, that help to build multiple complex steps as a
@@ -55,49 +55,85 @@ Manager which will be used by the SaaS company’s Engineering team.
 | ------------ | --------- | ------------ | -------- | ------------- |
 | Environments | Workflows | Features     | Category | Configuration |
 
-## Assumptions
+## Possible Solution
+
+### Assumptions
 
 - Single Tenant, Single User in a view.
 - Keeping endpoints un-Authenticated for simplicity's sake
 - Levels of selection
-  - Unselected: White
-  - Hightlight (current-options): Silver
-  - Select (user-click): Gold
-    - last column selection opens up editor modal
+  - Unselected
+  - Hightlight (current-options)
+  - Select (user-click)
 - Make progression click-aware:
-  - One hard-select per view, saved in query-filter
-  - Multiple highlight per column,
-- Initial: (no query)
-  - Current: Grab All column entries
-  - Extension: Grab top 10 for each column. And progressively fetch-render, while keeping backup in indexDB.
-- Apply filter
-  - On column with selection: Remove Selection
-  - On column without selecton: Omit all edges that includes the filtered item
-- Reorder Columns:
-  - Selected Items
-  - Highlighted Items
-  - Filtered Items
+  - One Select select per view
+  - Multiple filter per column
+
+### Decisions
+
+- Edges (Relations) are more important than visual nodes. As the relationships are context-aware, ie. Next relationship from a node depends on the previous relationship.
+- Inital items, Highlighted Items, & Selected Items would be the shown in each column in sored order, with min. count of 10.
+- Save 2 Datasets
+  - Available Items (Environments, Features , Sub-Features, Category, Configuration)\
+    & their meta (like id, and name).
+  - Edge Values [edgeId, ...nodeId]
+- Could leverage following possibilities
+  - Fetch all data during initial load, and process on FE (in web-worker)
+  - Fetch data from BE, progressively. For optimization:
+    - Progressive Filters, can be evaluated on UI.
+    - Keep cache of Filter Journey for quick undo.
+
+### Design
+
+- Column Keys: `[tenant, env, wf, feat, cat, cfg, key]`
+- BE Response:
+
+  ```text
+  {
+    edgeCount: x,
+    edges: [],
+    nodeCount: {...[colKey]: x},
+    nodes: {...[colKey]:{...x}}
+  }
+  ```
+
+- Render `nodes`
+  - Create a Column for each `colKey`
+  - Render nodes under each Column.
+    - Mark node 'active': if `nodes[colKey].active`
+    - Mark node 'selected': if `colKey === select.type && node[colKey].id === && select.id`
+  - Append "+ x More" if `edgeCount > nodes[colKey].length`
+- Render `edges`
+  - Break edge into smaller paths from `col1` to `col2`.
+  - Assign paths a color, and render them between nodes under `col1` & `col2`
+- Filter
+  - Elements
+    - Search Type-ahead
+    - Option List-view
+    - Apply\
+      (Optional, as updating view on change incurs re-renders, & intermediatary updates are not consumed by user)\
+      (If Apply button is not required, can simply debounce UI updates to filter select)
+  - Applied on Column, not including current selection in filter: Remove Selection
+  - Applied on Column, including current selection in filter: Happy Case
+- Select
+  - Node
+    - Show all edges including the selected node.
+    - Highlight connected Edges
+  - Edge
+    - TODO: Make all other edges gray
 - Error
   - Error data is kept in 'key'-node, as Variable(key-value) is shared across all edges
   - Keep 'Error-Codes'. But for this exercise we'll consider only "Failure".
+- Color Scheme
+  - All Nodes: White
+  - Highlighted Nodes: Bordered Gold
+  - Selected Node: Gold
+  - Error Node (`key` column)
+    - Highlighted: Bordered Red
+    - Selected Node: Red
+  -
 
-## Decisions
-
-- Edges (Relations) are more important than visual nodes.\
-  (because of many-to-many relationships with same node sharing)
-- Inital items, Highlighted Items, & Selected Items would be the shown in each column in-order.
-- Save 3 Datasets
-  - Available Items (Environments, Features , Sub-Features, Category, Configuration)\
-    & their meta (like id, and name).
-  - Edge Values (Edge Value Id => config key-values)
-  - Edge Meta (Button-Top Mapping from Items hierarchy) => Edge Value Id
-
-TODO
-
-- Progressive Filters, do not require API call.
-- Can cache Filter Journey for quick undo.
-
-## Back-of-the-Envelope Calculation
+### Back-of-the-Envelope Calculation
 
 Max Data Support assumption:
 
@@ -112,7 +148,7 @@ Max Data Support assumption:
 If everyone uses everything, we can reach a limit of `1K * 100 * 1M * 1K * 1M * 1K * 1K`, ie. `10^26` edges.\
 We can uniquely identify each edge with a keysize of `log(10^26)`, ie. `26 bits` or `4 bytes`.
 
-### Items
+#### Items
 
 Each item would be detailed description of each entity in system.
 
@@ -136,7 +172,7 @@ Blueprint:
 ]
 ```
 
-### Edges
+#### Edges
 
 Each Edge translates to acutal configuration key-value pair from tenant.
 
@@ -166,7 +202,8 @@ Blueprint:
     "category": "category-login",
     "config": "config-legacy",
     "variable": "key-username",
-    "value": "------"
+    "value": "------",
+    "error": "------"
   }
 ]
 ```
