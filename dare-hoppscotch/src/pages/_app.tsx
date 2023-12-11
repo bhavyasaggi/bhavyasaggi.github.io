@@ -38,7 +38,7 @@ export default function App(appProps: AppProps) {
         className={`min-vh-100 align-items-start bg-black text-white ${gFont.className}`}
       >
         <Stack className='sticky-top vh-100 border-end flex-grow-0 flex-shrink-0 bg-dark'>
-          <ol className='mt-0 mb-auto list-unstyled flex-grow-0 flex-shrink-0'>
+          <ol className='mt-0 mb-auto list-unstyled flex-grow-0 flex-shrink-0 text-center'>
             <li className='m-1'>
               <Link
                 href='/'
@@ -53,6 +53,16 @@ export default function App(appProps: AppProps) {
                 className='d-inline-block link-dark text-decoration-none rounded p-1 bg-secondary'
               >
                 <Iconize>📊</Iconize>
+              </Link>
+            </li>
+            <li className='m-1'>
+              <Link
+                href='https://github.com/bhavyasaggi/bhavyasaggi.github.io/tree/master/dare-thrivestack'
+                className='d-inline-block link-dark text-decoration-none rounded p-1 bg-secondary'
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                <Iconize>⚙️</Iconize>
               </Link>
             </li>
           </ol>
