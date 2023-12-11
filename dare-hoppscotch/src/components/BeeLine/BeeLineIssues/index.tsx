@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useReducer } from 'react'
-import { FixedSizeList } from 'react-window'
-import InfiniteLoader from 'react-window-infinite-loader'
+
+import { FixedSizeList as _FixedSizeList } from 'react-window'
+import _InfiniteLoader from 'react-window-infinite-loader'
 
 import Spinner from 'react-bootstrap/Spinner'
 
@@ -10,6 +11,10 @@ import { useWorkerCb } from '@/hooks/useWorkerCb'
 import BeeLineIssue from '../BeeLineIssue'
 
 import { useBeeLineWorkerRef, useBeeLineWorkerMeta } from '../provider'
+
+// Type mismatch in library for newer version
+const FixedSizeList = _FixedSizeList as any
+const InfiniteLoader = _InfiniteLoader as any
 
 function BeeLineIssueRenderer({ index, data, style }: any) {
   const {
