@@ -55,6 +55,16 @@ export default function App(appProps: AppProps) {
                 <Iconize>📊</Iconize>
               </Link>
             </li>
+            <li className='m-1'>
+              <Link
+                href='https://github.com/bhavyasaggi/bhavyasaggi.github.io/tree/master/dare-thrivestack'
+                className='d-inline-block link-dark text-decoration-none rounded p-1 bg-secondary'
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                <Iconize>⚙️</Iconize>
+              </Link>
+            </li>
           </ol>
           <ol className='mt-auto mb-0 list-unstyled flex-grow-0 flex-shrink-0'>
             {beeLineGroups.map((blg) => (
