@@ -1,48 +1,111 @@
 import * as Comlink from 'comlink'
 
 import React, {
-  useRef,
   useState,
   useEffect,
   useContext,
   createContext,
-  MutableRefObject,
   useCallback,
+  useMemo,
+  useTransition,
 } from 'react'
 
-import { BeeLineWorker } from '@/workers/beeline.worker'
+import { workerCb } from '@/hooks/useWorkerCb'
 
-const ContextBeeLineValue = createContext({})
-const ContextBeeLineWorkerRef = createContext<
-  MutableRefObject<Comlink.Remote<BeeLineWorker> | undefined>
->({ current: undefined })
+import { BeeLineWorker } from './worker'
+
+const ContextBeeLineValue = createContext<{
+  progress: number
+  loaded: boolean
+}>({ progress: 0, loaded: false })
+const ContextBeeLineWorkerRef =
+  createContext<Comlink.Remote<BeeLineWorker> | null>(null)
+
+let globalProgress = 0
+let globalWorker: Worker | null = null
+let globalBeeLineWorker: Comlink.Remote<BeeLineWorker> | null = null
 
 export default function BeeLineProvider({ children }: { children: any }) {
-  const workerRef = useRef<Worker>()
-  const beeLineWorkerRef = useRef<Comlink.Remote<BeeLineWorker>>()
+  const [, startTransition] = useTransition()
 
+  const [progress, setProgress] = useState(0)
   const [workerLoaded, setWorkerLoaded] = useState(false)
 
-  useEffect(() => {
-    setWorkerLoaded(false)
-
-    workerRef.current = new Worker(
-      new URL('@/workers/beeline.worker', import.meta.url)
-    )
-    beeLineWorkerRef.current = Comlink.wrap<BeeLineWorker>(workerRef.current)
-    setWorkerLoaded(true)
-
-    return () => {
-      workerRef.current?.terminate()
-      // @ts-ignore
-      beeLineWorkerRef.current?.terminate()
-      setWorkerLoaded(false)
+  const fetchTickets = useCallback(async () => {
+    const beeLineWorker = globalBeeLineWorker
+    if (globalProgress > 0 && beeLineWorker) {
+      return
     }
+    const uriList = [...Array(10)].map(
+      (_i, i) => `https://sfe-interview.hoppscotch.com/issues-${i + 1}.json`
+    )
+    await new Promise((resolve) => {
+      beeLineWorker?.fetchTicketsAbort(workerCb(resolve))
+    })
+    beeLineWorker?.fetchTickets(
+      uriList,
+      workerCb((p: number) => {
+        startTransition(() => {
+          setProgress(Number(p.toFixed(4)))
+        })
+      })
+    )
   }, [])
 
+  const abortTickets = useCallback(async () => {
+    const beeLineWorker = globalBeeLineWorker
+    await new Promise((resolve) => {
+      beeLineWorker?.fetchTicketsAbort(workerCb(resolve))
+    })
+  }, [])
+
+  useEffect(() => {
+    const domLoadedAction = () => {
+      const beeLineWorker = globalBeeLineWorker
+      if (beeLineWorker) {
+        return
+      }
+      setWorkerLoaded(false)
+      // Grab WebWorker Instances
+      globalWorker = new Worker(new URL('./worker', import.meta.url))
+      globalBeeLineWorker = Comlink.wrap<BeeLineWorker>(globalWorker)
+      // Initialize Sync
+      fetchTickets()
+      setWorkerLoaded(true)
+    }
+
+    // To avoid effect from breaking in between
+    setTimeout(domLoadedAction, 0)
+
+    return () => {
+      // Stop Sync
+      abortTickets()
+      // Terminate WebWorker Instances
+      globalWorker?.terminate()
+      globalWorker = null
+      // @ts-ignore
+      globalBeeLineWorker?.terminate()
+      globalBeeLineWorker = null
+      // Update Status?
+      setWorkerLoaded(false)
+    }
+  }, [abortTickets, fetchTickets])
+
+  useEffect(() => {
+    globalProgress = progress
+  }, [progress])
+
+  const providerValue = useMemo(
+    () => ({
+      progress,
+      loaded: workerLoaded,
+    }),
+    [progress, workerLoaded]
+  )
+
   return (
-    <ContextBeeLineWorkerRef.Provider value={beeLineWorkerRef}>
-      <ContextBeeLineValue.Provider value={workerLoaded}>
+    <ContextBeeLineWorkerRef.Provider value={globalBeeLineWorker}>
+      <ContextBeeLineValue.Provider value={providerValue}>
         {children}
       </ContextBeeLineValue.Provider>
     </ContextBeeLineWorkerRef.Provider>
@@ -54,18 +117,7 @@ export function useBeeLineWorkerRef() {
   return workerRef
 }
 
-export function useBeeLineWorkerCb() {
-  const proxyCb = useCallback(
-    // eslint-disable-next-line no-unused-vars
-    <T extends {}>(cb: T): T => {
-      return Comlink.proxy(cb)
-    },
-    []
-  )
-  return proxyCb
-}
-
-export function useBeeLineWorkerLoaded() {
-  const workerLoaded = useContext(ContextBeeLineValue)
-  return workerLoaded
+export function useBeeLineWorkerMeta() {
+  const workerMeta = useContext(ContextBeeLineValue)
+  return workerMeta
 }

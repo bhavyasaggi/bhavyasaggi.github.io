@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@/styles/globals.css'
+import '@/styles/scrollbar.css'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -16,8 +17,14 @@ import Iconize from '@/components/Iconize'
 import { store } from '@/store/redux'
 
 import beeLineGroups from '@/constants/beeLineGroups.json'
+import BeeLineProvider from '@/components/BeeLine/provider'
 
 const gFont = Montserrat({ subsets: ['latin'] })
+
+// Global context providers to avoid re-initialzation
+function AppProvider({ children }: any) {
+  return <BeeLineProvider>{children}</BeeLineProvider>
+}
 
 export default function App(appProps: AppProps) {
   const { Component, pageProps } = appProps as any
@@ -64,7 +71,9 @@ export default function App(appProps: AppProps) {
         </Stack>
         <div className='min-vh-100 flex-grow-1 flex-shrink-0'>
           <Provider store={store}>
-            <Component {...pageProps} />
+            <AppProvider>
+              <Component {...pageProps} />
+            </AppProvider>
           </Provider>
         </div>
       </Stack>
