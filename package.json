@@ -18,7 +18,8 @@
     "almanac:build": "yarn workspace almanac build",
     "dare:metakeep": "yarn workspace dare-metakeep start",
     "dare:thrivestack": "yarn workspace dare-thrivestack dev",
-    "dare:hoppscotch": "yarn workspace dare-hoppscotch dev"
+    "dare:hoppscotch": "yarn workspace dare-hoppscotch dev",
+    "dare:hoppscotch:test": "yarn workspace dare-hoppscotch test"
   },
   "repository": {
     "type": "git",

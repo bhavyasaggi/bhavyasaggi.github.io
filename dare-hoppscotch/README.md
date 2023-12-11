@@ -125,4 +125,4 @@ The code is part of a monorepo (via yarn-workspaces).
 
 ## TODO
 
-- Write test cases
+- Write Jest Mocks for WebWorker

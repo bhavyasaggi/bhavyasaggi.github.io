@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageHome Snapshot 1`] = `
+<div>
+  <main
+    class="min-vh-100 d-flex align-items-center justify-content-center className"
+  >
+    <div
+      class="text-center"
+    >
+      <div
+        class="display-1"
+      >
+        Welcome!
+      </div>
+      <a
+        href="/tracker"
+      >
+        <button
+          class="btn btn-dark btn-lg"
+          type="button"
+        >
+          Visit Dashboard
+        </button>
+      </a>
+    </div>
+  </main>
+</div>
+`;
