@@ -1,3 +1,7 @@
+import Image from 'next/image'
+
+import React, { useEffect, useState } from 'react'
+
 import Badge from 'react-bootstrap/Badge'
 import Stack from 'react-bootstrap/Stack'
 
@@ -68,15 +72,52 @@ function BeeLineIssuePriorityIcon({ priority }: { priority: string }) {
   )
 }
 
-function BeeLineIssueAssigneeIcon({ assignee }: { assignee: string }) {
+function BeeLineIssueAssigneeIcon({
+  assignee,
+  avatar,
+}: {
+  assignee: string
+  avatar?: string
+}) {
+  const [isLoaded, setLoaded] = useState(false)
   const initials = String(assignee)
     .split(/\s/)
     .map((s) => s[0])
     .slice(0, 2)
     .join('')
     .toUpperCase()
+
+  useEffect(() => {
+    let isFresh = true
+    if (avatar) {
+      const dummyImg = document.createElement('img')
+      dummyImg.src = avatar
+      dummyImg.addEventListener('load', () => {
+        if (isFresh) {
+          setLoaded(true)
+        }
+      })
+    }
+    return () => {
+      isFresh = false
+    }
+  }, [avatar])
+
+  if (isLoaded && avatar) {
+    return (
+      <Image
+        title={assignee}
+        src={avatar}
+        height={24}
+        width={24}
+        alt={assignee}
+        className='rounded-circle bg-info'
+      />
+    )
+  }
+
   return (
-    <Stickerize bg='info' text='light'>
+    <Stickerize title={assignee} bg='info' text='light'>
       {initials}
     </Stickerize>
   )
@@ -91,6 +132,7 @@ export default function BeeLineIssue({
   labels,
   priority,
   assignee,
+  avatar,
 }: {
   teamID: string
   id: string
@@ -100,6 +142,7 @@ export default function BeeLineIssue({
   labels: string[]
   priority: string
   assignee: string
+  avatar?: string
 }) {
   return (
     <Stack
@@ -142,7 +185,7 @@ export default function BeeLineIssue({
           ) : null
         )}
       </Stack>
-      <BeeLineIssueAssigneeIcon assignee={assignee} />
+      <BeeLineIssueAssigneeIcon assignee={assignee} avatar={avatar} />
     </Stack>
   )
 }

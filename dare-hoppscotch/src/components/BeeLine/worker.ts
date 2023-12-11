@@ -59,6 +59,12 @@ async function fetchTickets(
       const { tickets = [] } = await res.json()
       for (const ticket of tickets) {
         setTimeout(() => {
+          const avatarKey = String(ticket.assignee)
+            .replace(/\W/gi, '')
+            .toLowerCase()
+          ticket.avatar = ticket.assignee
+            ? `https://robohash.org/${avatarKey}.jpg?set=set5&size=24x24`
+            : null
           dataSinkTickets.set(ticket.id, ticket)
           dataListTickets.push(ticket.id)
           addDataGroupTickets(ticket)
@@ -105,13 +111,6 @@ function getTickets(
   const returnArray = sourceArray
     .slice(from, to)
     .map((id: any) => dataSinkTickets.get(id))
-  console.log({
-    hasMore: Boolean(fetchTicketsAbortController),
-    pages,
-    page,
-    limit,
-    data: returnArray,
-  })
   cb({
     pages,
     page,
