@@ -6,6 +6,7 @@
   "private": true,
   "workspaces": [
     "almanac",
+    "dare-mason",
     "dare-metakeep",
     "dare-thrivestack",
     "dare-hoppscotch"
