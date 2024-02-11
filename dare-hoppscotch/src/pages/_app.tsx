@@ -38,7 +38,7 @@ export default function App(appProps: AppProps) {
         className={`min-vh-100 align-items-start bg-black text-white ${gFont.className}`}
       >
         <Stack className='sticky-top vh-100 border-end flex-grow-0 flex-shrink-0 bg-dark'>
-          <ol className='mt-0 mb-auto list-unstyled flex-grow-0 flex-shrink-0'>
+          <ol className='mt-0 mb-auto list-unstyled flex-grow-0 flex-shrink-0 text-center'>
             <li className='m-1'>
               <Link
                 href='/'
