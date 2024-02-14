@@ -1,12 +1,11 @@
 import {
   Accordion,
-  Box,
   Text,
   ScrollArea,
   Group,
   Switch,
-  Button,
   ActionIcon,
+  Stack,
 } from '@mantine/core'
 import { IconArrowRight, IconEdit } from '@tabler/icons-react'
 
@@ -14,6 +13,8 @@ import { useAppDispatch, useAppSelector } from '@/store/redux'
 import { actionSetSelection } from '@/store/sliceDocumentSelector'
 
 import toShowDocument from '@/utils/toShowDocument'
+
+import styles from './styles.module.scss'
 
 import type { DSTemplateType } from '@/types/DocumentSelector'
 
@@ -71,9 +72,11 @@ export default function DocumentSelectorFromList({
     .flat(2)
 
   return (
-    <Box>
+    <Stack>
       <Group>
-        <Text>{totalDocuments} Available Documents</Text>
+        <Text mr='auto' fz='sm' fw='500'>
+          {totalDocuments} Available Documents
+        </Text>
         <Switch
           label='Select All'
           onChange={(e) => {
@@ -86,31 +89,53 @@ export default function DocumentSelectorFromList({
           }}
         />
       </Group>
-      <ScrollArea h={250}>
-        <Accordion>
+      <ScrollArea
+        offsetScrollbars
+        scrollbars='y'
+        type='always'
+        h={250}
+        style={{
+          borderRadius: '4px',
+          border: '1px solid orange',
+          overflow: 'hidden',
+        }}
+      >
+        <Accordion transitionDuration={300}>
           {renderTemplates.map(
             ({ id: templateId, name: templateName, documents }) => (
               <Accordion.Item key={templateId} value={templateId}>
-                <Accordion.Control>{templateName}</Accordion.Control>
+                <Accordion.Control className={styles.fromListHeader}>
+                  {templateName}
+                </Accordion.Control>
                 <Accordion.Panel>
-                  <Box>
+                  <Stack gap='4px'>
                     {documents?.map(
                       ({ id: documentId, name: documentName }) => (
-                        <Group key={documentId}>
-                          <Text>{documentName}</Text>
-
+                        <Group
+                          key={documentId}
+                          p='4px'
+                          gap='4px'
+                          className='hover'
+                        >
+                          <Text mr='auto'>{documentName}</Text>
                           {selection[documentId] ? (
                             <ActionIcon
                               variant='outline'
+                              color='gray'
+                              size='xs'
+                              className='rounded-sm'
                               onClick={() =>
                                 window.alert('Unknown Edit Action')
                               }
                             >
-                              <IconEdit />
+                              <IconEdit size='1rem' color='black' />
                             </ActionIcon>
                           ) : (
                             <ActionIcon
                               variant='outline'
+                              color='gray'
+                              size='xs'
+                              className='rounded-sm'
                               onClick={() => {
                                 dispatch(
                                   actionSetSelection({
@@ -120,19 +145,19 @@ export default function DocumentSelectorFromList({
                                 )
                               }}
                             >
-                              <IconArrowRight />
+                              <IconArrowRight size='1rem' color='black' />
                             </ActionIcon>
                           )}
                         </Group>
                       )
                     )}
-                  </Box>
+                  </Stack>
                 </Accordion.Panel>
               </Accordion.Item>
             )
           )}
         </Accordion>
       </ScrollArea>
-    </Box>
+    </Stack>
   )
 }

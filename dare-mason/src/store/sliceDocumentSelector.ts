@@ -47,7 +47,11 @@ const DocumentSelectorSlice = createSlice({
             state.selection[selectionId] = true
           }
         } else {
-          state.selection[selectionId] = Boolean(value)
+          if (value) {
+            state.selection[selectionId] = true
+          } else {
+            delete state.selection[selectionId]
+          }
         }
       })
     },

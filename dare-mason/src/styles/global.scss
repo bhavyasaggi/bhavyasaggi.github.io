@@ -1,0 +1,21 @@
+#root {
+  background-color: whitesmoke;
+}
+
+.rounded {
+  border-radius: 8px;
+}
+
+.rounded-sm {
+  border-radius: 4px;
+}
+
+.hover:hover {
+  background-color: rgba(255, 165, 0, 0.1);
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

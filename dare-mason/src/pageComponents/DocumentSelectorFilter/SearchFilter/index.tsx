@@ -15,7 +15,7 @@ export default function DocumentSelectorSearchFilter() {
     <TextInput
       placeholder='Search'
       value={searchFilter}
-      leftSection={<IconSearch />}
+      leftSection={<IconSearch color='black' size='1rem' />}
       onChange={(e) => {
         dispatch(actionSetFromSearch(e.target.value))
       }}
