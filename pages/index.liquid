@@ -1,0 +1,99 @@
+---
+title: Hi!
+layout: base.liquid
+---
+<h1><em>Hi!</em> I'm <mark>Bhavya Saggi</mark>.</h1>
+<p>
+  A <sup><em>(frontend focussed)</em></sup> full-stack engineer based in <strong>New Delhi, India</strong> with
+  <strong>~10 years</strong> of professional experience.
+  <br>
+  <span>You may find me at:</span>
+  <a href="https://www.linkedin.com/in/bhavya-saggi/" title="LinkedIn" style="text-decoration:none">
+    <kbd>
+      {%- icon "linkedin", "14" -%}
+    </kbd>
+  </a>
+  <a href="http://github.com/bhavyasaggi/" title="Github" style="text-decoration:none">
+    <kbd>
+      {%- icon "github", "14" -%}
+    </kbd>
+  </a>
+  <a href="https://medium.com/@bhavyasaggi" title="Medium" style="text-decoration:none">
+    <kbd>
+      {%- icon "globe", "14" -%}
+    </kbd>
+  </a>
+  <a href="https://x.com/bhavyasaggi" title="X (Twitter)" style="text-decoration:none">
+    <kbd>
+      {%- icon "twitter", "14" -%}
+    </kbd>
+  </a>
+  <a href="https://www.npmjs.com/~bhavyasaggi" title="NPM" style="text-decoration:none">
+    <kbd>
+      {%- icon "package", "14" -%}
+    </kbd>
+  </a>
+  <a href="https://codepen.io/bhavyasaggi" title="Codepen" style="text-decoration:none">
+    <kbd>
+      {%- icon "codepen", "14" -%}
+    </kbd>
+  </a>
+  <a href="https://codesandbox.io/u/bhavyasaggi" title="CodeSandbox" style="text-decoration:none">
+    <kbd>
+      {%- icon "codesandbox", "14" -%}
+    </kbd>
+  </a>
+</p>
+<blockquote>
+  <p>
+    The purity of software engineering calls to some, even before they understand what it is. I too felt the call, and
+    followed it with blinded passion. From the bright-blue glow of Turbo C++ to the dim comfort of VSCode’s dark theme.
+    I wanted to talk to the machine, and it compiled.
+  </p>
+  <p>
+    As we stand on the shoulders of mad giants, some who went against capital greed to foster an ecosystem of
+    open-source software. I understand that technology is not a tool, but a language of belief, a selfless act of human
+    ingenuity.
+  </p>
+  <cite><code>All code wants to be free.</code></cite>
+</blockquote>
+
+<p>
+  Following is a comprehensive second-brain for software development, containing quick references, best practices, and
+  essential knowledge for modern web development.
+</p>
+{%- assign sortedAllCollections = collections.all | sort_natural: 'url' | eleventyNavigation %}
+<ul>
+  {%- for entry in sortedAllCollections %}
+    {%- assign entryIsAcive = entry.url == page.url %}
+    <li>
+      {% if entryIsAcive %}<mark>{% endif %}
+      <a href="{{ entry.url }}">{{ entry.data.title }}</a>:
+      <span>{{ entry.excerpt }}</span>
+      {% if entryIsAcive %}</mark>{% endif %}
+    </li>
+  {%- endfor %}
+</ul>
+
+<section class="notice">
+  <header>
+    <p>
+      <strong>Browser-based live playgrounds</strong>
+      <sub>
+        <em>(powered by <a href="https://sandpack.codesandbox.io/">Sandpack</a>)</em>
+      </sub>
+    </p>
+  </header>
+  <p>
+    <a href="/playground/" class="button">Vanilla JS Playground</a>
+    <a href="/playground-react/" class="button">React Playground</a>
+  </p>
+</section>
+
+<h2>Essential External Resources</h2>
+<ul>
+  <li><a href="https://developer.mozilla.org/">MDN Web Docs</a></li>
+  <li><a href="https://devdocs.io/">DevDocs</a></li>
+  <li><a href="https://roadmap.sh/">Roadmap.sh</a></li>
+  <li><a href="https://bytebytego.com/guides/">ByteByteGo System Design</a></li>
+</ul>

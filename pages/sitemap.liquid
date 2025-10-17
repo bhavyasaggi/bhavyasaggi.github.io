@@ -1,0 +1,20 @@
+---
+title: Sitemap
+layout: base.liquid
+eleventyNoIndex: true
+eleventyExcludeFromCollections: true
+
+navParams:
+    listElement: "ol"
+    listItemElement: "li"
+    listClass: ""
+    listItemClass: ""
+    listItemHasChildrenClass: ""
+    activeListItemClass: ""
+    anchorClass: ""
+    activeAnchorClass: ""
+    activeKey: ""
+    showExcerpt: true
+
+---
+{{ collections.all | sort_natural: 'url' | eleventyNavigation | eleventyNavigationToHtml: navParams }}

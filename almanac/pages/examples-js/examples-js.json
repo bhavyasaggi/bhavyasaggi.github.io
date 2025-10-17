@@ -1,8 +1,0 @@
-{
-  "layout": "sandpack",
-  "sandpackTemplate": "vanilla-console",
-  "eleventyExcludeFromCollections": true,
-  "eleventyNavigation": {
-    "order": 0
-  }
-}
