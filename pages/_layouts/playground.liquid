@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>{{ title | default: 'Playground' }}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
+          "react-dom": "https://esm.sh/react-dom@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+          "@codesandbox/sandpack-react": "https://esm.sh/@codesandbox/sandpack-react@2.20.0?external=react,react-dom"
+        }
+      }
+    </script>
+    <script defer type="module">
+      import React from "react";
+      import { createRoot } from "react-dom/client";
+      import { Sandpack } from "@codesandbox/sandpack-react";
+
+      // Check files in queryParam
+
+      const root = createRoot(document.getElementById("sandpack-root"));
+      const sandpackComponent = React.createElement(
+        Sandpack,
+        {
+          template: "{{ sandpackTemplate | default: "react" }}",
+          theme: "{{ sandpackTheme | default: "dark" }}",
+          files: {{ sandpackFiles | default: "" | json }},
+          options: {
+            autoReload: false,
+            autoRun: false,
+            closableTabs: false,
+            editorHeight: Math.max(300, Math.floor(window.innerHeight - 4)),
+            editorWidthPercentage: 50,
+            initMode: "user-visible",
+            layout: "{{ sandpackLayout | default: "preview" }}",
+            recompileDelay: 300,
+            recompileMode: "delayed",
+            resizablePanels: false,
+            showConsoleButton: true,
+            showInlineErrors: true,
+            showLineNumbers: true,
+            showNavigator: true,
+            showRefreshButton: true,
+            showTabs: true,
+            skipEval: false,
+          },
+        },
+        null
+      );
+      root.render(sandpackComponent);
+    </script>
+  </head>
+  <body
+    style="
+      margin: 0;
+      border: 0;
+      padding: 0;
+      min-height: 100dvh;
+      min-width: 100dvw;
+      color: gray;
+      background: black;
+    "
+  >
+    <div id="sandpack-root">
+      <center style="font-size: 92px">{{ content | default: ⏳ }}</center>
+    </div>
+  </body>
+</html>
