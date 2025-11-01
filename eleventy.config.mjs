@@ -1,7 +1,6 @@
 import { HtmlBasePlugin, InputPathToUrlTransformPlugin } from "@11ty/eleventy";
 import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
-import { consolePlus } from "eleventy-plugin-console-plus";
 import markdownIt from "markdown-it";
 
 export default async function (eleventyConfig) {
@@ -28,7 +27,6 @@ export default async function (eleventyConfig) {
 		`${Math.random().toString(36).slice(2)}:${Date.now().toString(36)}`,
 	);
 
-	eleventyConfig.addPlugin(consolePlus);
 	eleventyConfig.addPlugin(HtmlBasePlugin);
 	eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
 	eleventyConfig.addPlugin(eleventyNavigationPlugin);

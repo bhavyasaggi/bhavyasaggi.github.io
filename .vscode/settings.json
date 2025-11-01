@@ -5,7 +5,7 @@
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
 		"source.biome": "always",
-        "source.fixAll.biome": "always",
-        "source.organizeImports.biome": "always"
+		"source.fixAll.biome": "always",
+		"source.organizeImports.biome": "always"
 	}
 }

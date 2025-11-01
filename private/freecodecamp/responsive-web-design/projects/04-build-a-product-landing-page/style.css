@@ -1,28 +1,28 @@
 body {
-  margin: 0px;
-  border: 0px;
-  padding: 90px 0px 0px 0px;
-  font-size: 16px;
-  font-weight: 500;
-  font-family: monospace;
-  text-align: center;
+	margin: 0px;
+	border: 0px;
+	padding: 90px 0px 0px 0px;
+	font-size: 16px;
+	font-weight: 500;
+	font-family: monospace;
+	text-align: center;
 }
 
 #header {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  padding: 8px 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: silver;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	padding: 8px 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: silver;
 }
 
-@media  (max-width: 768px) {
-  #header {
-    display: block;
-    text-align: center;
-  }
+@media (max-width: 768px) {
+	#header {
+		display: block;
+		text-align: center;
+	}
 }

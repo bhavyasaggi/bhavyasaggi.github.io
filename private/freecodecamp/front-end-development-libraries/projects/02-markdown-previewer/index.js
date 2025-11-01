@@ -1,16 +1,16 @@
-import React, {
-  StrictMode,
-  useState,
-  useEffect,
-  useCallback,
-} from 'https://cdn.skypack.dev/react@17.0.1'
-import { render } from 'https://cdn.skypack.dev/react-dom@17.0.1'
-import { marked } from 'https://cdn.skypack.dev/marked@4.0.18'
-import { debounce } from 'https://cdn.skypack.dev/lodash@4.17.21'
+import { debounce } from "https://cdn.skypack.dev/lodash@4.17.21";
+import { marked } from "https://cdn.skypack.dev/marked@4.0.18";
+import {
+	StrictMode,
+	useCallback,
+	useEffect,
+	useState,
+} from "https://cdn.skypack.dev/react@17.0.1";
+import { render } from "https://cdn.skypack.dev/react-dom@17.0.1";
 
 marked.setOptions({
-  breaks: true,
-})
+	breaks: true,
+});
 
 const placeholder = `# Welcome to my React Markdown Previewer!
 
@@ -55,53 +55,53 @@ And here. | Okay. | I think we get it.
 1. And last but not least, let's not forget embedded images:
 
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
-`
+`;
 
-const debouncedMarkedFn = debounce((string, cb) => cb(marked(string)), 300)
+const _debouncedMarkedFn = debounce((string, cb) => cb(marked(string)), 300);
 
-const markedFn = (string, cb) => cb(marked(string))
+const markedFn = (string, cb) => cb(marked(string));
 
 function Preview({ htmlString }) {
-  return (
-    <div
-      id='preview'
-      dangerouslySetInnerHTML={{
-        __html: marked.parse(htmlString),
-      }}
-    />
-  )
+	return (
+		<div
+			id="preview"
+			dangerouslySetInnerHTML={{
+				__html: marked.parse(htmlString),
+			}}
+		/>
+	);
 }
 
 function Editor({ onChange }) {
-  return (
-    <textarea
-      id='editor'
-      onChange={onChange}
-      type='text'
-      defaultValue={placeholder}
-    />
-  )
+	return (
+		<textarea
+			id="editor"
+			onChange={onChange}
+			type="text"
+			defaultValue={placeholder}
+		/>
+	);
 }
 
 function App() {
-  const [htmlString, setHtmlString] = useState('')
-  const onChange = useCallback((e) => {
-    markedFn(e.target.value, setHtmlString)
-  }, [])
-  useEffect(() => {
-    markedFn(placeholder, setHtmlString)
-  }, [])
-  return (
-    <div id='container'>
-      <Editor onChange={onChange} />
-      <Preview htmlString={htmlString} />
-    </div>
-  )
+	const [htmlString, setHtmlString] = useState("");
+	const onChange = useCallback((e) => {
+		markedFn(e.target.value, setHtmlString);
+	}, []);
+	useEffect(() => {
+		markedFn(placeholder, setHtmlString);
+	}, []);
+	return (
+		<div id="container">
+			<Editor onChange={onChange} />
+			<Preview htmlString={htmlString} />
+		</div>
+	);
 }
 
 render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  document.getElementById('app-root')
-)
+	<StrictMode>
+		<App />
+	</StrictMode>,
+	document.getElementById("app-root"),
+);
