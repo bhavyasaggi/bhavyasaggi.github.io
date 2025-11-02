@@ -4,6 +4,7 @@ title: Data Patterns
 eleventyNavigation:
   key: /system-design/data-patterns/
   parent: /system-design/
+  order: 1
 ---
 
 <https://blog.bytebytego.com/p/understanding-database-types>

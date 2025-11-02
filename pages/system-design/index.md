@@ -7,6 +7,28 @@ eleventyNavigation:
   excerpt: Architecture patterns, scalability, design principles
 ---
 
+New-age Tech Problems. How to instantaneously serve millions of users?
+
+- Process &rarr; Store &rarr; Reconcile &rarr; Serve &rarr; Notify
+
+A single monolith architecture is not viable anymore. Solution? Minimize the architecture & replicate them.
+Leads to the development of 'Distributed Systems', and not only for data, but for connections as well.
+Focus on Consistency and Availability.
+
+## System Architecture
+
+Architectures are not (or should not) be about frameworks. Architectures should not be supplied by frameworks.
+Frameworks are tools to be used, not architectures to be conformed to. If your architecture is based on frameworks, then it cannot be based on your use cases.
+
+Consider web or service-based architecture only, on basis of following factors:
+
+- Latency
+- Consistency
+- Throughput
+- Availability
+
+Commonly used Infrastructure Patterns that should be known, are as follows:
+
 - **Layered Architecture**
 
   ```mermaid
@@ -16,81 +38,69 @@ eleventyNavigation:
       C --> D[Database Layer<br/>Storage]
   ```
 
-- **Microservices** vs **Monolith**
+- Service-Oriented Architecture Pattern
+  - Enterprise service bus
+- Microservices Architecture Pattern
+  - Service Registry/Discovery
+- Client-Server Architecture Pattern
+- Event-driven Architecture Pattern
+- Blackboard Architecture Pattern
+- Master-Slave Architecture Pattern
+- Circuit Breaker Architecture Pattern
+- Peer-to-Peer Architecture Pattern
 
-  | Monolith                              | Microservices        |
-  | ------------------------------------- | -------------------- |
-  | Simple deployment                     | Independent scaling  |
-  | Easy testing                          | Technology diversity |
-  | Better performance (no network calls) | Fault isolation      |
-  | Easier debugging                      | Team autonomy        |
+Read more: <https://learn.microsoft.com/en-us/azure/architecture/patterns/>
 
-  When to use Microservices:
+### Microservices vs Monolith
 
-  - Large, complex applications
-  - Multiple teams
-  - Different scaling requirements
-  - Need for technology diversity
+| Monolith                              | Microservices        |
+| ------------------------------------- | -------------------- |
+| Simple deployment                     | Independent scaling  |
+| Easy testing                          | Technology diversity |
+| Better performance (no network calls) | Fault isolation      |
+| Easier debugging                      | Team autonomy        |
 
-## UI Architecture Patterns
+When to use Microservices:
 
-- **MVC** (Model-View-Controller)
+- Large, complex applications
+- Multiple teams
+- Different scaling requirements
+- Need for technology diversity
 
-  ```mermaid
-  flowchart LR
-      U[User Input] --> C[Controller]
-      C --> M[Model]
-      M --> V[View]
-      V --> U
-  ```
+## Back of the envelope estimation
 
-  - **Model**: Data and business logic
-  - **View**: UI representation
-  - **Controller**: Handles user input
+// ??
 
-- **MVP** (Model-View-Presenter)
+## Popular Algorithms
 
-  ```mermaid
-  flowchart LR
-      U[User Input] --> V[View]
-      V <--> P[Presenter]
-      P <--> M[Model]
-  ```
+- Data Lookup
+  - GeoHash: Location based service
+  - QuadTree: Location based service
+  - Trie: AutoComplete
+  - Bloom Filter: Lookup Hash
+  - Snowflake: Distributed Unique ID Generator
+- Balancing
+  - Consistent Hashing: Cluster Load-Balancing
+  - Leaky / Token Bucket: Rate Limiting
+- File Transfer
+  - Rsync
 
-  - View is passive, Presenter handles all logic
-  - Better testability than MVC
+## Popular Examples
 
-- **MVVM** (Model-View-ViewModel)
-
-  ```mermaid
-  flowchart LR
-    U[User Input] --> V[View]
-    V <--> VM[ViewModel]
-    VM <--> M[Model]
-  ```
-
-  - Data binding between View and ViewModel
-  - Popular in WPF, Angular, Vue.js
-
-- **MVI** (Model-View-Intent)
-
-  ```mermaid
-  flowchart LR
-      I[Intent] --> M[Model]
-      M --> V[View]
-      V --> I
-  ```
-
-  - Unidirectional data flow
-  - Reactive programming approach
-
-- **VIPER** (iOS Architecture):\
-  Read more: <https://medium.com/@pinarkocak/understanding-viper-pattern-619fa9a0b1f1>
-  - _View_: UI components
-  - _Interactor_: Business logic
-  - _Presenter_: View logic
-  - _Entity_: Data models
-  - _Router_: Navigation logic
+- High Level System Design
+  - Notification System
+  - Timeline System
+  - Chat System
+  - Collaboration System
+  - Media System
+    - On-Demand Large Media Service
+    - Live-Streaming Media Service
+  - Financial System
+    - Payment System
+    - Stock-Exchange System
+- Low Level System Design
+  - Bulk Data Processing
+  - Autocomplete System
 
 ## Essential Resources
 
@@ -98,3 +108,5 @@ eleventyNavigation:
 - [High Scalability](http://highscalability.com/)
 - [AWS Architecture Center](https://aws.amazon.com/architecture/)
 - [Software Craftsmanship](https://blog.cleancoder.com/uncle-bob/2011/01/17/software-craftsmanship-is-about.html)
+- <https://refactoring.guru/design-patterns/catalog>
+- <https://www.patterns.dev/#patterns>

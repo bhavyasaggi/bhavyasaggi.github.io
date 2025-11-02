@@ -4,7 +4,7 @@ title: Signals & Observables
 eleventyNavigation:
   key: /frontend/lib-signals-observables/
   parent: /frontend/
-  order: 6
+  order: 2
 ---
 
 ## Signals

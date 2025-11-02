@@ -4,7 +4,7 @@ title: React
 eleventyNavigation:
   key: /frontend/lib-react/
   parent: /frontend/
-  order: 5
+  order: 3
 ---
 
 **Terms**:
@@ -123,4 +123,5 @@ There is no for Server technologies for the Web. The only way RSC (React Server 
 - <https://react.dev/learn/you-might-not-need-an-effect>
 - <https://react.dev/learn/separating-events-from-effects>
 - <https://kaihao.dev/posts/Stale-props-and-zombie-children-in-Redux>
+- <https://quick-teaching-tool.web.app/>
 - <https://www.youtube.com/watch?v=FPJvlhee04E>

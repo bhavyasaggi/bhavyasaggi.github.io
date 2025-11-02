@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {%- if eleventyNoIndex == true -%}
-    <meta name="robots" content="noindex">
+      <meta name="robots" content="noindex">
     {%- endif -%}
     <title>{{ title | default: 'bhavyasaggi.github.io' }}</title>
-    <meta name="description" content="{{ eleventyNavigation.excerpt }}"">
+    <meta name="description" content="{{ eleventyNavigation.excerpt }}">
+    <meta name="color-scheme" content="dark light">
     <link rel="canonical" href="https://bhavyasaggi.github.io{{ page.url | url }}">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/css/simple.css">
+    <link rel="dns-prefetch" href="https://esm.sh">
+    <link rel="stylesheet" href="/css/simple.min.css">
     <link rel="preload" href="/css/prism.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/css/prism.css" fetchpriority="low"></noscript>
     <style>
       body {
         font-size: 16px;
-        text-align: justify;
       }
       body > header {
         padding: 0 0.5rem 1rem;
@@ -28,6 +29,9 @@
       body > header > :only-child {
         margin-block-start: 1rem;
       }
+      p {
+        text-align: justify;
+      }
       svg {
         vertical-align: middle;
       }
@@ -35,8 +39,14 @@
       pre[class*='language-'] {
         font-size: 14px;
       }
+      table,
+      a {
+        word-break: break-word;
+      }
+      a:has(kbd) {
+        text-decoration: none;
+      }
     </style>
-    <script src="/js/mermaid.js" defer></script>
   </head>
   <body>
     <header>
@@ -50,7 +60,7 @@
     <main>
       {%- unless page.url == '/' %}
         <h1>{{ title }}</h1>
-      {%- endunless  %}
+      {%- endunless %}
       {{ content }}
       {%- assign sortedAllCollections = collections.all | sort_natural: 'url' %}
       {%- unless page.url == '/' or page.url == '/sitemap/' or page.url == '/404.html' %}
@@ -131,18 +141,20 @@
       </div>
     </footer>
 
-    <script>
-      // Initialize mermaid after DOM is loaded
+    <script type="module">
+      import mermaid from 'https://esm.sh/mermaid@11.12.1';
+
       document.addEventListener('DOMContentLoaded', function () {
         mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
 
-        // Convert mermaid code blocks to diagrams
         document.querySelectorAll('pre code.language-mermaid').forEach(function (block) {
           const pre = block.parentElement;
-          const mermaidDiv = document.createElement('div');
-          mermaidDiv.className = 'mermaid';
-          mermaidDiv.textContent = block.textContent;
-          pre.parentElement.replaceChild(mermaidDiv, pre);
+          const div = document.createElement('figure');
+          div.className = 'mermaid';
+          div.style.minHeight = pre.offsetHeight + 'px';
+          div.style.fontSize = '0px';
+          div.textContent = block.textContent;
+          pre.parentElement.replaceChild(div, pre);
         });
 
         mermaid.init();

@@ -1,17 +1,12 @@
 import { HtmlBasePlugin, InputPathToUrlTransformPlugin } from "@11ty/eleventy";
 import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
-import markdownIt from "markdown-it";
 
 export default async function (eleventyConfig) {
 	// Copy the contents of the `public` folder to the output folder
 	// For example, `./public/css/` ends up in `_site/css/`
 	eleventyConfig.addPassthroughCopy({
 		"./public/": "/",
-		"./node_modules/simpledotcss/simple.min.css": "/css/simple.css",
-		"./node_modules/feather-icons/dist/feather-sprite.svg":
-			"/feather-sprite.svg",
-		"./node_modules/mermaid/dist/mermaid.min.js": "/js/mermaid.js",
 		"./node_modules/prismjs/themes/prism-okaidia.min.css": "/css/prism.css",
 	});
 
@@ -49,10 +44,6 @@ export default async function (eleventyConfig) {
 		});
 		return navigation.map(convertItem);
 	});
-
-	// Configure markdown-it for better mermaid support
-	const md = markdownIt({ html: true, linkify: true, typographer: true });
-	eleventyConfig.setLibrary("md", md);
 
 	return {
 		dir: {

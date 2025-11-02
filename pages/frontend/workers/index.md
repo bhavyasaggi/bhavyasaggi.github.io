@@ -4,7 +4,7 @@ layout: base.liquid
 eleventyNavigation:
   key: /frontend/workers/
   parent: /frontend/
-  order: 3
+  order: 1
 ---
 
 ## Web Workers

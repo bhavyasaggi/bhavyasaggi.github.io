@@ -4,6 +4,7 @@ title: Auth Patterns
 eleventyNavigation:
   key: /system-design/auth-patterns/
   parent: /system-design/
+  order: 2
 ---
 
 SAML vs SSO
